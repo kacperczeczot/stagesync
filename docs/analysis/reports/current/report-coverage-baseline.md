@@ -1,6 +1,3 @@
-[Strona główna](../../../../README.md) > [current](README.md) > [report-coverage-baseline](report-coverage-baseline.md)
-
----
 
 # Raport: Bazowe Pokrycie Testami (Coverage Baseline)
 

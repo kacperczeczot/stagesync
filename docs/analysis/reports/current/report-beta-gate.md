@@ -1,6 +1,3 @@
-[Strona główna](../../../../README.md) > [current](README.md) > [report-beta-gate](report-beta-gate.md)
-
----
 
 # Beta gate — bramka przed / po `5.0.0-beta.*`
 

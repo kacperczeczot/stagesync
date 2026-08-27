@@ -1,6 +1,3 @@
-[Strona główna](../../../../README.md) > [current](README.md) > [report-adr-dual-engine-vst-align](report-adr-dual-engine-vst-align.md)
-
----
 
 # Report: Align ADR Dual Engine + VST Freeze
 
