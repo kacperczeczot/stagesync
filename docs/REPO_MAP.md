@@ -6,16 +6,16 @@
 
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
-* **Liczba wszystkich plików:** 1614
-* **Liczba katalogów:** 247
-* **Data aktualizacji:** 2026-08-27T15:19:36.777Z
+* **Liczba wszystkich plików:** 1615
+* **Liczba katalogów:** 248
+* **Data aktualizacji:** 2026-08-27T15:29:20.523Z
 
 ### Kategorie
 
 | Kategoria | Liczba plików |
 | :--- | ---: |
 | Kod | 1213 |
-| Docs | 135 |
+| Docs | 136 |
 | Config | 119 |
 | Assety | 120 |
 | Inne | 27 |
@@ -26,7 +26,7 @@
 | :--- | ---: |
 | `.ts` | 743 |
 | `.tsx` | 284 |
-| `.md` | 122 |
+| `.md` | 123 |
 | `.png` | 94 |
 | `.kt` | 71 |
 | `.css` | 52 |
@@ -71,7 +71,8 @@
   - **library/** (3) — Główny plik bazy utworów (library.json) oraz szablony projektów
   - **logs/** (1) — Buffer logów systemowych, diagnostyka i ślady wykonania
   - **projects/** (1) — Katalog projektów użytkownika z lokalnymi zasobami assets/
-- **docs/** (93) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
+- **docs/** (94) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
+  - **adr/** (1)
   - **analysis/** (48)
   - **architecture/** (32) — Architektura systemu, SSOT, ADR, specyfikacje API i Design System
     - **adr/** (20) — Architectural Decision Records (Decyzje architektoniczne)
@@ -593,6 +594,8 @@ stagesync/
 │   │   └── .gitkeep
 │   └── README.md
 ├── docs/
+│   ├── adr/
+│   │   └── README.md
 │   ├── analysis/
 │   │   ├── inspiracje/
 │   │   │   ├── audyty-silnik/
