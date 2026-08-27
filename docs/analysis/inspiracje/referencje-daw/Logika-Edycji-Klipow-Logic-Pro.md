@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [referencje-daw](README.md) > [Logika-Edycji-Klipow-Logic-Pro](Logika-Edycji-Klipow-Logic-Pro.md)
+
+---
+
 > **Repo:** surowy dump — nie SSOT. Triage: [Logika-Edycji-Klipow-Logic-Pro.triage.md](./Logika-Edycji-Klipow-Logic-Pro.triage.md). Konwencje: [README](../README.md).
 
 # **Specyfikacja Geometrii i Interakcji na Osi Czasu: Standardy Logic Pro dla Systemów DAW**

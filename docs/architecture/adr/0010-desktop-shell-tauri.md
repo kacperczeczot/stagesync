@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0010-desktop-shell-tauri](0010-desktop-shell-tauri.md)
+
+---
+
 # ADR 0010 — Desktop shell (Tauri)
 
 - **Status:** Zaakceptowany (plan β1)

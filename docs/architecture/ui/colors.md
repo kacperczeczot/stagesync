@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [ui](README.md) > [colors](colors.md)
+
+---
+
 # Kolory (`--ss-color-*`)
 
 Źródło: [`packages/ui/src/tokens.css`](../../../packages/ui/src/tokens.css).  

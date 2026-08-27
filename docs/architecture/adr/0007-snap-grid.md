@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0007-snap-grid](0007-snap-grid.md)
+
+---
+
 # ADR 0007 — Snap / edit grid (kwantyzacja edycji)
 
 - **Status:** Zaakceptowany

@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0011-ui-parity-behavior](0011-ui-parity-behavior.md)
+
+---
+
 # ADR 0011 — Parity behawioralna i redesign IA (rebuild alpha)
 
 - **Status:** Zaakceptowany

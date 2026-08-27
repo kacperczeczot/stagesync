@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Recenzja-Decyzji-Live-FOH-Audio.triage](Recenzja-Decyzji-Live-FOH-Audio.triage.md)
+
+---
+
 # Triage: Recenzja decyzji Live FOH Audio / routing (CRIT-OUT)
 
 **Źródło:** [Recenzja-Decyzji-Live-FOH-Audio.md](./Recenzja-Decyzji-Live-FOH-Audio.md) (Gemini / AI Exporter)  

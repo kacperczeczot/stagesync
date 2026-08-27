@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Specyfikacja-Klienta-Mobile-StageSync-v5.2+](Specyfikacja-Klienta-Mobile-StageSync-v5.2+.md)
+
+---
+
 > From: https://gemini.google.com/app/b16203d408888e91
 
 Specyfikacja StageSync Mobile Client

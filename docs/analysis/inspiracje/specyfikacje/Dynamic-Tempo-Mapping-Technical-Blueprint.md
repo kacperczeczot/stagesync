@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Dynamic-Tempo-Mapping-Technical-Blueprint](Dynamic-Tempo-Mapping-Technical-Blueprint.md)
+
+---
+
 > From: https://gemini.google.com/app/fa096704e148ade9
 
 # you asked

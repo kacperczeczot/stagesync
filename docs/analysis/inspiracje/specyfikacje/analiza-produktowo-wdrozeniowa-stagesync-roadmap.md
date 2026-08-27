@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [analiza-produktowo-wdrozeniowa-stagesync-roadmap](analiza-produktowo-wdrozeniowa-stagesync-roadmap.md)
+
+---
+
 # 🗺️ Długoterminowa Roadmapa StageSync (5.5 – 7.1)
 
 - [ 5.4.5 Smart Tempo ] (Wydane / Stan obecny)

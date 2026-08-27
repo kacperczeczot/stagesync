@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [referencje-daw](README.md) > [Referencja-Zachowan-Live-MIDI](Referencja-Zachowan-Live-MIDI.md)
+
+---
+
 > From: https://gemini.google.com/app/a4e1f8ba30830dd1
 
 Specyfikacja StageSync MIDI PC

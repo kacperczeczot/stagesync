@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0018-future-audio-architecture](0018-future-audio-architecture.md)
+
+---
+
 # ADR 0018 — Przyszła architektura audio (Live Processing, 6.0+)
 
 - **Status:** Zaakceptowany

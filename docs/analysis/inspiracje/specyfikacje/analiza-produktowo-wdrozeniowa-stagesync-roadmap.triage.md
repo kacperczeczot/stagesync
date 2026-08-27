@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage](analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage.md)
+
+---
+
 # Triage: Analiza Produktowo-Wdrożeniowa Roadmapy StageSync (v5.5 – v7.1)
 
 **Źródło:** [analiza-produktowo-wdrozeniowa-stagesync-roadmap.md](./analiza-produktowo-wdrozeniowa-stagesync-roadmap.md) (Analiza strategiczna / Roadmap)  

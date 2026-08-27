@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Ocena-Safety-Net-StageSync-437.triage](Ocena-Safety-Net-StageSync-437.triage.md)
+
+---
+
 # Triage: Ocena Safety Net (#437) — dłuższy dump
 
 **Źródło:** [Ocena-Safety-Net-StageSync-437.md](./Ocena-Safety-Net-StageSync-437.md) (Gemini / AI Exporter; Downloads `(1)` → kanon)  

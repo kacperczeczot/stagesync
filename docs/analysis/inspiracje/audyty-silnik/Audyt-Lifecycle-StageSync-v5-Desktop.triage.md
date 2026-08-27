@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [audyty-silnik](README.md) > [Audyt-Lifecycle-StageSync-v5-Desktop.triage](Audyt-Lifecycle-StageSync-v5-Desktop.triage.md)
+
+---
+
 # Triage: Audyt lifecycle Desktop (Tauri launcher / sidecar)
 
 **Źródło:** [Audyt-Lifecycle-StageSync-v5-Desktop.md](./Audyt-Lifecycle-StageSync-v5-Desktop.md) (Gemini Deep Search)  

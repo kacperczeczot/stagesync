@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Safety-Net-dla-StageSync-v5.2](Safety-Net-dla-StageSync-v5.2.md)
+
+---
+
 > From: https://gemini.google.com/app/5230369d06d7744e
 
 Specyfikacja Safety Net StageSync

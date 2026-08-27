@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [referencje-daw](README.md) > [UXLogika-Show-Tools-Referencja-Zachowan](UXLogika-Show-Tools-Referencja-Zachowan.md)
+
+---
+
 > From: https://gemini.google.com/app/b160ce95f586b17b
 
 Referencja Zachowań Show Tools

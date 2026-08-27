@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0004-updates-docker](0004-updates-docker.md)
+
+---
+
 # ADR 0004 — Aktualizacje przez Docker (bez git-apply)
 
 - **Status:** Zaakceptowany (amendement 2026-07-21)

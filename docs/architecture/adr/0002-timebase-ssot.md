@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0002-timebase-ssot](0002-timebase-ssot.md)
+
+---
+
 # ADR 0002 — Timebase SSOT
 
 - **Status:** Zaakceptowany

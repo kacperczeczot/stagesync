@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [ui](README.md) > [button](button.md)
+
+---
+
 # Button (`@stagesync/ui`)
 
 Kanoniczny przycisk StageSync. Źródło:

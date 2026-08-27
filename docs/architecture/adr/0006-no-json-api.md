@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0006-no-json-api](0006-no-json-api.md)
+
+---
+
 # ADR 0006 — Bez JSON:API
 
 - **Status:** Zaakceptowany

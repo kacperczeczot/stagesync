@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Architektura-Ingestii-Danych-Muzycznych-StageSync](Architektura-Ingestii-Danych-Muzycznych-StageSync.md)
+
+---
+
 > From: https://gemini.google.com/app/3e916a1babed0369
 
 # you asked

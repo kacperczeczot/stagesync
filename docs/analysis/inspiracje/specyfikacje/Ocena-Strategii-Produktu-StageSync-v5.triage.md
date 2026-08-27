@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Ocena-Strategii-Produktu-StageSync-v5.triage](Ocena-Strategii-Produktu-StageSync-v5.triage.md)
+
+---
+
 # Triage: Ocena strategii produktu StageSync v5 (CRIT-ID-01)
 
 **Źródło:** [Ocena-Strategii-Produktu-StageSync-v5.md](./Ocena-Strategii-Produktu-StageSync-v5.md) (Gemini / AI Exporter)  

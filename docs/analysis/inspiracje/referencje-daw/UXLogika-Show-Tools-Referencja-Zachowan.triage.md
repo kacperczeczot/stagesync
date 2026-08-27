@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [referencje-daw](README.md) > [UXLogika-Show-Tools-Referencja-Zachowan.triage](UXLogika-Show-Tools-Referencja-Zachowan.triage.md)
+
+---
+
 # Triage: UX/logika Show Tools (Follow Actions / setlista FOH)
 
 **Źródło:** [UXLogika-Show-Tools-Referencja-Zachowan.md](./UXLogika-Show-Tools-Referencja-Zachowan.md) (Gemini Deep Search)  

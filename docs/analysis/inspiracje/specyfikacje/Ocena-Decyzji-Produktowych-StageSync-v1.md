@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Ocena-Decyzji-Produktowych-StageSync-v1](Ocena-Decyzji-Produktowych-StageSync-v1.md)
+
+---
+
 > From: https://gemini.google.com/app/b2426baaf913da82
 
 Recenzja Decyzji Miksera StageSync

@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Implementacja-Smart-Tempo-w-Antigravity.triage](Implementacja-Smart-Tempo-w-Antigravity.triage.md)
+
+---
+
 # Triage: Implementacja Smart Tempo w Antigravity
 
 **Źródło:** [Implementacja-Smart-Tempo-w-Antigravity.md](./Implementacja-Smart-Tempo-w-Antigravity.md) (Gemini / Antigravity / AI Exporter, ~2026-08)  

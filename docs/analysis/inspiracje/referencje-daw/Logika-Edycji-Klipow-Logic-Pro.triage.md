@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [referencje-daw](README.md) > [Logika-Edycji-Klipow-Logic-Pro.triage](Logika-Edycji-Klipow-Logic-Pro.triage.md)
+
+---
+
 # Triage: Logika edycji klipów (Logic Pro)
 
 **Źródło:** [Logika-Edycji-Klipow-Logic-Pro.md](./Logika-Edycji-Klipow-Logic-Pro.md)  

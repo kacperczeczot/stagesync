@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Krytyka-strategii-Mobile-for-Live.triage](Krytyka-strategii-Mobile-for-Live.triage.md)
+
+---
+
 # Triage: Krytyka strategii Mobile-for-Live (ADR 0016)
 
 **Źródło:** [Krytyka-strategii-Mobile-for-Live.md](./Krytyka-strategii-Mobile-for-Live.md) (Gemini / AI Exporter)  

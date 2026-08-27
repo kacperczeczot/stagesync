@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [audyty-silnik](README.md) > [Audyt-StageSync-v5-Race-Conditions.triage](Audyt-StageSync-v5-Race-Conditions.triage.md)
+
+---
+
 # Triage: Audyt race conditions (setlista / auto-advance)
 
 **Źródło:** [Audyt-StageSync-v5-Race-Conditions.md](./Audyt-StageSync-v5-Race-Conditions.md) (Gemini Deep Search)  

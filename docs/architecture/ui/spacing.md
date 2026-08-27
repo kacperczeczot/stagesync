@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [ui](README.md) > [spacing](spacing.md)
+
+---
+
 # Spacing (`--ss-space-*`)
 
 Źródło: [`packages/ui/src/tokens.css`](../../../packages/ui/src/tokens.css).  

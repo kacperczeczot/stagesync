@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0016-android-performer-console](0016-android-performer-console.md)
+
+---
+
 # ADR 0016 — Android Performer + Console (Kotlin WebView)
 
 - **Status:** Zaakceptowany

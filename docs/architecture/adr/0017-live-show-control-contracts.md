@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0017-live-show-control-contracts](0017-live-show-control-contracts.md)
+
+---
+
 # ADR 0017 — Live Show Control: kontrakty produktowe (pakiet 1–8)
 
 - **Status:** Zaakceptowany

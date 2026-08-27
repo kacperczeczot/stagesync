@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0015-daw-reference-and-product-decisions](0015-daw-reference-and-product-decisions.md)
+
+---
+
 # ADR 0015 — Referencja DAW (Logic) i stałe decyzje produktowe
 
 - **Status:** Zaakceptowany

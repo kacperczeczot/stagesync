@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [ui](README.md) > [ui-shell-inventory](ui-shell-inventory.md)
+
+---
+
 # Inventarz kontrolek UI (v4 → v5 shelle)
 
 **Rola:** checklista **wtórna** — aktualizuj **po** działającym geście / flow, nie przed.  

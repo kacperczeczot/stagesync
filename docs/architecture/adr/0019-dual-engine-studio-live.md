@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0019-dual-engine-studio-live](0019-dual-engine-studio-live.md)
+
+---
+
 # ADR 0019 — Dual Engine: Studio vs Live (6.0+)
 
 - **Status:** Zaakceptowany

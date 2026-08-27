@@ -1,3 +1,7 @@
+[Strona główna](../../README.md) > [guides](README.md) > [MOBILE](MOBILE.md)
+
+---
+
 # StageSync — Mobile (Performer + Console)
 
 **Dla kogo:** instalacja i użytkowanie APK Android oraz PWA na telefonie / tablecie.  

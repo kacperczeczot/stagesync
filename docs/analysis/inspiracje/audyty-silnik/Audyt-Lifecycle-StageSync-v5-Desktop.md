@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [audyty-silnik](README.md) > [Audyt-Lifecycle-StageSync-v5-Desktop](Audyt-Lifecycle-StageSync-v5-Desktop.md)
+
+---
+
 > From: https://gemini.google.com/app/2e33caa037d41a7d
 
 Audyt Lifecycle StageSync Desktop

@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0013-in-app-vs-github-docs](0013-in-app-vs-github-docs.md)
+
+---
+
 # ADR 0013 — Dokumentacja in-app vs GitHub
 
 - **Status:** Zaakceptowany

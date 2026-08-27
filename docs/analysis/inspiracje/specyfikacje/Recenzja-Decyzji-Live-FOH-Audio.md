@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Recenzja-Decyzji-Live-FOH-Audio](Recenzja-Decyzji-Live-FOH-Audio.md)
+
+---
+
 > From: https://gemini.google.com/app/89e3268136945bb9
 
 Ocena Decyzji Routingu FOH

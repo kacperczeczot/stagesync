@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Specyfikacja-Klienta-Mobile-StageSync-v5.2+.triage](Specyfikacja-Klienta-Mobile-StageSync-v5.2+.triage.md)
+
+---
+
 # Triage: Performer + Console (PWA + Android shell) — intro 5.2+ (#674)
 
 **Źródło:** [Specyfikacja-Klienta-Mobile-StageSync-v5.2+.md](./Specyfikacja-Klienta-Mobile-StageSync-v5.2+.md) (Gemini / AI Exporter)  

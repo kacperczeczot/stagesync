@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0001-storage-layout](0001-storage-layout.md)
+
+---
+
 # ADR 0001 — Układ storage
 
 - **Status:** Zaakceptowany

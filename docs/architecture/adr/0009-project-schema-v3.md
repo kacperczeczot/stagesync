@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0009-project-schema-v3](0009-project-schema-v3.md)
+
+---
+
 # ADR 0009 — Project schema v3 (assets + setlist)
 
 - **Status:** Zaakceptowany

@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0005-domain-axioms](0005-domain-axioms.md)
+
+---
+
 # ADR 0005 — Granica 0 (Domain Axioms)
 
 - **Status:** Zaakceptowany

@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Specyfikacja-StageSync-dla-miksera-DAW.triage](Specyfikacja-StageSync-dla-miksera-DAW.triage.md)
+
+---
+
 # Triage: Mixer HW Out 3–4 + bus→bus — intro 5.2+
 
 **Źródło:** [Specyfikacja-StageSync-dla-miksera-DAW.md](./Specyfikacja-StageSync-dla-miksera-DAW.md) (Gemini / AI Exporter)  

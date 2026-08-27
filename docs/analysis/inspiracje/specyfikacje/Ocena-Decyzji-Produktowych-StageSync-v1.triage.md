@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Ocena-Decyzji-Produktowych-StageSync-v1.triage](Ocena-Decyzji-Produktowych-StageSync-v1.triage.md)
+
+---
+
 # Triage: Ocena decyzji miksera FOH / WebAudio (CRIT-MX-01) — dump v1
 
 **Źródło:** [Ocena-Decyzji-Produktowych-StageSync-v1.md](./Ocena-Decyzji-Produktowych-StageSync-v1.md) (Gemini / AI Exporter; krótszy plik Downloads bez `(1)`)  

@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Architektura-Ingestii-Danych-Muzycznych-StageSync.triage](Architektura-Ingestii-Danych-Muzycznych-StageSync.triage.md)
+
+---
+
 # Triage: Architektura ingestii danych muzycznych (Parallel Track AST)
 
 **Źródło:** [Architektura-Ingestii-Danych-Muzycznych-StageSync.md](./Architektura-Ingestii-Danych-Muzycznych-StageSync.md) (Gemini / AI Exporter)  

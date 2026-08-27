@@ -1,3 +1,7 @@
+[Strona główna](../../README.md) > [guides](README.md) > [DX](DX.md)
+
+---
+
 # 🛠️ StageSync DX Guide
 
 Informacje dotyczące trybu deweloperskiego, uruchamiania i automatyzacji w projekcie StageSync.

@@ -1,3 +1,7 @@
+[Strona główna](../README.md) > [docs](README.md) > [ROADMAP](ROADMAP.md)
+
+---
+
 # StageSync — Roadmapa
 
 Kierunek produktu (długoterminowy). **Bieżąca checklista:** [TODO.md](./TODO.md)

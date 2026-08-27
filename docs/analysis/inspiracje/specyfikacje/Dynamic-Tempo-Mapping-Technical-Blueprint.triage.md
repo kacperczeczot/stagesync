@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Dynamic-Tempo-Mapping-Technical-Blueprint.triage](Dynamic-Tempo-Mapping-Technical-Blueprint.triage.md)
+
+---
+
 # Triage: Dynamic Tempo Mapping — blueprint MIR / Smart Tempo / Flex
 
 **Źródło:** [Dynamic-Tempo-Mapping-Technical-Blueprint.md](./Dynamic-Tempo-Mapping-Technical-Blueprint.md) (Gemini / AI Exporter, 2026-08-03)  

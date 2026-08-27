@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0012-user-data-location](0012-user-data-location.md)
+
+---
+
 # ADR 0012 — Lokalizacja danych użytkownika (MuseScore-style)
 
 - **Status:** Zaakceptowany

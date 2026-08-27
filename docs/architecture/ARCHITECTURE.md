@@ -1,3 +1,7 @@
+[Strona główna](../../README.md) > [architecture](README.md) > [ARCHITECTURE](ARCHITECTURE.md)
+
+---
+
 # StageSync v5 — Architektura
 
 ## Mapa dokumentacji (jedno źródło prawdy)

@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0014-desktop-launcher](0014-desktop-launcher.md)
+
+---
+
 # ADR 0014 — Desktop Launcher (ekran startowy)
 
 - **Status:** Zaakceptowany

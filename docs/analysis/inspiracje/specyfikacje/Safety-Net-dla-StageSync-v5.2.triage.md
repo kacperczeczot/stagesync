@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Safety-Net-dla-StageSync-v5.2.triage](Safety-Net-dla-StageSync-v5.2.triage.md)
+
+---
+
 # Triage: Safety Net (Master / Spare failover) — intro 5.2+ (#437)
 
 **Źródło:** [Safety-Net-dla-StageSync-v5.2.md](./Safety-Net-dla-StageSync-v5.2.md) (Gemini / AI Exporter)  

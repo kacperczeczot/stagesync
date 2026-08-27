@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Implementacja-Smart-Tempo-w-Antigravity](Implementacja-Smart-Tempo-w-Antigravity.md)
+
+---
+
 > From: https://gemini.google.com/u/1/app/0369e3f8ba44fcba?pageId=none
 >
 > Gemini / Antigravity · AI Exporter · ok. 2026-08 (companion do cutu Smart Tempo 5.4.2)

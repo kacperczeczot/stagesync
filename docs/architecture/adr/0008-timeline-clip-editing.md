@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [adr](README.md) > [0008-timeline-clip-editing](0008-timeline-clip-editing.md)
+
+---
+
 # ADR 0008 — Edycja klipów Timeline (Forma, audio, Smart Tool)
 
 - **Status:** Zaakceptowany

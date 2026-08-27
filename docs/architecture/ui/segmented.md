@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [ui](README.md) > [segmented](segmented.md)
+
+---
+
 # SegmentedControl
 
 Wyłączna grupa `Button` (`selected` / `aria-pressed`) w `@stagesync/ui`.

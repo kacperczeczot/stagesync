@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Ocena-Strategii-Produktu-StageSync-v5](Ocena-Strategii-Produktu-StageSync-v5.md)
+
+---
+
 > From: https://gemini.google.com/app/cad99ed9ace74f10
 
 Ocena Strategii StageSync v5

@@ -1,3 +1,7 @@
+[Strona główna](../README.md) > [docs](README.md) > [TODO](TODO.md)
+
+---
+
 # StageSync — TODO
 
 Otwarte zadania. Plan etapów: [ROADMAP.md](./ROADMAP.md). Historia: [CHANGELOG.md](../CHANGELOG.md).

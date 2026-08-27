@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [referencje-daw](README.md) > [Specyfikacja-Referencji-Zachowan-Wyswietlania](Specyfikacja-Referencji-Zachowan-Wyswietlania.md)
+
+---
+
 > From: https://gemini.google.com/app/e503b40473faa2c1
 
 Referencja Wyświetlania Chartów StageSync

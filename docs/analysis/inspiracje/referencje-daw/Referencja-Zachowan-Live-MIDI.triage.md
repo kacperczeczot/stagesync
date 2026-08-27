@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [referencje-daw](README.md) > [Referencja-Zachowan-Live-MIDI.triage](Referencja-Zachowan-Live-MIDI.triage.md)
+
+---
+
 # Triage: Referencja zachowań Live MIDI (PC)
 
 **Źródło:** [Referencja-Zachowan-Live-MIDI.md](./Referencja-Zachowan-Live-MIDI.md) (Gemini Deep Search)  

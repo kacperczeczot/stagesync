@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [ui](README.md) > [badge](badge.md)
+
+---
+
 # Badge
 
 Kompaktowy chip meta (`@stagesync/ui` `Badge` / shell `MetaBadge`).

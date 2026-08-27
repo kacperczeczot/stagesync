@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Specyfikacja-StageSync-dla-miksera-DAW](Specyfikacja-StageSync-dla-miksera-DAW.md)
+
+---
+
 > From: https://gemini.google.com/app/d187839d0e8677e6
 
 Specyfikacja Routingu StageSync v5.2

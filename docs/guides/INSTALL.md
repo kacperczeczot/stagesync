@@ -1,3 +1,7 @@
+[Strona główna](../../README.md) > [guides](README.md) > [INSTALL](INSTALL.md)
+
+---
+
 # StageSync — instalacja produkcyjna (Docker)
 
 Host na scenie (rack / serwer): **Docker Compose** + volume `data/`.

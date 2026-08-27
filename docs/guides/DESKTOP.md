@@ -1,3 +1,7 @@
+[Strona główna](../../README.md) > [guides](README.md) > [DESKTOP](DESKTOP.md)
+
+---
+
 # StageSync — aplikacja desktop
 
 Okno desktopowe (Admin / Timeline / Client) z wbudowanym lokalnym hostem albo połączeniem z hostem w sieci.

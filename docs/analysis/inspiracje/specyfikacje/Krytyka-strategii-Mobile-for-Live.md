@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [specyfikacje](README.md) > [Krytyka-strategii-Mobile-for-Live](Krytyka-strategii-Mobile-for-Live.md)
+
+---
+
 > From: https://gemini.google.com/app/7e261ed8bd7b2b5e
 
 Ocena Strategii Mobile StageSync

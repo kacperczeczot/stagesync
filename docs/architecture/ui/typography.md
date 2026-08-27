@@ -1,3 +1,7 @@
+[Strona główna](../../../README.md) > [ui](README.md) > [typography](typography.md)
+
+---
+
 # Typografia (`--ss-text-*` / weight / leading / tracking)
 
 Źródło: [`packages/ui/src/tokens.css`](../../../packages/ui/src/tokens.css).  

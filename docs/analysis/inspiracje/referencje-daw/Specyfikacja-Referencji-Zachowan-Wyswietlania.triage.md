@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [referencje-daw](README.md) > [Specyfikacja-Referencji-Zachowan-Wyswietlania.triage](Specyfikacja-Referencji-Zachowan-Wyswietlania.triage.md)
+
+---
+
 # Triage: Specyfikacja referencji wyświetlania (Client charts)
 
 **Źródło:** [Specyfikacja-Referencji-Zachowan-Wyswietlania.md](./Specyfikacja-Referencji-Zachowan-Wyswietlania.md) (Gemini Deep Search)  

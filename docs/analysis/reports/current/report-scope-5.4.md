@@ -1,3 +1,7 @@
+[Strona główna](../../../../README.md) > [current](README.md) > [report-scope-5.4](report-scope-5.4.md)
+
+---
+
 # Scope 5.4 — Syllables (fundament timed lyrics + Ingest)
 
 **Wersja:** `5.4.x` — **Syllables**  
