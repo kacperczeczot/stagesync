@@ -27,7 +27,7 @@
 
 - **On tree:** role + MIDI mute Spare + manual promote.
 - **Justified skip:** auto-election / HW switchers / P2P.
-- **→ TODO:** residual auto-election w [TODO 5.2+../../../../TODO.md) (MVP manual promote poza TODO).
+- **→ TODO:** residual auto-election w [TODO 5.2+../../../TODO.md) (MVP manual promote poza TODO).
 
 ## Następny krok eng
 

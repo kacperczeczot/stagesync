@@ -12,7 +12,7 @@ Otwarte zadania. Plan etapów: [ROADMAP.md](./ROADMAP.md). Historia: [CHANGELOG.
 ## Must — operator / HW
 
 - [ ] **HW smoke multi-out** na interfejsie ≥ 4 ch (mac/Win) — [DESKTOP.md](./guides/DESKTOP.md); bez claim green
-- [ ] **G1–G10** na instalatorach z GitHub Release (mac/Win HW) — bez claim green; G2 skip; G3 re-verify HW; G7–G9 Docker deferred — [report-beta-gate](./standards/analysis/reports/current/report-beta-gate.md)
+- [ ] **G1–G10** na instalatorach z GitHub Release (mac/Win HW) — bez claim green; G2 skip; G3 re-verify HW; G7–G9 Docker deferred — [report-beta-gate](./analysis/reports/current/report-beta-gate.md)
 
 ## Should / Higiena
 
@@ -56,5 +56,5 @@ Kolejność i kryteria Done: [ROADMAP.md](./ROADMAP.md).
 - [ ] **GUI mobile:** Admin / Client / Timeline pod wąskie viewporty, touch, Android WebView — [MOBILE.md](./guides/MOBILE.md); [ADR 0016](./architecture/adr/0016-android-performer-console.md)
 - [ ] [#674](https://github.com/kacperczeczot/stagesync/issues/674) **Performer + Console:** smoke P-HW/C-HW na tablecie (w tym C-HW3); bez claim HW green
 - [ ] [#692](https://github.com/kacperczeczot/stagesync/issues/692) **Offline-First UI:** delta / CacheStorage per-asset po `ui-manifest`
-- [ ] **Safety Net:** auto-election / lease split-brain — Later ([triage](./standards/analysis/inspiracje/specyfikacje/Safety-Net-dla-StageSync-v5.2.triage.md))
+- [ ] **Safety Net:** auto-election / lease split-brain — Later ([triage](./analysis/inspiracje/specyfikacje/Safety-Net-dla-StageSync-v5.2.triage.md))
 - [ ] **Parity residual (opcjonalne):** Tab (nawigacja zaznaczenia); bare **S** = nożyczki; skala czcionki / autoscroll poza Karaoke; ukrywanie sekcji Formy w roli Client

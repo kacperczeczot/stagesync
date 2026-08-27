@@ -4,7 +4,7 @@
 **Status:** `partial`  
 **Obszar:** Multi-out runtime gate · bus→bus DAG · zakaz atrap · logical HW patch table  
 **Data triage:** 2026-07-26  
-**Companion:** [Specyfikacja-StageSync-dla-miksera-DAW.triage.md](./Specyfikacja-StageSync-dla-miksera-DAW.triage.md) · [Ocena-Decyzji-Produktowych-StageSync-v1.triage.md](./Ocena-Decyzji-Produktowych-StageSync-v1.triage.md) · [ADR 0015../../../../architecture/adr/0015-daw-reference-and-product-decisions.md)
+**Companion:** [Specyfikacja-StageSync-dla-miksera-DAW.triage.md](./Specyfikacja-StageSync-dla-miksera-DAW.triage.md) · [Ocena-Decyzji-Produktowych-StageSync-v1.triage.md](./Ocena-Decyzji-Produktowych-StageSync-v1.triage.md) · [ADR 0015../../../architecture/adr/0015-daw-reference-and-product-decisions.md)
 
 ## Werdykt przydatności
 

@@ -4,7 +4,7 @@
 **Status:** `open`  
 **Obszar:** Tożsamość produktu · Logic-First · Console host · PIN · Sampler · Flex/Takes · menubar  
 **Data triage:** 2026-07-26  
-**Companion:** [ADR 0015../../../../architecture/adr/0015-daw-reference-and-product-decisions.md) · [ADR 0016../../../../architecture/adr/0016-android-performer-console.md) · [Krytyka-strategii-Mobile-for-Live.triage.md](./Krytyka-strategii-Mobile-for-Live.triage.md)
+**Companion:** [ADR 0015../../../architecture/adr/0015-daw-reference-and-product-decisions.md) · [ADR 0016../../../architecture/adr/0016-android-performer-console.md) · [Krytyka-strategii-Mobile-for-Live.triage.md](./Krytyka-strategii-Mobile-for-Live.triage.md)
 
 ## Werdykt przydatności
 

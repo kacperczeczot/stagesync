@@ -101,7 +101,7 @@ W StageSync stosujemy zasadę **bramkowania per warstwa technologiczna** ([`code
 
 | Obszar               | Ścieżka w repozytorium                                                  | Narzędzie weryfikacji                            |    Wymóg Minimalny (CI Gate)    |                Wymóg Zalecany                 |
 | :------------------- | :---------------------------------------------------------------------- | :----------------------------------------------- | :-----------------------------: | :-------------------------------------------: |
-| **E2E UI Smoke**     | [`apps/web/e2e/`](../../apps/web/e2e/README.md)                         | Playwright Chromium                              | **100% pass** w CI przed mergem |       Rozszerzone flow importu i edycji       |
+| **E2E UI Smoke**     | [`apps/web/e2e/`](../apps/web/e2e/README.md)                         | Playwright Chromium                              | **100% pass** w CI przed mergem |       Rozszerzone flow importu i edycji       |
 | **Smart Tempo DSP**  | `apps/web/scripts/benchmark/`                                           | Referencyjny dataset 4 utworów                   |  **Brak regresji** vs baseline  |  DAW Grade **≥ 80%**, Stage Grade **≥ 95%**   |
 | **Desktop Launcher** | `apps/desktop/`                                                         | Node Test Runner + Cargo check                   | **100% pass** testów launchera  |     Weryfikacja cyklu życia Node sidecar      |
 | **Android Shells**   | `apps/console/`, `apps/performer/`                                      | Gradle JVM unit tests (`./scripts/unit-test.sh`) | Czysty build APK bez ostrzeżeń  |        Testy mostka WebView i intentów        |

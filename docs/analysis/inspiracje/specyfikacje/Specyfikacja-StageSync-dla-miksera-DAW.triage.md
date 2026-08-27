@@ -10,7 +10,7 @@
 
 ## Werdykt przydatności
 
-**Wysoka — rekomendacja modelu (logical HW patch table + unified target) + anti-cycle DFS + ograniczenia `maxChannelCount`.** **Out 3–4 = decyzja produktowa wprowadzić** ([ADR 0015../../../../architecture/adr/0015-daw-reference-and-product-decisions.md)); ten dump = design implementacji, nie claim że multi-out działa. Recenzja FOH: KEEP patch table / DAG / zakaz atrap; REVISE = gate runtime (już `hwOutputUiAllowed`).
+**Wysoka — rekomendacja modelu (logical HW patch table + unified target) + anti-cycle DFS + ograniczenia `maxChannelCount`.** **Out 3–4 = decyzja produktowa wprowadzić** ([ADR 0015../../../architecture/adr/0015-daw-reference-and-product-decisions.md)); ten dump = design implementacji, nie claim że multi-out działa. Recenzja FOH: KEEP patch table / DAG / zakaz atrap; REVISE = gate runtime (już `hwOutputUiAllowed`).
 
 ## Epiki / tematy vs `main` (5.2.0)
 
@@ -27,7 +27,7 @@
 
 - **On tree:** bus→bus + anti-cycle; Zod HW patch table.
 - **Justified skip:** HW UI + ChannelMerger theater bez realnych kanałów urządzenia.
-- **→ TODO:** tylko residual HW WebAudio multi-out (gated) w [TODO 5.2+../../../../TODO.md).
+- **→ TODO:** tylko residual HW WebAudio multi-out (gated) w [TODO 5.2+../../../TODO.md).
 
 ## Następny krok eng
 

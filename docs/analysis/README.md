@@ -1,4 +1,4 @@
-> [📦 StageSync](../../../README.md) / [docs](../../README.md) / [standards](../README.md)
+> [📦 StageSync](../../README.md) / [docs](../../README.md)
 
 # 🔬 analysis/ — Analizy, Raporty i Inspiracje
 
@@ -10,7 +10,7 @@ Trzy typy artefaktów:
 | Inspiracja (zewn. audyt) | [`inspiracje/`](./inspiracje/README.md)   | tak | dump + `*.triage.md` |
 | Notatka robocza          | [`working/`](./working/README.md)         | nie | `working-<temat>.md` |
 
-Historia wydań / zamkniętych cutów → [CHANGELOG.md](../../../CHANGELOG.md). Bez lokalnego archiwum milestones / hygiene.
+Historia wydań / zamkniętych cutów → [CHANGELOG.md](../../CHANGELOG.md). Bez lokalnego archiwum milestones / hygiene.
 
 ## reports/
 
@@ -24,7 +24,7 @@ Finalne dokumenty, do których można linkować z `TODO`, `ROADMAP` i PR. Nowe r
 | **G1–G10 ops residual**  | [report-beta-gate](./reports/current/report-beta-gate.md)                                 |
 | **Dual Engine align**    | [report-adr-dual-engine-vst-align](./reports/current/report-adr-dual-engine-vst-align.md) |
 
-Powiązane: [ui-shell-inventory.md](../../architecture/ui/ui-shell-inventory.md), [ROADMAP.md](../../ROADMAP.md), [TODO.md](../../TODO.md), [ADR 0011](../../architecture/adr/0011-ui-parity-behavior.md).
+Powiązane: [ui-shell-inventory.md](../architecture/ui/ui-shell-inventory.md), [ROADMAP.md](../ROADMAP.md), [TODO.md](../TODO.md), [ADR 0011](../architecture/adr/0011-ui-parity-behavior.md).
 
 ## inspiracje/
 

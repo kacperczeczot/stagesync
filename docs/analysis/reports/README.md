@@ -1,8 +1,8 @@
-> [📦 StageSync](../../../../README.md) / [docs](../../../README.md) / [standards](../../README.md) / [analysis](../README.md)
+> [📦 StageSync](../../README.md) / [docs](../../README.md) / [analysis](../README.md)
 
 # 📊 reports/ — Kanoniczne Raporty Analityczne
 
-Kanoniczne raporty analityczne commitowane do repo. Historia wydań → [CHANGELOG.md](../../../../CHANGELOG.md).
+Kanoniczne raporty analityczne commitowane do repo. Historia wydań → [CHANGELOG.md](../../CHANGELOG.md).
 
 ## Konwencja
 

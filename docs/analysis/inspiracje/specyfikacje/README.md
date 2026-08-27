@@ -1,4 +1,4 @@
-> [📦 StageSync](../../../../../README.md) / [docs](../../../../README.md) / [standards](../../../README.md) / [analysis](../../README.md) / [inspiracje](../README.md)
+> [📦 StageSync](../../../README.md) / [docs](../../README.md) / [analysis](../../README.md) / [inspiracje](../README.md)
 
 # 📋 specyfikacje/ — Specyfikacje i Hipotezy Produktowe
 

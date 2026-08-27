@@ -1,9 +1,9 @@
-> [📦 StageSync](../../../../README.md) / [docs](../../../README.md) / [standards](../../README.md) / [analysis](../README.md)
+> [📦 StageSync](../../README.md) / [docs](../../README.md) / [analysis](../README.md)
 
 # 💡 inspiracje/ — Zewnętrzne Audyty i Hipotezy
 
 Zewnętrzne / eksperymentalne audyty i notatki — **hipotezy**, nie SSOT produktu.
-Polityka: trzymaj tylko materiał wpływający na otwartą / przyszłą pracę. Historia wydań → [CHANGELOG.md](../../../../CHANGELOG.md).
+Polityka: trzymaj tylko materiał wpływający na otwartą / przyszłą pracę. Historia wydań → [CHANGELOG.md](../../CHANGELOG.md).
 
 | Typ           | Plik                   | Git | Rola                                                 |
 | ------------- | ---------------------- | --- | ---------------------------------------------------- |
@@ -34,7 +34,7 @@ Jedno pole w triage: `**Status:** \`…\`` — **wyłącznie** token z tabeli (b
 ## Zasady
 
 1. **Nie** linkuj inspiracji z CHANGELOG / claimów „Done”.
-2. Do [`TODO.md`../../../../TODO.md) / issue tylko hipotezy ze stanem **`confirmed`**.
+2. Do [`TODO.md`../../../TODO.md) / issue tylko hipotezy ze stanem **`confirmed`**.
 3. Workflow: dump → triage → weryfikacja → opcjonalnie `reports/current/report-<temat>.md`.
 4. Nazwy plików: ASCII. Ocena w `*.triage.md`, nie w dumpie.
 

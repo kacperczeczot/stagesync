@@ -7,7 +7,7 @@
 
 ## Werdykt przydatności
 
-**Wysoka wartość historyczna / provenance — nie backlog.** Dump zasilił [ADR 0007../../../../architecture/adr/0007-snap-grid.md) / [ADR 0008../../../../architecture/adr/0008-timeline-clip-editing.md). Nie kopiować chrome Logic. Relative snap / Shuffle = odroczone; Flex / Takes / recording — **nie** permanent OUT ([ADR 0015../../../../architecture/adr/0015-daw-reference-and-product-decisions.md)). Logic = pierwsza referencja przy wątpliwości UX.
+**Wysoka wartość historyczna / provenance — nie backlog.** Dump zasilił [ADR 0007../../../architecture/adr/0007-snap-grid.md) / [ADR 0008../../../architecture/adr/0008-timeline-clip-editing.md). Nie kopiować chrome Logic. Relative snap / Shuffle = odroczone; Flex / Takes / recording — **nie** permanent OUT ([ADR 0015../../../architecture/adr/0015-daw-reference-and-product-decisions.md)). Logic = pierwsza referencja przy wątpliwości UX.
 
 ## Rozstrzygnięte
 

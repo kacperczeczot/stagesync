@@ -78,16 +78,16 @@ Alternatywa pinu Node: [fnm](https://github.com/Schniz/fnm) + `.nvmrc`.
   tylko na push do `main` / `workflow_dispatch`; job `playwright-smoke` na push
   do `main` albo PR gdy zmienia się `apps/web/src/**` (docs-only → skip);
   Rust/Tauri wyłącznie w [`.github/workflows/release.yml`](./workflows/release.yml)
-  (tagi `v*`). Coverage: flagi Codecov per warstwa — [docs/standards/STANDARDS.md](../docs/standards/STANDARDS.md).
+  (tagi `v*`). Coverage: flagi Codecov per warstwa — [docs/STANDARDS.md](../docs/STANDARDS.md).
 - Wkładki (PR / patch) przyjmujemy na warunkach [LICENSE](../LICENSE) (BSL 1.1).
 
-Higiena listy zadań i parytetu: [docs/TODO.md](../docs/TODO.md), [`.cursor/rules/todo-hygiene.mdc`](../.cursor/rules/todo-hygiene.mdc).
+Higiena listy zadań i parytetu: [docs/TODO.md](../docs/TODO.md), [`.agents/rules/project.md`](../.agents/rules/project.md).
 
 ## Cursor (agent tooling)
 
-- **Rules** (zawsze): [`.cursor/rules/`](../.cursor/rules/) — konstytucja, CHANGELOG, parity, TODO.
-- **Commands / skills** (jawne): `/night-audit`, `/triage-next`, `/turn-red` → [`.cursor/skills/`](../.cursor/skills/) (procedury sesji; nie dublują Rules).
-- **Subagent:** `night-auditor` ([`.cursor/agents/night-auditor.md`](../.cursor/agents/night-auditor.md)) — długie sesje night/evening hygiene z handoffem.
+- **Rules** (zawsze): [`.agents/rules/`](../.agents/rules/) — konstytucja, CHANGELOG, parity, TODO.
+- **Commands / skills** (jawne): `/night-audit`, `/triage-next`, `/turn-red` → [`.cursor/skills/`](../.agents/rules/) (procedury sesji; nie dublują Rules).
+- **Subagent:** `night-auditor` ([`.cursor/agents/night-auditor.md`](../.agents/rules/night-auditor.md)) — długie sesje night/evening hygiene z handoffem.
 
 ### Branch protection (właściciel repo)
 
@@ -121,13 +121,13 @@ zgodnie z konwencją repo (Settings → Labels).
 - Merge commits GitHuba (`Merge pull request #…`) nie przechodzą przez lokalny
   hook — to akceptowany wyjątek; treść PR / squash title powinna być CC
 
-Linki do SemVer, Keep a Changelog, EditorConfig, ADR itd.: [docs/standards/STANDARDS.md](../docs/standards/STANDARDS.md).  
+Linki do SemVer, Keep a Changelog, EditorConfig, ADR itd.: [docs/STANDARDS.md](../docs/STANDARDS.md).  
 Mapa „gdzie co żyje”: [docs/architecture/ARCHITECTURE.md](../docs/architecture/ARCHITECTURE.md).  
 Roadmapa (kierunek): [docs/ROADMAP.md](../docs/ROADMAP.md). Design UI: [docs/architecture/ui/](../docs/architecture/ui/README.md).
 
 ### CHANGELOG.md (Keep a Changelog) + TODO
 
-Pełne reguły: [`.cursor/rules/changelog.mdc`](../.cursor/rules/changelog.mdc), [`.cursor/rules/todo-hygiene.mdc`](../.cursor/rules/todo-hygiene.mdc).
+Pełne reguły: [`.agents/rules/project.md`](../.agents/rules/project.md), [`.agents/rules/project.md`](../.agents/rules/project.md).
 
 **Złota zasada:** wpis tylko gdy użytkownik/realizator zauważyłby różnicę w działaniu aplikacji. Domknięcie TODO ≠ automatyczny wpis.
 
@@ -147,7 +147,7 @@ Polityka parytetu v4 → `5.0.0`: [ADR 0011 §1a](../docs/architecture/adr/0011-
 ## Checklista przed release
 
 - [ ] Albo ręcznie, albo: `pnpm cut-release <patch|minor|major> --yes [--push]` ([scripts/release/cut-release.mjs](../scripts/release/cut-release.mjs))
-- [ ] [CHANGELOG.md](../CHANGELOG.md) — wpisy przeniesione z Unreleased / uzupełnione; **bez** sekcji `[Unreleased]` w trakcie cut release (dopiero po pierwszych zmianach post-release); styl wg [changelog.mdc](../.cursor/rules/changelog.mdc)
+- [ ] [CHANGELOG.md](../CHANGELOG.md) — wpisy przeniesione z Unreleased / uzupełnione; **bez** sekcji `[Unreleased]` w trakcie cut release (dopiero po pierwszych zmianach post-release); styl wg [project.md](../.agents/rules/project.md)
 - [ ] [README.md](../README.md) — uruchomienie i wersja nadal zgodne z rzeczywistością
 - [ ] Design System — brak ad-hoc HEX / drugiego Buttona; tokeny `--ss-*` ([docs/architecture/ui/](../docs/architecture/ui/README.md))
 - [ ] Brak orphan `TODO` / `FIXME` / `TEMP` w kodzie bez pozycji w [docs/TODO.md](../docs/TODO.md)

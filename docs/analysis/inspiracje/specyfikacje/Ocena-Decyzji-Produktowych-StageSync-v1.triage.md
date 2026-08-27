@@ -4,7 +4,7 @@
 **Status:** `open`  
 **Obszar:** Multi-out · bus→bus · True Balance · dual-mono · solo · Click · Mixer Zoom · zakaz stubów  
 **Data triage:** 2026-07-26  
-**Companion:** [Recenzja-Decyzji-Live-FOH-Audio.triage.md](./Recenzja-Decyzji-Live-FOH-Audio.triage.md) · [Specyfikacja-StageSync-dla-miksera-DAW.triage.md](./Specyfikacja-StageSync-dla-miksera-DAW.triage.md) · [ADR 0015../../../../architecture/adr/0015-daw-reference-and-product-decisions.md)
+**Companion:** [Recenzja-Decyzji-Live-FOH-Audio.triage.md](./Recenzja-Decyzji-Live-FOH-Audio.triage.md) · [Specyfikacja-StageSync-dla-miksera-DAW.triage.md](./Specyfikacja-StageSync-dla-miksera-DAW.triage.md) · [ADR 0015../../../architecture/adr/0015-daw-reference-and-product-decisions.md)
 
 ## Provenance
 
