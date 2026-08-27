@@ -1,14 +1,15 @@
-## 📝 Opis zmian
+## Kontekst i Cel Zmiany
+<!-- Opis zmian w architekturze, DAW, protokole transportu lub powłokach UI -->
 
-<!-- Zwięzłe podsumowanie: co dokładnie zostało zmienione i w jakim celu? -->
+## Podsumowanie Zmian
+- 
 
-## 🔗 Powiązane zgłoszenia (Issues)
+## Plan Weryfikacji i Testy
+- [ ] Weryfikacja typów: `pnpm run check-types`
+- [ ] Testy jednostkowe i integracyjne: `pnpm run test`
+- [ ] W przypadku zmian w Smart Tempo DSP: uruchomiono benchmark referencyjny (`pnpm run benchmark:record`)
 
-- Fixes #
-
-## 📋 Checklista jakościowa (Definition of Done)
-
-- [ ] Kod kompiluje się bez błędów (`pnpm build` / `cargo check`)
-- [ ] Testy jednostkowe i e2e przechodzą na zielono (`pnpm test`)
-- [ ] Linter i formatowanie bez uwag (`pnpm lint`)
-- [ ] Zaktualizowano dokumentację (`docs/`, [`TODO.md`](../docs/TODO.md) lub [`CHANGELOG.md`](../CHANGELOG.md) – jeśli dotyczy)
+## Zgodność ze Standardami DevEx
+- [ ] Zmiany przestrzegają zasad architektury Monorepo (`devex-standards`)
+- [ ] Zastosowano konwencję Conventional Commits
+- [ ] Brak zakazanych formatów (inline-styles, Tailwind CSS, atrapy UI)

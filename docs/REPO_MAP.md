@@ -6,19 +6,19 @@
 
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
-* **Liczba wszystkich plików:** 1634
-* **Liczba katalogów:** 255
-* **Data aktualizacji:** 2026-08-15T08:28:34.967Z
+* **Liczba wszystkich plików:** 1616
+* **Liczba katalogów:** 248
+* **Data aktualizacji:** 2026-08-27T14:35:19.675Z
 
 ### Kategorie
 
 | Kategoria | Liczba plików |
 | :--- | ---: |
 | Kod | 1213 |
-| Docs | 151 |
+| Docs | 137 |
 | Config | 119 |
 | Assety | 120 |
-| Inne | 31 |
+| Inne | 27 |
 
 ### Top rozszerzenia
 
@@ -26,15 +26,15 @@
 | :--- | ---: |
 | `.ts` | 743 |
 | `.tsx` | 284 |
-| `.md` | 129 |
+| `.md` | 124 |
 | `.png` | 94 |
 | `.kt` | 71 |
 | `.css` | 52 |
 | `.json` | 37 |
 | `.xml` | 35 |
 | `.mjs` | 32 |
-| `brak rozszerzenia` | 24 |
-| _(pozostałe)_ | 133 |
+| `brak rozszerzenia` | 20 |
+| _(pozostałe)_ | 124 |
 
 ---
 
@@ -71,7 +71,7 @@
   - **library/** (3) — Główny plik bazy utworów (library.json) oraz szablony projektów
   - **logs/** (1) — Buffer logów systemowych, diagnostyka i ślady wykonania
   - **projects/** (1) — Katalog projektów użytkownika z lokalnymi zasobami assets/
-- **docs/** (94) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
+- **docs/** (95) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
   - **architecture/** (32) — Architektura systemu, SSOT, ADR, specyfikacje API i Design System
     - **adr/** (20) — Architectural Decision Records (Decyzje architektoniczne)
     - **api/** (1) — Specyfikacje interfejsów programistycznych REST i WebSocket
@@ -101,12 +101,8 @@
 
 ## ⚙️ Konfiguracja i Środowisko (Katalogi Narzędziowe)
 
-- **.agents/** (1) — Instrukcje i kontekst operacyjny dla autonomicznych agentów AI
-- **.cursor/** (16) — Konfiguracja środowiska Cursor (agenci, komendy, reguły MDC, umiejętności)
-  - **agents/** (1) — Definicje agentów Cursor (np. night-auditor)
-  - **commands/** (3) — Komendy slash / prompt templates
-  - **rules/** (9) — Reguły MDC (konstytucja, changelog, parity, layout)
-  - **skills/** (3) — Umiejętności agentów (night-audit, triage-verify)
+- **.agents/** (2) — Instrukcje i kontekst operacyjny dla autonomicznych agentów AI
+  - **rules/** (2)
 - **.github/** (15) — Szablony zgłoszeń GitHub, wytyczne społeczności oraz workflows CI/CD
   - **ISSUE_TEMPLATE/** (3) — Szablony issue
   - **codeql/** (1) — Konfiguracja analizy statycznej CodeQL
@@ -119,10 +115,6 @@
 ## 📎 Pliki w root monorepo
 
 ### Repozytorium & Tooling
-- [`.clineignore`](../.clineignore)
-- [`.clinerules`](../.clinerules)
-- [`.cursorignore`](../.cursorignore)
-- [`.cursorindexingignore`](../.cursorindexingignore)
 - [`.dockerignore`](../.dockerignore)
 - [`.editorconfig`](../.editorconfig)
 - [`.gitignore`](../.gitignore)
@@ -162,31 +154,9 @@
 ```text
 stagesync/
 ├── .agents/
-│   └── AGENTS.md
-├── .cursor/
-│   ├── agents/
-│   │   └── night-auditor.md
-│   ├── commands/
-│   │   ├── night-audit.md
-│   │   ├── triage-next.md
-│   │   └── turn-red.md
-│   ├── rules/
-│   │   ├── changelog.mdc
-│   │   ├── constitution.mdc
-│   │   ├── docs-analysis-naming.mdc
-│   │   ├── lib-structure.mdc
-│   │   ├── root-layout.mdc
-│   │   ├── todo-hygiene.mdc
-│   │   ├── ui-density.mdc
-│   │   ├── ui-parity.mdc
-│   │   └── versioning.mdc
-│   └── skills/
-│       ├── night-audit/
-│       │   └── SKILL.md
-│       ├── triage-verify/
-│       │   └── SKILL.md
-│       └── turn-red/
-│           └── SKILL.md
+│   └── rules/
+│       ├── project.md
+│       └── tempo.md
 ├── .github/
 │   ├── codeql/
 │   │   └── codeql-config.yml
@@ -692,6 +662,7 @@ stagesync/
 │   │   └── TESTING.md
 │   ├── README.md
 │   ├── ROADMAP.md
+│   ├── STANDARDS.md
 │   └── TODO.md
 ├── packages/
 │   ├── android-keystore/
@@ -931,10 +902,6 @@ stagesync/
 │   │   └── setup.sh
 │   ├── README.md
 │   └── tsconfig.json
-├── .clineignore
-├── .clinerules
-├── .cursorignore
-├── .cursorindexingignore
 ├── .dockerignore
 ├── .editorconfig
 ├── .env.example

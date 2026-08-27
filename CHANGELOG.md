@@ -5,6 +5,15 @@ Wszystkie istotne zmiany w StageSync są dokumentowane w tym pliku.
 Format oparty na [Keep a Changelog](https://keepachangelog.com/pl/1.1.0/),
 projekt stosuje [Semantic Versioning](https://semver.org/lang/pl/).
 
+## [Unreleased]
+
+### Zmieniono
+
+#### 🛠️ DevEx & AI Tooling
+
+- **Modernizacja standardów AI:** Usunięto przestarzałe formaty `.cursor/` i `.clinerules` na rzecz natywnych reguł Antigravity `.agents/rules/` (`project.md`, `tempo.md`).
+- **Standardy DevEx:** Wdrożono certyfikat `docs/STANDARDS.md` powiązany z centralną Konstytucją `devex-standards`.
+
 ## [5.4.12](https://github.com/kacperczeczot/stagesync/compare/v5.4.11...v5.4.12) - 2026-08-15
 
 ### Dodano
