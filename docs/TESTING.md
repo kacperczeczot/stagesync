@@ -1,6 +1,8 @@
-> [📦 StageSync](../../README.md) / [docs](../README.md)
+[Strona główna](../README.md) > [Dokumentacja](README.md) > [TESTING.md](TESTING.md)
 
-# 🧪 docs/standards/TESTING.md — Standardy Testowania i Pokrycia Kodu
+---
+
+# Standardy Testowania i Pokrycia Kodu (TESTING.md)
 
 Dokument określa kanoniczne standardy jakości, architekturę testów oraz wymagane progi pokrycia kodu w monorepo **StageSync**.
 
@@ -8,7 +10,7 @@ Dokument określa kanoniczne standardy jakości, architekturę testów oraz wyma
 
 ## 🏛️ Filozofia i Architektura Testów
 
-W StageSync stosujemy zasadę **bramkowania per warstwa technologiczna** ([`codecov.yml`](../../codecov.yml)). Nie gonimy za ogólnym, uśrednionym procentem dla całego repozytorium — każda warstwa posiada specyficzny profil testowalności:
+W StageSync stosujemy zasadę **bramkowania per warstwa technologiczna** ([`codecov.yml`](../codecov.yml)). Nie gonimy za ogólnym, uśrednionym procentem dla całego repozytorium — każda warstwa posiada specyficzny profil testowalności:
 
 1. **Czysta Domena (`@stagesync/shared`)**: Brak DOM, sieci i filesystemu. Logika czysto funkcyjna — testowalność bliska 100%.
 2. **Serwer & Czas SSOT (`@stagesync/server`)**: Silnik transportu `TransportEngine`, autorytatywny zegar, transakcyjny storage projektów i REST API — rygorystyczne testy integracyjne i jednostkowe.
