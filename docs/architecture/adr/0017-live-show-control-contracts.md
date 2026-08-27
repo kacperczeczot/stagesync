@@ -49,4 +49,4 @@ Sesja PO (dumpy `docs/analysis/inspiracje/specyfikacje/`, konfrontacja z ADR) do
 ## Powiązane
 
 - [ADR 0002](./0002-timebase-ssot.md), [0008](./0008-timeline-clip-editing.md), [0015](./0015-daw-reference-and-product-decisions.md), [0016](./0016-android-performer-console.md), [0018](./0018-future-audio-architecture.md), [0019](./0019-dual-engine-studio-live.md)
-- Inspiracje / triage: [`docs/analysis/inspiracje/specyfikacje/`](../../standards/analysis/inspiracje/specyfikacje/README.md)
+- Inspiracje / triage: [`docs/analysis/inspiracje/specyfikacje/`](../../analysis/inspiracje/specyfikacje/README.md)

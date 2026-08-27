@@ -3,7 +3,7 @@
 # 💡 inspiracje/ — Zewnętrzne Audyty i Hipotezy
 
 Zewnętrzne / eksperymentalne audyty i notatki — **hipotezy**, nie SSOT produktu.
-Polityka: trzymaj tylko materiał wpływający na otwartą / przyszłą pracę. Historia wydań → [CHANGELOG.md](../../CHANGELOG.md).
+Polityka: trzymaj tylko materiał wpływający na otwartą / przyszłą pracę. Historia wydań → [CHANGELOG.md](../../../CHANGELOG.md).
 
 | Typ           | Plik                   | Git | Rola                                                 |
 | ------------- | ---------------------- | --- | ---------------------------------------------------- |

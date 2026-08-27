@@ -79,7 +79,7 @@ Stan obecny (od **5.3.0**): Mixer Master\|Bus + bus→bus DAG; multi-out HW Out 
 | **6.0** | **Live Suite** (+ Dual Engine) | Filary 1–4; STEM / mute lead; recording + proste edit; MIDI Patch Matrix; standalone VSTi; Plugin Host (Studio) + Freeze | In-process VST/AU/CLAP; aktywny Plugin Host w Live; wbudowane synthy WebAudio (→ 6.x+); Flex / Take Folders jako must 6.0 |
 | **6.1** | **Karaoke & Jukebox**          | `/karaoke`, `/request`, Gig/Jukebox — [#824](https://github.com/kacperczeczot/stagesync/issues/824)                      | Cloud karaoke; zależność od 5.4–5.5 + 6.0 STEM/pitch                                                                      |
 
-Szczegóły checklisty: [ROADMAP](../../ROADMAP.md), [TODO](../../TODO.md), [report-scope-5.4](../../standards/analysis/reports/current/report-scope-5.4.md). Implementacja filarów 6.0 = dopiero po osobnym scope report + akceptacji PO przed kodem.
+Szczegóły checklisty: [ROADMAP](../../ROADMAP.md), [TODO](../../TODO.md), [report-scope-5.4](../../analysis/reports/current/report-scope-5.4.md). Implementacja filarów 6.0 = dopiero po osobnym scope report + akceptacji PO przed kodem.
 
 ### 5. Decyzje PO zamknięte
 
@@ -134,7 +134,7 @@ Szczegóły checklisty: [ROADMAP](../../ROADMAP.md), [TODO](../../TODO.md), [rep
 1. Automation: tylko parametry Mixer/DSP, czy też clip gain / Forma?
 2. Track Pitch (5.5): globalny vs per-track; szczegóły sync Chord AST + OSMD
 3. Plugin Host IPC / packaging vs thin-shell [ADR 0010](./0010-desktop-shell-tauri.md) — kierunek sidecar **jest** decyzją; szczegóły implementacji = scope 6.0 (+ residual Dual Engine w [ADR 0019](./0019-dual-engine-studio-live.md) §7)
-4. Hot-unplug wejść / wyjść i fail-safe (FOH): mute vs fold-to-Master — kontynuacja Q z [Recenzja Live FOH](../../standards/analysis/inspiracje/specyfikacje/Recenzja-Decyzji-Live-FOH-Audio.triage.md)
+4. Hot-unplug wejść / wyjść i fail-safe (FOH): mute vs fold-to-Master — kontynuacja Q z [Recenzja Live FOH](../../analysis/inspiracje/specyfikacje/Recenzja-Decyzji-Live-FOH-Audio.triage.md)
 5. STEM / mute lead w 6.0: kontrakt Mixer vs osobne ścieżki assetów — needed dla Karaoke **6.1** ([#824](https://github.com/kacperczeczot/stagesync/issues/824))
 6. Desktop low-latency WebAudio (preferencje bufora) vs natywny tor poza Plugin Host — nadal otwarte dla toru **bez** VST
 
@@ -149,11 +149,11 @@ v4 / parytet 5.0: Host MIDI I/O, clock, Program Change, odtwarzanie audio, Mixer
 - [ADR 0019](./0019-dual-engine-studio-live.md): SSOT trybów Studio/Live i Freeze gate.
 - [ARCHITECTURE](../ARCHITECTURE.md): wskaźnik do tego ADR przy mapie decyzji audio.
 - CHANGELOG: **brak** wpisu za sam ADR / ROADMAP / TODO (changelog.mdc — docs deweloperskie).
-- Inspiracje FOH ([Recenzja-Decyzji-Live-FOH-Audio](../../standards/analysis/inspiracje/specyfikacje/Recenzja-Decyzji-Live-FOH-Audio.triage.md)): zgodne — multi-out tylko przy `maxChannelCount`, DAG, zakaz atrap; ten ADR **nie** cofa tych bramek.
+- Inspiracje FOH ([Recenzja-Decyzji-Live-FOH-Audio](../../analysis/inspiracje/specyfikacje/Recenzja-Decyzji-Live-FOH-Audio.triage.md)): zgodne — multi-out tylko przy `maxChannelCount`, DAG, zakaz atrap; ten ADR **nie** cofa tych bramek.
 
 ## Powiązane
 
 - [ADR 0002](./0002-timebase-ssot.md), [0005](./0005-domain-axioms.md), [0008](./0008-timeline-clip-editing.md), [0010](./0010-desktop-shell-tauri.md), [0011](./0011-ui-parity-behavior.md), [0015](./0015-daw-reference-and-product-decisions.md), [0017](./0017-live-show-control-contracts.md), [0019](./0019-dual-engine-studio-live.md)
 - Spec źródłowy (sesja PO / plan): Future Architecture Spec 6.0 (ten ADR = kanon audio w repo)
-- Triage FOH / mixer: [`docs/analysis/inspiracje/specyfikacje/Recenzja-Decyzji-Live-FOH-Audio.triage.md`](../../standards/analysis/inspiracje/specyfikacje/Recenzja-Decyzji-Live-FOH-Audio.triage.md), `…/Specyfikacja-StageSync-dla-miksera-DAW.triage.md`
-- Align report: [report-adr-dual-engine-vst-align.md](../../standards/analysis/reports/current/report-adr-dual-engine-vst-align.md)
+- Triage FOH / mixer: [`docs/analysis/inspiracje/specyfikacje/Recenzja-Decyzji-Live-FOH-Audio.triage.md`](../../analysis/inspiracje/specyfikacje/Recenzja-Decyzji-Live-FOH-Audio.triage.md), `…/Specyfikacja-StageSync-dla-miksera-DAW.triage.md`
+- Align report: [report-adr-dual-engine-vst-align.md](../../analysis/reports/current/report-adr-dual-engine-vst-align.md)

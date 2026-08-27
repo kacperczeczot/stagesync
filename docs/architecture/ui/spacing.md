@@ -1,7 +1,7 @@
 # Spacing (`--ss-space-*`)
 
 Źródło: [`packages/ui/src/tokens.css`](../../../packages/ui/src/tokens.css).  
-Reguła egzekucji: [`.cursor/rules/ui-density.mdc`](../../../.cursor/rules/ui-density.mdc).
+Reguła egzekucji: [`.cursor/rules/ui-density.mdc`](../../../.agents/rules/project.md).
 
 **Zakaz** ad-hoc `px` / ułamkowych `rem` dla margin / padding / gap / wymiarów
 kontrolek — tylko siatka poniżej.

@@ -64,4 +64,4 @@ nie jest fundamentem domeny — jest wymienną warstwą dostarczania.
 
 ## Powiązane
 
-- Egzekucja: [konstytucja](../../../.cursor/rules/constitution.mdc) · [ARCHITECTURE.md](../ARCHITECTURE.md).
+- Egzekucja: [konstytucja](../../../.agents/rules/project.md) · [ARCHITECTURE.md](../ARCHITECTURE.md).

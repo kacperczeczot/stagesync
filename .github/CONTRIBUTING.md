@@ -87,7 +87,7 @@ Higiena listy zadań i parytetu: [docs/TODO.md](../docs/TODO.md), [`.agents/rule
 
 - **Rules** (zawsze): [`.agents/rules/`](../.agents/rules/) — konstytucja, CHANGELOG, parity, TODO.
 - **Commands / skills** (jawne): `/night-audit`, `/triage-next`, `/turn-red` → [`.cursor/skills/`](../.agents/rules/) (procedury sesji; nie dublują Rules).
-- **Subagent:** `night-auditor` ([`.cursor/agents/night-auditor.md`](../.agents/rules/night-auditor.md)) — długie sesje night/evening hygiene z handoffem.
+- **Subagent:** `night-auditor` ([`.cursor/agents/night-auditor.md`](../.agents/rules/project.md)) — długie sesje night/evening hygiene z handoffem.
 
 ### Branch protection (właściciel repo)
 

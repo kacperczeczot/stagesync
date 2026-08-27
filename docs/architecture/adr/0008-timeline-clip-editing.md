@@ -162,7 +162,7 @@ Nadal poza zakresem implementacyjnym (nie backlog produktowy „nigdy”):
 - Shared: helpery kolizji no-overlap (Forma + generyczne dla lane) — czyste funkcje, testy Vitest.
 - [ui-shell-inventory.md](../ui/ui-shell-inventory.md): Smart Tool, Gain Tool, Mute Tool, fader ścieżki.
 - Logic Pro (inspiracja, **nie** SSOT):
-  [Logika-Edycji-Klipow-Logic-Pro.md](../../standards/analysis/inspiracje/referencje-daw/Logika-Edycji-Klipow-Logic-Pro.md)
+  [Logika-Edycji-Klipow-Logic-Pro.md](../../analysis/inspiracje/referencje-daw/Logika-Edycji-Klipow-Logic-Pro.md)
   — referencja algorytmiczna; nie checklista implementacji / TODO.
 
 ## Powiązane ADR

@@ -14,9 +14,9 @@
 | [ui-shell-inventory](./ui/ui-shell-inventory.md)                                                           | Checklista wtórna kontrolek shelli (po geście)                       | Aktywny backlog (→ TODO); claim Done bez PO smoke |
 | [api/README.md](./api/README.md)                                                                           | Kontrakt REST / WS (krótko)                                          | OpenAPI / pełne TSDoc                             |
 | [INSTALL](../guides/INSTALL.md) / [DESKTOP](../guides/DESKTOP.md) / [MOBILE](../guides/MOBILE.md)          | Podręczniki operatorskie                                             | Implementacja w `apps/*`                          |
-| [analysis/README.md](../standards/analysis/README.md)                                                      | `reports/{current,milestones,hygiene}/` + `inspiracje/` + `working/` | Scratch / inspiracje jako SSOT lub claim Done     |
-| [STANDARDS](../standards/STANDARDS.md)                                                                     | Linki do speców zewnętrznych                                         | Treść tych speców                                 |
-| [TESTING](../standards/TESTING.md)                                                                         | Architektura testów, bramki CI i progi pokrycia                      | Wyniki pojedynczych przebiegów CI                 |
+| [analysis/README.md](../analysis/README.md)                                                      | `reports/{current,milestones,hygiene}/` + `inspiracje/` + `working/` | Scratch / inspiracje jako SSOT lub claim Done     |
+| [STANDARDS](../STANDARDS.md)                                                                     | Linki do speców zewnętrznych                                         | Treść tych speców                                 |
+| [TESTING](../TESTING.md)                                                                         | Architektura testów, bramki CI i progi pokrycia                      | Wyniki pojedynczych przebiegów CI                 |
 | [CONTRIBUTING](../../.github/CONTRIBUTING.md)                                                              | Język docs + workflow commitów                                       | SemVer / release (→ versioning)                   |
 | [SECURITY](../../.github/SECURITY.md)                                                                      | Zgłoszenia bezpieczeństwa                                            | Treść ADR / backlog                               |
 | [adr/README.md](./adr/README.md)                                                                           | Decyzje z kontekstem i konsekwencjami (indeks)                       | Checklisty zadań                                  |
@@ -36,7 +36,7 @@
 | `packages/ui`     | React                       | Design system (`Button`, `--ss-*`)                                                                                   |
 | `data/`           | JSON / katalogi             | Biblioteka, `projects/<id>/`, logi, `downloads/` (APK sideload)                                                      |
 
-Szczegóły granic i zakazów: [konstytucja](../../.cursor/rules/constitution.mdc).
+Szczegóły granic i zakazów: [konstytucja](../../.agents/rules/project.md).
 
 ### 🔍 Quick Finder — Gdzie co znaleźć w kodzie
 

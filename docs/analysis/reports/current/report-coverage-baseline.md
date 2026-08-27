@@ -1,7 +1,7 @@
 # Raport: Bazowe Pokrycie Testami (Coverage Baseline)
 
 **Data:** 2026-08-12  
-**Powiązane:** [STANDARDS.md](../../../STANDARDS.md) · [TESTING.md](../../../TESTING.md) · [codecov.yml](../../../../../codecov.yml) · [.clinerules](../../../../../.clinerules)
+**Powiązane:** [STANDARDS.md](../../../STANDARDS.md) · [TESTING.md](../../../TESTING.md) · [codecov.yml](../../../../codecov.yml) · [.clinerules](../../../../.agents/rules/project.md)
 
 ---
 

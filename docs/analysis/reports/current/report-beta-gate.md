@@ -1,7 +1,7 @@
 # Beta gate — bramka przed / po `5.0.0-beta.*`
 
 **Data:** 2026-07-21  
-**Podstawa:** [ADR 0004](../../../architecture/adr/0004-updates-docker.md) · [ADR 0010](../../../architecture/adr/0010-desktop-shell-tauri.md) · historia cutów β1/β2 → [CHANGELOG.md](../../../CHANGELOG.md)
+**Podstawa:** [ADR 0004](../../../architecture/adr/0004-updates-docker.md) · [ADR 0010](../../../architecture/adr/0010-desktop-shell-tauri.md) · historia cutów β1/β2 → [CHANGELOG.md](../../../../CHANGELOG.md)
 
 ## Decyzja release
 
@@ -16,7 +16,7 @@ Tag = closeout hosta na jawną prośbę operatora:
 
 ### `v5.0.0-beta.1.1` (2026-07-21) — docs cut
 
-Uczciwy cut docs: residual β1 (**menu Faza B**, **G1–G10**) oraz **menu Faza C** = **must β2** przed tagiem `v5.0.0-beta.2` — nie soft carry. Scope β2: historia w [CHANGELOG.md](../../../CHANGELOG.md).
+Uczciwy cut docs: residual β1 (**menu Faza B**, **G1–G10**) oraz **menu Faza C** = **must β2** przed tagiem `v5.0.0-beta.2` — nie soft carry. Scope β2: historia w [CHANGELOG.md](../../../../CHANGELOG.md).
 
 ### `v5.0.0-beta.2` (2026-07-21) — feature cut
 
@@ -93,15 +93,15 @@ Wykonane (2026-07-21):
    - konflikt portu `4000` daje czytelny komunikat → **G5**
 3. **G6 (desktop update):** zainstaluj **β2**, potem Admin → Aktualizuj aplikację → **5.0.0** (`latest.json` z Release; darwin+windows).
 4. Docker secondary:
-   - [`compose.prod.yml`](../../../../../compose.prod.yml) z `STAGESYNC_VERSION=…` → `/api/health` → **G7**
+   - [`compose.prod.yml`](../../../../compose.prod.yml) z `STAGESYNC_VERSION=…` → `/api/health` → **G7**
    - host update: starszy obraz → Admin → Aktualizuj host → `data/` bez zmian → **G8**
    - rollback do poprzedniego tagu → **G9**
 5. Przeczytaj INSTALL/DESKTOP — flow Faza A–D + updates + Windows EISDIR. → **G10**
 
 ## Ograniczenia beta
 
-- Instalatory **unsigned** (brak notaryzacji Apple / cert EV Windows) — obejście w [DESKTOP.md](../../../../guides/DESKTOP.md).
-- GHCR **prywatny** — operator potrzebuje PAT `read:packages` — instrukcja w [INSTALL.md](../../../../guides/INSTALL.md).
+- Instalatory **unsigned** (brak notaryzacji Apple / cert EV Windows) — obejście w [DESKTOP.md](../../../../docs/guides/DESKTOP.md).
+- GHCR **prywatny** — operator potrzebuje PAT `read:packages` — instrukcja w [INSTALL.md](../../../../docs/guides/INSTALL.md).
 - Windows G2/G6: wymaga ręcznej maszyny Win (CI nie weryfikuje instalacji/relauch w środowisku operatora).
 - Desktop update (G6): wymaga tag push z `latest.json` (pełny publish Release).
 - Jeśli Actions `github-release` padnie na limicie wydatków GitHub — dokończ publish ręcznie przez `gh` (jak przy α13).

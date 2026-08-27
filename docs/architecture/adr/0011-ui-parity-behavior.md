@@ -56,8 +56,8 @@ Decyzja produktowa (PO):
 ### 2. Zakaz clone chrome / gotowców UI
 
 - Chrome (toolbar, header, status) tylko przez **`@stagesync/ui`** + CSS Modules +
-  `--ss-*` ([konstytucja](../../../.cursor/rules/constitution.mdc),
-  [ui-density](../../../.cursor/rules/ui-density.mdc)).
+  `--ss-*` ([konstytucja](../../../.agents/rules/project.md),
+  [ui-density](../../../.agents/rules/project.md)).
 - **Zakaz:** importowanie „gotowego” paska z v4, emoji-chrome, ad-hoc HEX,
   Tailwind, inline style (poza dynamicznym %).
 - Ikony (np. Lucide) OK jako **glyph** w `Button` / `ShellIconButton` — **nie**
@@ -123,12 +123,12 @@ być regresją względem v4; nie cofaj automatycznie w tej samej sesji bez proś
 
 Bez zmian względem polityki: **zakaz** `5.0.0-beta.*` do green CI **i** green
 PO smoke wg tej decyzji. Historia bramek α8/P8 → [CHANGELOG.md](../../../CHANGELOG.md).
-Ops residual G1–G10: [report-beta-gate](../../standards/analysis/reports/current/report-beta-gate.md).
+Ops residual G1–G10: [report-beta-gate](../../analysis/reports/current/report-beta-gate.md).
 
 ## Konsekwencje
 
 - [ADR 0003](./0003-ui-direction-booth.md) zaktualizowany: inventarz nie rządzi review.
-- Reguła agenta [`.cursor/rules/ui-parity.mdc`](../../../.cursor/rules/ui-parity.mdc) + konstytucja.
+- Reguła agenta [`.cursor/rules/ui-parity.mdc`](../../../.agents/rules/project.md) + konstytucja.
 - TODO = aktywny etap (**α9** po α8 code freeze): residual PO smoke + Client CL-P0 + migrator — nie „odhacz inventarz”.
 - Kod clone-chrome i atrapy mogą zostać usunięte / przebudowane w kolejnych PR —
   ten ADR ustala **kontrakt**, nie wymusza jednego mega-diffu.

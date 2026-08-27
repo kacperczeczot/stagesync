@@ -19,6 +19,6 @@ Katalog zawiera kanoniczny opis architektury systemu StageSync, zasady autorytet
 
 ## 🔗 Powiązane
 
-- Standardy kodowania i testowania: **[docs/standards/](../standards/README.md)**
+- Standardy kodowania i testowania: **[docs/standards/](../README.md)**
 - Podręczniki operacyjne: **[docs/guides/](../guides/README.md)**
 - Długoterminowa roadmapa: **[docs/ROADMAP.md](../ROADMAP.md)**

@@ -10,7 +10,7 @@
 
 Linia **5.x** = Playback & Show Control bez trybu Studio/Live. ROADMAP i dump strategiczny zapowiadały **Dual Engine** w **6.0** (pancerna Scena vs produkcyjne Studio), ale żaden ADR nie definiował kontraktu trybów, gate’ów przejścia ani relacji do Zero-Crash / VST.
 
-Ten ADR jest **SSOT trybów Studio vs Live**. Audio, Plugin Host i „prosta edycja” = [ADR 0018](./0018-future-audio-architecture.md). Narracja źródłowa (nie SSOT): [analiza-produktowo-wdrozeniowa-stagesync-roadmap.md](../../standards/analysis/inspiracje/specyfikacje/analiza-produktowo-wdrozeniowa-stagesync-roadmap.md).
+Ten ADR jest **SSOT trybów Studio vs Live**. Audio, Plugin Host i „prosta edycja” = [ADR 0018](./0018-future-audio-architecture.md). Narracja źródłowa (nie SSOT): [analiza-produktowo-wdrozeniowa-stagesync-roadmap.md](../../analysis/inspiracje/specyfikacje/analiza-produktowo-wdrozeniowa-stagesync-roadmap.md).
 
 ## Decyzja
 
@@ -96,5 +96,5 @@ Po udanym przejściu: Plugin Host **zatrzymany / niezaładowany**; odtwarzanie =
 ## Powiązane
 
 - [ADR 0010](./0010-desktop-shell-tauri.md), [0011](./0011-ui-parity-behavior.md), [0017](./0017-live-show-control-contracts.md), [0018](./0018-future-audio-architecture.md)
-- Triage: [analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage.md](../../standards/analysis/inspiracje/specyfikacje/analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage.md) (RM-08 / RM-09)
-- Raport align: [report-adr-dual-engine-vst-align.md](../../standards/analysis/reports/current/report-adr-dual-engine-vst-align.md)
+- Triage: [analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage.md](../../analysis/inspiracje/specyfikacje/analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage.md) (RM-08 / RM-09)
+- Raport align: [report-adr-dual-engine-vst-align.md](../../analysis/reports/current/report-adr-dual-engine-vst-align.md)

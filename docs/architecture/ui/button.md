@@ -52,7 +52,7 @@ Przy `loading` lub `disabled` przycisk dostaje native `disabled` oraz
 - Hover **nie** jest jedynym sygnałem interaktywności (krytyczne akcje zawsze widoczne).
 - Stany `:hover` tylko w `@media (hover: hover)` — brak „wiszącego” hover po tapnięciu.
 - `iconOnly`: hit target desktop **36×36** px (`padding` + width/height); Client PWA celuje w ≥44 px gdy osobna kontrolka touch.
-- Gęstość: [ui-density.mdc](../../../.cursor/rules/ui-density.mdc).
+- Gęstość: [ui-density.mdc](../../../.agents/rules/project.md).
 
 ## Kiedy nie używać
 

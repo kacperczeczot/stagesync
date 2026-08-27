@@ -2,7 +2,7 @@
 
 # 📊 reports/ — Kanoniczne Raporty Analityczne
 
-Kanoniczne raporty analityczne commitowane do repo. Historia wydań → [CHANGELOG.md](../../CHANGELOG.md).
+Kanoniczne raporty analityczne commitowane do repo. Historia wydań → [CHANGELOG.md](../../../CHANGELOG.md).
 
 ## Konwencja
 

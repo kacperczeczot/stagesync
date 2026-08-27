@@ -30,7 +30,7 @@ komponentów: [`packages/ui`](../../../packages/ui/).
 ## Zasady
 
 - Style shelli: wyłącznie CSS Modules + `--ss-*` ([ADR 0003](../adr/0003-ui-direction-booth.md)).
-- Gęstość / spacing / hover: [`.cursor/rules/ui-density.mdc`](../../../.cursor/rules/ui-density.mdc).
+- Gęstość / spacing / hover: [`.cursor/rules/ui-density.mdc`](../../../.agents/rules/project.md).
 - Animacje: `--ss-duration-fast` (120ms) / `normal` (200ms) / `slow` (700ms);
   hover przez `--ss-transition` (= fast + ease). Bez ad-hoc `0.7s` itd.
 - Ikony shelli: **Lucide** przez [`apps/web/src/shells/icons.tsx`](../../../apps/web/src/shells/components/icons.tsx)
