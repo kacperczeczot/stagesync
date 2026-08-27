@@ -92,3 +92,4 @@ tmp/
 apps/server/tools/yt-dlp
 data/downloads/*.apk
 apps/desktop/src-tauri/bin/*
+tmp/
