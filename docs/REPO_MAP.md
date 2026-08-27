@@ -6,16 +6,16 @@
 
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
-* **Liczba wszystkich plików:** 1616
+* **Liczba wszystkich plików:** 1615
 * **Liczba katalogów:** 248
-* **Data aktualizacji:** 2026-08-27T14:35:19.675Z
+* **Data aktualizacji:** 2026-08-27T14:36:23.883Z
 
 ### Kategorie
 
 | Kategoria | Liczba plików |
 | :--- | ---: |
 | Kod | 1213 |
-| Docs | 137 |
+| Docs | 136 |
 | Config | 119 |
 | Assety | 120 |
 | Inne | 27 |
@@ -26,7 +26,7 @@
 | :--- | ---: |
 | `.ts` | 743 |
 | `.tsx` | 284 |
-| `.md` | 124 |
+| `.md` | 123 |
 | `.png` | 94 |
 | `.kt` | 71 |
 | `.css` | 52 |
@@ -71,7 +71,7 @@
   - **library/** (3) — Główny plik bazy utworów (library.json) oraz szablony projektów
   - **logs/** (1) — Buffer logów systemowych, diagnostyka i ślady wykonania
   - **projects/** (1) — Katalog projektów użytkownika z lokalnymi zasobami assets/
-- **docs/** (95) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
+- **docs/** (94) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
   - **architecture/** (32) — Architektura systemu, SSOT, ADR, specyfikacje API i Design System
     - **adr/** (20) — Architectural Decision Records (Decyzje architektoniczne)
     - **api/** (1) — Specyfikacje interfejsów programistycznych REST i WebSocket
@@ -662,7 +662,6 @@ stagesync/
 │   │   └── TESTING.md
 │   ├── README.md
 │   ├── ROADMAP.md
-│   ├── STANDARDS.md
 │   └── TODO.md
 ├── packages/
 │   ├── android-keystore/
