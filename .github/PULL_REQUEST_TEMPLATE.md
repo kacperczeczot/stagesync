@@ -10,6 +10,6 @@
 - [ ] W przypadku zmian w Smart Tempo DSP: uruchomiono benchmark referencyjny (`pnpm run benchmark:record`)
 
 ## Zgodność ze Standardami DevEx
-- [ ] Zmiany przestrzegają zasad architektury Monorepo (`devex-standards`)
+- [ ] Zmiany są zgodne z wytycznymi w `.agents/rules/project.md`
 - [ ] Zastosowano konwencję Conventional Commits
 - [ ] Brak zakazanych formatów (inline-styles, Tailwind CSS, atrapy UI)
