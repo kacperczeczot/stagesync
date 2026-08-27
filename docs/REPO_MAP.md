@@ -7,8 +7,8 @@
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
 * **Liczba wszystkich plików:** 1614
-* **Liczba katalogów:** 248
-* **Data aktualizacji:** 2026-08-27T15:18:04.810Z
+* **Liczba katalogów:** 247
+* **Data aktualizacji:** 2026-08-27T15:19:36.777Z
 
 ### Kategorie
 
@@ -86,8 +86,7 @@
   - **shared/** (173) — Logika domenowa SSOT, Zod schematy, przeliczenia czasu i akordów
   - **typescript-config/** (5) — Bazowe pliki tsconfig.json dla paczek i aplikacji
   - **ui/** (26) — Biblioteka komponentów UI (przycisk, pole, menu, badge)
-- **scripts/** (36) — Skrypty monorepo (mapa repo, release notes, lint CSS, merge-train)
-  - **docker/** (3)
+- **scripts/** (33) — Skrypty monorepo (mapa repo, release notes, lint CSS, merge-train)
   - **hub/** (11)
   - **merge-train/** (4) — Automatyzacja merge train i walidacji PR
   - **quality/** (5) — Narzędzia jakości kodu, linków i generator mapy repozytorium
@@ -129,6 +128,11 @@
 - [`CHANGELOG.md`](../CHANGELOG.md)
 - [`LICENSE`](../LICENSE)
 - [`README.md`](../README.md)
+
+### Docker & Compose
+- [`compose.prod.yml`](../compose.prod.yml)
+- [`compose.yml`](../compose.yml)
+- [`Dockerfile`](../Dockerfile)
 
 ### Skrypty
 - [`dev`](../dev)
@@ -895,10 +899,6 @@ stagesync/
 │   │   └── vitest.setup.ts
 │   └── README.md
 ├── scripts/
-│   ├── docker/
-│   │   ├── compose.prod.yml
-│   │   ├── compose.yml
-│   │   └── Dockerfile
 │   ├── hub/
 │   │   ├── menus/
 │   │   │   ├── menu-clean.ts
@@ -948,9 +948,12 @@ stagesync/
 ├── CHANGELOG.md
 ├── codecov.yml
 ├── commitlint.config.js
+├── compose.prod.yml
+├── compose.yml
 ├── dev
 ├── dev.cmd
 ├── dev.ps1
+├── Dockerfile
 ├── knip.jsonc
 ├── LICENSE
 ├── package.json
