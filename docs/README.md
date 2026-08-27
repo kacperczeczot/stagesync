@@ -21,13 +21,13 @@ _Opis działania systemu, niezmienniki domenowe, autorytet serwera i decyzje._
 
 ---
 
-### 2. 📐 Standardy Inżynieryjne i Jakość ([`standards/`](./standards/README.md))
+### 2. 📐 Standardy Inżynieryjne i Jakość
 
 _Reguły jakościowe, kontrakty kodu, bramki testowe i audyty._
 
-- **[STANDARDS.md](./standards/STANDARDS.md)** — Standardy zewnętrzne (Conventional Commits, SemVer, Keep a Changelog, TSDoc, EditorConfig).
-- **[TESTING.md](./standards/TESTING.md)** — Strategia testowania, architektura testów, bramki CI i progi pokrycia kodu per moduł.
-- **[`analysis/`](./standards/analysis/README.md)** — Raporty audytowe (`reports/`), inspiracje z profesjonalnych DAW oraz notatki robocze.
+- **[STANDARDS.md](./STANDARDS.md)** — Standardy zewnętrzne (Conventional Commits, SemVer, Keep a Changelog, TSDoc, EditorConfig).
+- **[TESTING.md](./TESTING.md)** — Strategia testowania, architektura testów, bramki CI i progi pokrycia kodu per moduł.
+- **[`analysis/`](./analysis/README.md)** — Raporty audytowe (`reports/`), inspiracje z profesjonalnych DAW oraz notatki robocze.
 
 ---
 

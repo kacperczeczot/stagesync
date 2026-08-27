@@ -6,16 +6,16 @@
 
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
-* **Liczba wszystkich plików:** 1615
-* **Liczba katalogów:** 248
-* **Data aktualizacji:** 2026-08-27T14:36:23.883Z
+* **Liczba wszystkich plików:** 1614
+* **Liczba katalogów:** 247
+* **Data aktualizacji:** 2026-08-27T14:37:06.105Z
 
 ### Kategorie
 
 | Kategoria | Liczba plików |
 | :--- | ---: |
 | Kod | 1213 |
-| Docs | 136 |
+| Docs | 135 |
 | Config | 119 |
 | Assety | 120 |
 | Inne | 27 |
@@ -26,7 +26,7 @@
 | :--- | ---: |
 | `.ts` | 743 |
 | `.tsx` | 284 |
-| `.md` | 123 |
+| `.md` | 122 |
 | `.png` | 94 |
 | `.kt` | 71 |
 | `.css` | 52 |
@@ -71,18 +71,14 @@
   - **library/** (3) — Główny plik bazy utworów (library.json) oraz szablony projektów
   - **logs/** (1) — Buffer logów systemowych, diagnostyka i ślady wykonania
   - **projects/** (1) — Katalog projektów użytkownika z lokalnymi zasobami assets/
-- **docs/** (94) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
+- **docs/** (93) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
+  - **analysis/** (48)
   - **architecture/** (32) — Architektura systemu, SSOT, ADR, specyfikacje API i Design System
     - **adr/** (20) — Architectural Decision Records (Decyzje architektoniczne)
     - **api/** (1) — Specyfikacje interfejsów programistycznych REST i WebSocket
     - **ui/** (9) — Dokumentacja systemu designu, tokenów i komponentów UI
   - **examples/** (2) — Przykładowe pliki baz danych i pakiety projektowe v5
   - **guides/** (5) — Podręczniki operatorskie (INSTALL, DESKTOP, MOBILE, DX)
-  - **standards/** (51) — Standardy inżynieryjne, testowanie i raporty jakościowe
-    - **analysis/** (48) — Audyty kodu, analizy wydajności, referencje DAW i specyfikacje
-      - **inspiracje/** (40) — Dumpy zewnętrzne + triage (nie SSOT produktu)
-      - **reports/** (5) — Raporty kanoniczne (current / milestones / hygiene)
-      - **working/** (2) — Notatki robocze (gitignored treści, tylko README/.gitignore)
 - **packages/** (216) — Współdzielone pakiety wewnętrzne monorepo
   - **android-keystore/** (2) — Keystore do sideloadu / podpisywania APK (lokalny, nie sekret produkcyjny CI)
   - **eslint-config/** (5) — Wspólne reguły ESLint dla całego repozytorium
@@ -597,6 +593,62 @@ stagesync/
 │   │   └── .gitkeep
 │   └── README.md
 ├── docs/
+│   ├── analysis/
+│   │   ├── inspiracje/
+│   │   │   ├── audyty-silnik/
+│   │   │   │   ├── Audyt-Lifecycle-StageSync-v5-Desktop.md
+│   │   │   │   ├── Audyt-Lifecycle-StageSync-v5-Desktop.triage.md
+│   │   │   │   ├── Audyt-StageSync-v5-Race-Conditions.md
+│   │   │   │   ├── Audyt-StageSync-v5-Race-Conditions.triage.md
+│   │   │   │   └── README.md
+│   │   │   ├── referencje-daw/
+│   │   │   │   ├── Logika-Edycji-Klipow-Logic-Pro.md
+│   │   │   │   ├── Logika-Edycji-Klipow-Logic-Pro.triage.md
+│   │   │   │   ├── README.md
+│   │   │   │   ├── Referencja-Zachowan-Live-MIDI.md
+│   │   │   │   ├── Referencja-Zachowan-Live-MIDI.triage.md
+│   │   │   │   ├── Specyfikacja-Referencji-Zachowan-Wyswietlania.md
+│   │   │   │   ├── Specyfikacja-Referencji-Zachowan-Wyswietlania.triage.md
+│   │   │   │   ├── UXLogika-Show-Tools-Referencja-Zachowan.md
+│   │   │   │   └── UXLogika-Show-Tools-Referencja-Zachowan.triage.md
+│   │   │   ├── specyfikacje/
+│   │   │   │   ├── analiza-produktowo-wdrozeniowa-stagesync-roadmap.md
+│   │   │   │   ├── analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage.md
+│   │   │   │   ├── Architektura-Ingestii-Danych-Muzycznych-StageSync.md
+│   │   │   │   ├── Architektura-Ingestii-Danych-Muzycznych-StageSync.triage.md
+│   │   │   │   ├── Dynamic-Tempo-Mapping-Technical-Blueprint.md
+│   │   │   │   ├── Dynamic-Tempo-Mapping-Technical-Blueprint.triage.md
+│   │   │   │   ├── Implementacja-Smart-Tempo-w-Antigravity.md
+│   │   │   │   ├── Implementacja-Smart-Tempo-w-Antigravity.triage.md
+│   │   │   │   ├── Krytyka-strategii-Mobile-for-Live.md
+│   │   │   │   ├── Krytyka-strategii-Mobile-for-Live.triage.md
+│   │   │   │   ├── Ocena-Decyzji-Produktowych-StageSync-v1.md
+│   │   │   │   ├── Ocena-Decyzji-Produktowych-StageSync-v1.triage.md
+│   │   │   │   ├── Ocena-Safety-Net-StageSync-437.md
+│   │   │   │   ├── Ocena-Safety-Net-StageSync-437.triage.md
+│   │   │   │   ├── Ocena-Strategii-Produktu-StageSync-v5.md
+│   │   │   │   ├── Ocena-Strategii-Produktu-StageSync-v5.triage.md
+│   │   │   │   ├── README.md
+│   │   │   │   ├── Recenzja-Decyzji-Live-FOH-Audio.md
+│   │   │   │   ├── Recenzja-Decyzji-Live-FOH-Audio.triage.md
+│   │   │   │   ├── Safety-Net-dla-StageSync-v5.2.md
+│   │   │   │   ├── Safety-Net-dla-StageSync-v5.2.triage.md
+│   │   │   │   ├── Specyfikacja-Klienta-Mobile-StageSync-v5.2+.md
+│   │   │   │   ├── Specyfikacja-Klienta-Mobile-StageSync-v5.2+.triage.md
+│   │   │   │   ├── Specyfikacja-StageSync-dla-miksera-DAW.md
+│   │   │   │   └── Specyfikacja-StageSync-dla-miksera-DAW.triage.md
+│   │   │   └── README.md
+│   │   ├── reports/
+│   │   │   ├── current/
+│   │   │   │   ├── report-adr-dual-engine-vst-align.md
+│   │   │   │   ├── report-beta-gate.md
+│   │   │   │   ├── report-coverage-baseline.md
+│   │   │   │   └── report-scope-5.4.md
+│   │   │   └── README.md
+│   │   ├── working/
+│   │   │   ├── .gitignore
+│   │   │   └── README.md
+│   │   └── README.md
 │   ├── architecture/
 │   │   ├── adr/
 │   │   │   ├── 0001-storage-layout.md
@@ -643,25 +695,10 @@ stagesync/
 │   │   ├── INSTALL.md
 │   │   ├── MOBILE.md
 │   │   └── README.md
-│   ├── standards/
-│   │   ├── analysis/
-│   │   │   ├── inspiracje/
-│   │   │   │   ├── audyty-silnik/  … (5 plików: .md ×5)
-│   │   │   │   ├── referencje-daw/  … (9 plików: .md ×9)
-│   │   │   │   ├── specyfikacje/  … (25 plików: .md ×25)
-│   │   │   │   └── README.md
-│   │   │   ├── reports/
-│   │   │   │   ├── current/  … (4 pliki)
-│   │   │   │   └── README.md
-│   │   │   ├── working/
-│   │   │   │   ├── .gitignore
-│   │   │   │   └── README.md
-│   │   │   └── README.md
-│   │   ├── README.md
-│   │   ├── STANDARDS.md
-│   │   └── TESTING.md
 │   ├── README.md
 │   ├── ROADMAP.md
+│   ├── STANDARDS.md
+│   ├── TESTING.md
 │   └── TODO.md
 ├── packages/
 │   ├── android-keystore/

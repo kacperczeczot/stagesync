@@ -1,4 +1,4 @@
-[Strona główna](../../README.md) > [Dokumentacja](../README.md) > [Standardy](README.md) > [STANDARDS.md](STANDARDS.md)
+[Strona główna](../README.md) > [Dokumentacja](README.md) > [Standardy](STANDARDS.md)
 
 ---
 
@@ -13,18 +13,18 @@ Projekt funkcjonuje w oparciu o architekturę **Monorepo** ([`template-monorepo`
 | Standard | Implementacja w Projekcie | Specyfikacja |
 | :--- | :--- | :--- |
 | **Conventional Commits** | Commitlint + Husky; treść commitów w języku angielskim | [conventionalcommits.org](https://www.conventionalcommits.org/pl/v1.0.0/) |
-| **Semantic Versioning** | SemVer (`MAJOR.MINOR.PATCH`) w root [`package.json`](../../package.json) | [semver.org](https://semver.org/lang/pl/) |
-| **Keep a Changelog** | [`CHANGELOG.md`](../../CHANGELOG.md) wg specyfikacji 1.1.0 | [keepachangelog.com](https://keepachangelog.com/pl/1.1.0/) |
-| **ADR** | Rejestr Decyzji w [`docs/architecture/adr/`](../architecture/adr/README.md) | [adr.github.io](https://adr.github.io/) |
-| **EditorConfig** | [`.editorconfig`](../../.editorconfig) w root dla spójności IDE | [editorconfig.org](https://editorconfig.org/) |
+| **Semantic Versioning** | SemVer (`MAJOR.MINOR.PATCH`) w root [`package.json`](../package.json) | [semver.org](https://semver.org/lang/pl/) |
+| **Keep a Changelog** | [`CHANGELOG.md`](../CHANGELOG.md) wg specyfikacji 1.1.0 | [keepachangelog.com](https://keepachangelog.com/pl/1.1.0/) |
+| **ADR** | Rejestr Decyzji w [`docs/architecture/adr/`](architecture/adr/README.md) | [adr.github.io](https://adr.github.io/) |
+| **EditorConfig** | [`.editorconfig`](../.editorconfig) w root dla spójności IDE | [editorconfig.org](https://editorconfig.org/) |
 | **TSDoc** | Publiczne API w `@stagesync/shared` | [tsdoc.org](https://tsdoc.org/) |
-| **JSON:API** | **Nie** — [ADR 0006](../architecture/adr/0006-no-json-api.md); kształt: [api/](../architecture/api/README.md) | [jsonapi.org/format](https://jsonapi.org/format/) |
+| **JSON:API** | **Nie** — [ADR 0006](architecture/adr/0006-no-json-api.md); kształt: [api/](architecture/api/README.md) | [jsonapi.org/format](https://jsonapi.org/format/) |
 
 ---
 
 ## 2. Coverage i Bramki Jakościowe (Codecov)
 
-Bramki są **per warstwa** ([`codecov.yml`](../../codecov.yml) flags) — **nie** gonimy ogólnego overall %.  
+Bramki są **per warstwa** ([`codecov.yml`](../codecov.yml) flags) — **nie** gonimy ogólnego overall %.  
 Pełna strategia testowa, architektura i progi modułowe: patrz **[TESTING.md](./TESTING.md)**.
 
 | Flaga | Target (project) | Zakres |
