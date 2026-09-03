@@ -18,7 +18,7 @@ export function fakeAudioBuffer(
   } as AudioBuffer;
 }
 
-export function mockAudioParam(value = 1): any {
+export function mockAudioParam(value = 1): unknown {
   const param = {
     value,
     cancelScheduledValues: vi.fn(),
@@ -36,7 +36,7 @@ export function mockAudioParam(value = 1): any {
   return param;
 }
 
-export function mockConnectable(): any {
+export function mockConnectable(): unknown {
   return { connect: vi.fn(), disconnect: vi.fn() };
 }
 

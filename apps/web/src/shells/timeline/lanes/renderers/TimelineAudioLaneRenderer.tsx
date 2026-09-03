@@ -60,8 +60,8 @@ export type TimelineAudioLaneRendererProps = {
     lane: AudioLaneId,
     clip: AudioClip,
   ) => void;
-  onFormaClipPointerMove: (e: React.PointerEvent<any>) => void;
-  onFormaClipPointerUp: (e: React.PointerEvent<any>) => void;
+  onFormaClipPointerMove: (e: React.PointerEvent<HTMLElement>) => void;
+  onFormaClipPointerUp: (e: React.PointerEvent<HTMLElement>) => void;
 };
 
 export function TimelineAudioLaneRenderer({

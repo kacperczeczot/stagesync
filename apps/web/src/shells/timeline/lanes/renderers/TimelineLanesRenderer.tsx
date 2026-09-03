@@ -37,7 +37,7 @@ export type TimelineLanesRendererProps = {
     lengthTicks: number;
     name?: string;
     targetLane?: string;
-    subsections?: any;
+    subsections?: number[];
   } | null;
   clipSelection: ClipSelection;
   primaryId: string | null;
@@ -97,8 +97,8 @@ export type TimelineLanesRendererProps = {
     lane: ContentLaneId,
     clip: { id: string; startTicks: number; lengthTicks: number },
   ) => void;
-  onFormaClipPointerMove: (e: React.PointerEvent<any>) => void;
-  onFormaClipPointerUp: (e: React.PointerEvent<any>) => void;
+  onFormaClipPointerMove: (e: React.PointerEvent<HTMLElement>) => void;
+  onFormaClipPointerUp: (e: React.PointerEvent<HTMLElement>) => void;
   onMapSegmentPointerDown: (
     e: React.PointerEvent<HTMLButtonElement>,
     lane: MapLaneId,

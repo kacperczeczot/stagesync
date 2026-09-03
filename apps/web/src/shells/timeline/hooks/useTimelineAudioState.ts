@@ -9,6 +9,8 @@ import { useTimelineAudioUpload } from "./useTimelineAudioUpload.js";
 import { useTimelineTrackActions } from "./useTimelineTrackActions.js";
 import { useTimelineAudioTrackInteractions } from "./useTimelineAudioTrackInteractions.js";
 import { useTimelineDockCallbacks } from "./useTimelineDockCallbacks.js";
+import type { DraftHistory } from "@lib/client/draftHistory.js";
+import type { OpenContextMenuArgs } from "@stagesync/ui";
 
 interface Params {
   projectId?: string;
@@ -16,7 +18,7 @@ interface Params {
   commitDraft: (p: Project) => void;
   setSavedProject: React.Dispatch<React.SetStateAction<Project | null>>;
   setDraftProject: React.Dispatch<React.SetStateAction<Project | null>>;
-  setDraftHistory: React.Dispatch<React.SetStateAction<any>>;
+  setDraftHistory: React.Dispatch<React.SetStateAction<DraftHistory | null>>;
   setTrackVisibility: React.Dispatch<React.SetStateAction<TrackVisibilityMap>>;
   setLoadError: React.Dispatch<React.SetStateAction<string | null>>;
   trackSelection: TrackSelection;
@@ -30,8 +32,8 @@ interface Params {
   setSoloBusIds: React.Dispatch<React.SetStateAction<string[]>>;
   isMobilePreview: boolean;
   setTouchAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  openContextMenu: (args: any) => void;
-  state: any;
+  openContextMenu: (args: OpenContextMenuArgs) => void;
+  state: { playing: boolean };
 }
 
 export function useTimelineAudioState({

@@ -33,6 +33,8 @@ import {
 import { useTimelineTrackActions } from "./useTimelineTrackActions.js";
 import { useTimelineMixerCallbacks } from "./useTimelineMixerCallbacks.js";
 
+import type { OpenContextMenuArgs } from "@stagesync/ui";
+
 export type UseTimelineMixerStateOptions = {
   draftProject: Project | null;
   commitDraft: (next: Project) => void;
@@ -47,7 +49,7 @@ export type UseTimelineMixerStateOptions = {
   isMobilePreview: boolean;
   setTouchAlertOpen: (v: boolean) => void;
   setLoadError: (err: string | null) => void;
-  openContextMenu: (args: any) => void;
+  openContextMenu: (args: OpenContextMenuArgs) => void;
   playing: boolean;
 };
 

@@ -36,20 +36,7 @@ import {
   type ClipSelection,
   type TrackSelection,
 } from "@lib/timeline/timelineSelection.js";
-
-export type ContextMenuItem = {
-  id: string;
-  label: string;
-  danger?: boolean;
-  onSelect: () => void;
-};
-
-export type ContextMenuConfig = {
-  x: number;
-  y: number;
-  label: string;
-  items: ContextMenuItem[];
-};
+import type { OpenContextMenuArgs } from "@stagesync/ui";
 
 export type UseTimelineDockCallbacksOptions = {
   draftProject: Project | null;
@@ -76,7 +63,7 @@ export type UseTimelineDockCallbacksOptions = {
   setSelectedHwOutputId: React.Dispatch<React.SetStateAction<string | null>>;
   setSoloBusIds: React.Dispatch<React.SetStateAction<string[]>>;
   setSoloAudioTrackIds: React.Dispatch<React.SetStateAction<string[]>>;
-  openContextMenu: (menu: ContextMenuConfig) => void;
+  openContextMenu: (menu: OpenContextMenuArgs) => void;
 };
 
 export function useTimelineDockCallbacks({

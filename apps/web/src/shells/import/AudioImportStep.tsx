@@ -5,17 +5,20 @@ import { ImportProgress } from "./ImportProgress.js";
 import { formatBytesMb } from "@lib/client/memoryPressure.js";
 import styles from "./CombinedUsUgImportForm.module.css";
 
+import { type PipelineStage } from "./combinedImportHelpers.js";
+import { type ProjectAsset, type SmartTempoAudioRef } from "@stagesync/shared";
+
 interface AudioImportStepProps {
   meta: { title: string; subtitle: string };
   includeAudioStep: boolean;
-  projectAudioAssets: any[];
+  projectAudioAssets: ProjectAsset[];
   selectedAssetId: string | null;
-  smartTempoAudio: any;
+  smartTempoAudio: SmartTempoAudioRef | null;
   locked: boolean;
   busyNet: boolean;
   ytJobBusy: boolean;
   hasAudio: boolean;
-  pipelineStages: any[];
+  pipelineStages: PipelineStage[];
   youtubeUrlDraft: string;
   youtubeAvailable: boolean;
   resolvedYoutubeId?: string | null;

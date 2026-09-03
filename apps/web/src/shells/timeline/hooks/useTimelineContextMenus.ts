@@ -1,6 +1,7 @@
 import {
   useCallback,
   type RefObject,
+  type MutableRefObject,
   type Dispatch,
   type SetStateAction,
 } from "react";
@@ -47,6 +48,8 @@ import {
 } from "@lib/audio/audioLaneEdit.js";
 import { pencilFormaClick } from "@lib/timeline-edit/formaCanvas.js";
 
+import type { OpenContextMenuArgs } from "@stagesync/ui";
+
 export type UseTimelineContextMenusOptions = {
   isMobilePreview: boolean;
   setTouchAlertOpen: (v: boolean) => void;
@@ -67,9 +70,9 @@ export type UseTimelineContextMenusOptions = {
   duplicateClipSelection: () => void;
   pasteClipClipboard: (targetTicks: number) => void;
   focusInspectorPanel: () => void;
-  openContextMenu: (args: any) => void;
-  laneImportTrackIdRef: RefObject<string | null>;
-  laneImportStartTicksRef: RefObject<number | null>;
+  openContextMenu: (args: OpenContextMenuArgs) => void;
+  laneImportTrackIdRef: MutableRefObject<string | null> | RefObject<string | null>;
+  laneImportStartTicksRef: MutableRefObject<number | null> | RefObject<number | null>;
   laneAudioFileRef: RefObject<HTMLInputElement | null>;
   locatorTicks: number;
 };
@@ -362,12 +365,10 @@ export function useTimelineContextMenus({
           onImportAudio:
             laneKind === "audio" && audioTrackId
               ? () => {
-                  if (laneImportTrackIdRef.current !== undefined) {
-                    (laneImportTrackIdRef as any).current = audioTrackId;
-                  }
-                  if (laneImportStartTicksRef.current !== undefined) {
-                    (laneImportStartTicksRef as any).current = null;
-                  }
+                  (laneImportTrackIdRef as MutableRefObject<string | null>).current =
+                    audioTrackId;
+                  (laneImportStartTicksRef as MutableRefObject<number | null>).current =
+                    null;
                   laneAudioFileRef.current?.click();
                 }
               : undefined,

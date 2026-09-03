@@ -1,11 +1,11 @@
-import React from "react";
-import type { Project } from "@stagesync/shared";
+import type { Project, TransportState } from "@stagesync/shared";
 import type {
   ClipSelection,
   ClipSelectionLane,
 } from "@lib/timeline/timelineSelection.js";
 import type { MapLaneId } from "@lib/timeline/mapLaneEdit.js";
 import type { ToolId } from "../timelineToolsData.js";
+import type { PreferencesTab } from "@lib/client/preferencesEvents.js";
 import { useTimelineRulerGestures } from "./useTimelineRulerGestures.js";
 import { useTimelineMarquee } from "./useTimelineMarquee.js";
 import { useTimelineFormaGestures } from "./useTimelineFormaGestures.js";
@@ -17,7 +17,7 @@ interface UseTimelineGesturesParams {
   draftRef: React.RefObject<Project | null>;
   draftProject: Project | null;
   commitDraft: (p: Project) => void;
-  state: any;
+  state: TransportState;
   locatorTicks: number;
   seek: (ticks: number) => Promise<void>;
   setLoop: (body: {
@@ -38,7 +38,11 @@ interface UseTimelineGesturesParams {
   rawTicksAtClientX: (clientX: number) => number | null;
   toolRef: React.RefObject<ToolId>;
   tool: ToolId;
-  gesturePolicy: any;
+  gesturePolicy: {
+    pencilDraw: boolean;
+    clipDragResize: boolean;
+    mapEdit: boolean;
+  };
   setTouchAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
   clipSelection: ClipSelection;
   setClipSelection: React.Dispatch<React.SetStateAction<ClipSelection>>;
@@ -69,7 +73,7 @@ interface UseTimelineGesturesParams {
   setPrimaryMapId: (id: string | null) => void;
   openMapEdit: (lane: MapLaneId, ticks: number) => void;
   keyHandlersRef: React.RefObject<TimelineKeyHandlers>;
-  openPreferences: (tab?: any) => void;
+  openPreferences: (tab?: PreferencesTab) => void;
   setHelpOpen: React.Dispatch<React.SetStateAction<boolean>>;
   projectId?: string;
 }

@@ -12,6 +12,7 @@ import {
   laneHeightEffective,
 } from "@lib/timeline/timelineLaneHeights.js";
 import type { ToolId } from "../timelineToolsData.js";
+import type { ChannelStripCallbacks } from "../channelStrip/channelStripTypes.js";
 import { ChannelStripControls } from "../channelStrip/ChannelStripControls.js";
 import styles from "../TimelineShell.module.css";
 
@@ -26,7 +27,7 @@ export type TimelineTrackRowDockProps = {
   trackSelection: TrackSelection;
   soloAudioTrackIds: string[];
   trackRename: { trackId: string; name: string } | null;
-  buildChannelStripCallbacks: (trackId: string) => any;
+  buildChannelStripCallbacks: (trackId: string) => ChannelStripCallbacks;
   laneHeights: Record<string, number>;
   zoomV: number;
   uiScale: number;

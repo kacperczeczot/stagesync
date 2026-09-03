@@ -27,6 +27,7 @@ import {
   ensureAudioTrackVisibility,
   type TrackVisibilityMap,
 } from "@lib/timeline/timelineTracks.js";
+import type { OpenContextMenuArgs } from "@stagesync/ui";
 
 export type UseTimelineTrackActionsOptions = {
   draftProject: Project | null;
@@ -45,7 +46,7 @@ export type UseTimelineTrackActionsOptions = {
   isMobilePreview: boolean;
   setTouchAlertOpen: (v: boolean) => void;
   setLoadError: (err: string | null) => void;
-  openContextMenu: (args: any) => void;
+  openContextMenu: (args: OpenContextMenuArgs) => void;
 };
 
 export function useTimelineTrackActions({

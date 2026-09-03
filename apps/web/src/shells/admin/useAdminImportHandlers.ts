@@ -12,12 +12,16 @@ import { fetchProject, putProject } from "@lib/shell-operator/libraryApi.js";
 import { uploadProjectAudio } from "@lib/shell-operator/projectAssetsApi.js";
 import { createSongWithContent } from "@lib/client/desktopFileMenu.js";
 
+import { type UgImportApplyPayload } from "../import/UgImportForm.js";
+import { type UltrastarImportOk } from "@stagesync/shared";
+import { type UsUgApplyPayload } from "../import/combinedImportHelpers.js";
+
 interface UseAdminImportHandlersArgs {
   selectedId: string | null;
   setCommandPending: (pending: boolean) => void;
   setImportModalOpen: (open: boolean) => void;
   setActionNotice: (notice: string | null) => void;
-  refreshLibrary: (id: string | null) => Promise<any>;
+  refreshLibrary: (id: string | null) => Promise<unknown>;
 }
 
 export function useAdminImportHandlers({
@@ -35,7 +39,7 @@ export function useAdminImportHandlers({
     sectionBars,
     runWand,
     metadata,
-  }: any) => {
+  }: UgImportApplyPayload) => {
     setCommandPending(true);
     try {
       if (selectedId) {
@@ -107,7 +111,7 @@ export function useAdminImportHandlers({
     }
   };
 
-  const onApplyUltrastar = async (result: any) => {
+  const onApplyUltrastar = async (result: UltrastarImportOk) => {
     setCommandPending(true);
     try {
       if (selectedId) {
@@ -136,7 +140,7 @@ export function useAdminImportHandlers({
     }
   };
 
-  const onApplyUsUg = async (payload: any) => {
+  const onApplyUsUg = async (payload: UsUgApplyPayload) => {
     const result = payload.bridge;
     const smartAudio = payload.smartTempoAudio;
     const pendingFile = payload.pendingAudioFile;

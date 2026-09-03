@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import type { NavigateFunction } from "react-router";
-import type { Project, WandMode } from "@stagesync/shared";
-import { resetDraftHistory } from "@lib/client/draftHistory.js";
+import type { Project, TempoMapProject, TransportState, WandMode, FormaClip } from "@stagesync/shared";
+import { resetDraftHistory, type DraftHistory } from "@lib/client/draftHistory.js";
 import {
   SONG_IMPORT_EVENT,
   parseSongImportDetail,
@@ -27,7 +27,7 @@ interface Params {
   projectId?: string;
   reloadProject: (id: string) => Promise<void>;
   setDraftProject: React.Dispatch<React.SetStateAction<Project | null>>;
-  setDraftHistory: React.Dispatch<React.SetStateAction<any>>;
+  setDraftHistory: React.Dispatch<React.SetStateAction<DraftHistory | null>>;
   clearClipSelection: () => void;
   onUndo: () => void;
   onRedo: () => void;
@@ -97,15 +97,15 @@ interface Params {
   draftProject: Project | null;
   setTrackVisibility: React.Dispatch<React.SetStateAction<TrackVisibilityMap>>;
   setFailedAudioAssetIds: React.Dispatch<React.SetStateAction<string[]>>;
-  setSoftClockTempoMaps: (body: any) => void;
-  state: any;
+  setSoftClockTempoMaps: (body: TempoMapProject | null) => void;
+  state: TransportState;
   displayTicks: number;
   loopOn: boolean;
   soloAudioTrackIds: string[];
   soloBusIds: string[];
   latencyCompMs: number;
   openSongImportWizard: (asNew: boolean) => void;
-  selectedClip: any;
+  selectedClip: FormaClip | null;
 }
 
 export function useTimelineShortcutsAndSync({

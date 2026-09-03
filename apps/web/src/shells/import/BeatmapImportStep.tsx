@@ -1,20 +1,26 @@
+import {
+  type SmartTempoAudioRef,
+  type TempoNode,
+  type TextAnchorBridgeOk,
+  type UltrastarImportResult,
+} from "@stagesync/shared";
 import { BeatMapperPane } from "./BeatMapperPane.js";
 import styles from "./CombinedUsUgImportForm.module.css";
 
 interface BeatmapImportStepProps {
   meta: { title: string; subtitle: string };
-  bridgeOk: any;
+  bridgeOk: TextAnchorBridgeOk | null;
   stepNotice: string | null;
-  smartTempoAudio: any;
+  smartTempoAudio: SmartTempoAudioRef | null;
   audioStartOffsetMs: number;
   localBuffer: AudioBuffer | null;
-  displayTempoNodes: any[];
-  handleTempoNodesChange: (nodes: any[]) => void;
+  displayTempoNodes: TempoNode[];
+  handleTempoNodesChange: (nodes: TempoNode[]) => void;
   handleAudioStartOffsetChange: (ms: number) => void;
   gridBpmDisplay: string;
   setGridBpmDraft: (v: string) => void;
   usTitle: string;
-  usPreview: any;
+  usPreview: UltrastarImportResult | null;
   ingestLocalFile: (file: File) => Promise<void>;
   beatPlayToggleRef: React.MutableRefObject<(() => void) | null>;
   locked: boolean;

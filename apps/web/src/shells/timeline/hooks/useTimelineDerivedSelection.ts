@@ -1,8 +1,9 @@
-import type { Project } from "@stagesync/shared";
+import type { Project, TimeSignature } from "@stagesync/shared";
 import { resolveMeterAt, resolveTempoAt } from "@stagesync/shared";
 import {
   primaryAudioTrackId,
   primaryLane,
+  type ClipSelection,
   type TrackSelection,
 } from "@lib/timeline/timelineSelection.js";
 import { isAudioSelectionLane } from "@lib/timeline/timelineSelection.js";
@@ -11,7 +12,7 @@ import { scoreAnchors } from "@lib/timeline-edit/scoreBarEdit.js";
 
 export type UseTimelineDerivedSelectionOpts = {
   draftProject: Project | null;
-  clipSelection: any;
+  clipSelection: ClipSelection;
   trackSelection: TrackSelection;
   selectedAnchorId: string | null;
   isMobilePreview: boolean;
@@ -19,7 +20,7 @@ export type UseTimelineDerivedSelectionOpts = {
   timelineSurface: string;
   displayTicks: number;
   state: {
-    timeSignature: any;
+    timeSignature: TimeSignature;
     bpm: number;
   };
 };

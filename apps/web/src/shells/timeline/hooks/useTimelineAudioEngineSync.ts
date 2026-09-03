@@ -1,5 +1,5 @@
 import { useEffect, type Dispatch, type SetStateAction } from "react";
-import type { Project } from "@stagesync/shared";
+import type { Project, TempoMapProject, TransportLoop } from "@stagesync/shared";
 import { wrapDisplayTicks } from "@stagesync/shared";
 import {
   allowAudioPlayback,
@@ -23,11 +23,11 @@ export type UseTimelineAudioEngineSyncOpts = {
   setDraftProject: Dispatch<SetStateAction<Project | null>>;
   setTrackVisibility: Dispatch<SetStateAction<TrackVisibilityMap>>;
   setFailedAudioAssetIds: Dispatch<SetStateAction<string[]>>;
-  setSoftClockTempoMaps: (maps: any) => void;
+  setSoftClockTempoMaps: (maps: TempoMapProject | null) => void;
   state: {
     playing: boolean;
     displayTicks?: number;
-    loop?: any;
+    loop?: TransportLoop | null;
     bpm: number;
     ppq: number;
   };

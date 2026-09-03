@@ -16,7 +16,7 @@ export function DriftChart({
   activeBars: BarDataPoint[];
   stats: SmartTempoStats;
   showHistoryOverlay: boolean;
-  compareRun: any;
+  compareRun?: { summary: { meanMs: number } } | null;
   setHoveredPoint: (pt: BarDataPoint | null) => void;
   setTooltipPos: (pos: { x: number; y: number } | null) => void;
 }) {
