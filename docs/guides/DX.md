@@ -100,9 +100,9 @@ W TUI opcje z **submenu** kończą się znakiem `›` (np. `Testy & Jakość ›
 
 > **✅ Verify** (rosnąco wg zakresu)
 >
-> 1. **Lustrzane CI**: tylko `check-types` → `lint:ss-css` → `lint` → `test` (bez formatu / mutacji).
+> 1. **Lustrzane CI**: szybki check (`clean ._*` → `check-types` → `lint:ss-css` → `lint` → `test`, bez formatu / mutacji).
 > 2. **Codzienny gate**: j.w. + `format` + docs links + knip (domyślny check przed pushem).
-> 3. **Kompletny audyt**: j.w. + unlinked (gate, **auto-fix** linków) → map → coverage → e2e (**env auto-fix**: shared build, wolne :3000/:4000, świeże webServery, Playwright install / `pnpm install` przy typowych brakach + 1 retry) → build → `sync:launcher-ui` + testy launchera desktop → `sync-version --check` → gate literówki ownera → `pnpm audit`. Bez instalatorów Tauri i Smart Tempo.
+> 3. **Kompletny audyt**: pełny audyt monorepo (~25–45s dzięki cache Turbo i Vitest 5): `clean ._*` → `format` → CI → docs links → unlinked (gate + **auto-fix** linków) → knip → map → test:coverage → e2e (**env auto-fix**: shared build, wolne :3000/:4000) → build → `sync:launcher-ui` + testy launchera desktop → `sync-version --check` → `pnpm audit`. Bez instalatorów Tauri i Smart Tempo.
 >
 > Podsumowanie każdego Verify wypisuje krótkie `detail` per krok (liczby testów / links; auto-fix / instalacja e2e **tylko gdy faktycznie zaszły**) oraz linię **Zmienione pliki** gdy krok zapisał pliki (`format`, `unlinked`, `generate:map`).
 >
@@ -183,7 +183,7 @@ Możesz uruchamiać moduły bezpośrednio z terminala z pominięciem interaktywn
 | `[cmd] types`    | —                             | **TypeScript Check**: Weryfikacja typów w całym monorepo.                                                                                                  |
 | `[cmd] verify`   | `ci`                          | **Lustrzane CI**: `check-types` → `lint:ss-css` → `lint` → `test` (bez format; exit code).                                                                 |
 | `[cmd] pr`       | `before-pr`, `daily`, `gate`  | **Codzienny gate**: Lustrzane CI + `format` + docs links + knip (exit code).                                                                               |
-| `[cmd] all`      | `full`, `everything`, `audit` | **Kompletny audyt**: + unlinked (auto-fix) + map + coverage + e2e (env auto-fix) + build + launcher sync/test + version check + owner typo + `pnpm audit`. |
+| `[cmd] all`      | `full`, `everything`, `audit` | **Kompletny audyt**: pełny audyt monorepo (~25s): sanitacja ._* + format + CI + links + unlinked (auto-fix) + knip + map + coverage + e2e (env auto-fix) + build + launcher sync/test + version check + `pnpm audit`. |
 | `[cmd] knip`     | —                             | **Dead Code Detector**: Wykrywanie nieużywanego kodu i zależności.                                                                                         |
 | `[cmd] ss-css`   | `css`                         | **CSS Token Guard**: Walidacja zmiennych CSS (`--ss-*`).                                                                                                   |
 | `[cmd] links`    | —                             | **Docs Link Checker**: Weryfikacja odnośników w dokumentacji Markdown.                                                                                     |

@@ -61,8 +61,8 @@ export async function menuTestingVerify() {
   } else if (choice === "full-audit") {
     if (
       !(await confirmDanger(
-        "Kompletny audyt: format, auto-fix docs, e2e może zabić :3000/:4000, długo. Uruchomić?",
-        false,
+        "Kompletny audyt: ~25s, format + auto-fix docs + e2e (zwalnia :3000/:4000). Uruchomić?",
+        true,
       ))
     ) {
       clack.log.info("Anulowano Kompletny audyt.");

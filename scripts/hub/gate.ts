@@ -785,12 +785,12 @@ export function runWebE2eWithBrowserBootstrap(): GateStep {
 
 export async function runFullAudit(): Promise<boolean> {
   warnSideEffects([
+    "Szybki przebieg (~25–45s dzięki cache Turbo i Vitest 5)",
     "Prettier zapisze pliki (format)",
     "unlinked: może auto-naprawić linki w Markdown (mutacja docs)",
-    "e2e: może zabić procesy na :3000/:4000 i doinstalować Playwright / pnpm install",
+    "e2e: może zabić procesy na :3000/:4000 (reset dev serwerów)",
     "generate:map zapisuje docs/REPO_MAP.md tylko przy zmianie struktury; coverage → coverage/",
     "sync:launcher-ui może nadpisać apps/desktop/launcher/vendor/*.css",
-    "Długi przebieg (często wiele minut)",
   ]);
   clack.note(
     "Kompletny audyt: clean ._* → format → types → ss-css → lint → test → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",

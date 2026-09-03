@@ -270,7 +270,9 @@ export async function runDoctorScan() {
   // 5. Narzędzia C/C++ / Build Tools (Tauri / natywne moduły @julusian/midi)
   if (os.platform() === "darwin") {
     try {
-      const xcodePath = execSync("xcode-select -p", { encoding: "utf8" }).trim();
+      const xcodePath = execSync("xcode-select -p", {
+        encoding: "utf8",
+      }).trim();
       clack.log.success(
         `${pc.bold("Kompilator C/C++ (Xcode CLI)")}: ${pc.cyan(xcodePath)}`,
       );
@@ -284,7 +286,9 @@ export async function runDoctorScan() {
       const gccVer = execSync("gcc --version", { encoding: "utf8" })
         .trim()
         .split("\n")[0];
-      clack.log.success(`${pc.bold("Kompilator C/C++ (gcc)")}: ${pc.cyan(gccVer)}`);
+      clack.log.success(
+        `${pc.bold("Kompilator C/C++ (gcc)")}: ${pc.cyan(gccVer)}`,
+      );
     } catch {
       clack.log.warn(
         `${pc.bold("Kompilator C/C++ (gcc)")}: Brak gcc / build-essential`,
@@ -305,9 +309,7 @@ export async function runDoctorScan() {
     const hasNdk = fs.existsSync(ndkPath);
     const hasCmake = fs.existsSync(cmakePath);
 
-    clack.log.success(
-      `${pc.bold("Android SDK")}: ${pc.cyan(androidSdkPath)}`,
-    );
+    clack.log.success(`${pc.bold("Android SDK")}: ${pc.cyan(androidSdkPath)}`);
     if (hasNdk && hasCmake) {
       clack.log.success(
         `${pc.bold("Android NDK / CMake")}: ${pc.cyan("NDK 26.1")} + ${pc.cyan("CMake 3.22.1")} ${pc.dim("(gotowe dla Console)")}`,
@@ -325,9 +327,15 @@ export async function runDoctorScan() {
 
   // 7. Playwright (przeglądarki E2E)
   try {
-    const playwrightCache = path.join(os.homedir(), "Library", "Caches", "ms-playwright");
+    const playwrightCache = path.join(
+      os.homedir(),
+      "Library",
+      "Caches",
+      "ms-playwright",
+    );
     const linuxCache = path.join(os.homedir(), ".cache", "ms-playwright");
-    const hasCache = fs.existsSync(playwrightCache) || fs.existsSync(linuxCache);
+    const hasCache =
+      fs.existsSync(playwrightCache) || fs.existsSync(linuxCache);
     if (hasCache) {
       clack.log.success(
         `${pc.bold("Playwright Browsers")}: ${pc.green("Zainstalowane")} ${pc.dim("(gotowe do E2E)")}`,
