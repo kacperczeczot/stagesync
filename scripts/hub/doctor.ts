@@ -226,7 +226,17 @@ export async function runDoctorScan() {
 
   // 3. Rust / Cargo
   try {
-    const rustVer = execSync("cargo -V", { encoding: "utf8" }).trim();
+    // rustup installs cargo to ~/.cargo/bin which may not be in PATH
+    // when the hub is launched without a full shell profile
+    const cargoEnv = { ...process.env };
+    const cargoBin = path.join(os.homedir(), ".cargo", "bin");
+    if (!cargoEnv.PATH?.includes(cargoBin)) {
+      cargoEnv.PATH = `${cargoBin}${path.delimiter}${cargoEnv.PATH ?? ""}`;
+    }
+    const rustVer = execSync("cargo -V", {
+      encoding: "utf8",
+      env: cargoEnv,
+    }).trim();
     clack.log.success(`${pc.bold("Rust / Cargo")}: ${pc.cyan(rustVer)}`);
   } catch {
     clack.log.warn(

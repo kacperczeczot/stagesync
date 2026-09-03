@@ -90,6 +90,11 @@ fi
 
 # 3. Weryfikacja narzedzi dla Desktop (Tauri)
 echo -e "\n${CYAN}➤ Weryfikacja wymagań dla aplikacji Desktopowej (Tauri)...${NC}"
+# Source rustup env so ~/.cargo/bin is in PATH even when not loaded by shell profile
+if [ -f "$HOME/.cargo/env" ]; then
+    # shellcheck source=/dev/null
+    source "$HOME/.cargo/env"
+fi
 HAS_RUST=false
 if command -v cargo &> /dev/null; then
     HAS_RUST=true
