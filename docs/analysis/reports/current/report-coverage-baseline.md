@@ -86,10 +86,10 @@ W architekturze monorepo StageSync stosujemy zasadę **izolacji odpowiedzialnoś
 
 ## 🛡️ 3. Dodatkowe Mechanizmy Zapewnienia Jakości
 
-| Obszar                  | Ścieżka                                             | Narzędzie                            | Wymóg                                     |
-| :---------------------- | :-------------------------------------------------- | :----------------------------------- | :---------------------------------------- |
-| **End-to-End UI**       | `apps/web/e2e`                                      | Playwright Chromium                  | **100% pass** w CI przed każdym mergem    |
-| **DSP Accuracy**        | `apps/web/scripts/benchmark`                        | Dataset 4 referencyjnych utworów     | **Brak regresji** DAW Grade / Stage Grade |
-| **Desktop Shell**       | `apps/desktop`                                      | Node test runner + Tauri cargo check | **100% pass** testów launchera            |
-| **Android Shells**      | `apps/console`, `apps/performer`                    | Gradle JVM unit tests                | Czysty build i poprawne działanie WebView |
+| Obszar                  | Ścieżka                                                                      | Narzędzie                            | Wymóg                                     |
+| :---------------------- | :--------------------------------------------------------------------------- | :----------------------------------- | :---------------------------------------- |
+| **End-to-End UI**       | `apps/web/e2e`                                                               | Playwright Chromium                  | **100% pass** w CI przed każdym mergem    |
+| **DSP Accuracy**        | `apps/web/scripts/benchmark`                                                 | Dataset 4 referencyjnych utworów     | **Brak regresji** DAW Grade / Stage Grade |
+| **Desktop Shell**       | `apps/desktop`                                                               | Node test runner + Tauri cargo check | **100% pass** testów launchera            |
+| **Android Shells**      | `apps/console`, `apps/performer`                                             | Gradle JVM unit tests                | Czysty build i poprawne działanie WebView |
 | **Bramka Beta/Release** | [`docs/analysis/reports/current/report-beta-gate.md`](./report-beta-gate.md) | Checklista G1–G10                    | Weryfikacja operatorska na fizycznym HW   |
