@@ -444,7 +444,7 @@ export async function runDailyGate(): Promise<boolean> {
     "Reszta kroków tylko sprawdza (types / ss-css / lint / test / links / knip)",
   ]);
   clack.note(
-    "Codzienny gate: format → check-types → lint:ss-css → lint → test → links → knip…",
+    "Codzienny gate: clean ._* → format → check-types → lint:ss-css → lint → test → links → knip…",
     "Gate",
   );
   const steps: GateStep[] = [
@@ -793,7 +793,7 @@ export async function runFullAudit(): Promise<boolean> {
     "Długi przebieg (często wiele minut)",
   ]);
   clack.note(
-    "Kompletny audyt: format → CI → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",
+    "Kompletny audyt: clean ._* → format → types → ss-css → lint → test → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",
     "Audyt",
   );
   ensureNoAppleDoubleFiles();
