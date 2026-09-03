@@ -13,6 +13,10 @@ confirmModulesPurge: false
 # 8.5.26 bumps nanoid to ^3.3.17 (vite already allows ^8.5.25).
 overrides:
   postcss: ">=8.5.26"
+  # GHSA-f65p-4m7j-42xc / GHSA-fph4-wmhf-6fwf / GHSA-jqff-g426-hqxp: fast-uri <3.1.6 (high, via commitlint→ajv)
+  fast-uri: ">=3.1.6"
+  # GHSA-x5fp-wj9c-mxmx / GHSA-4mjr-xmp4-gh2g: qs <6.16.0 (moderate, via express@5.2.1)
+  qs: ">=6.16.0"
 allowBuilds:
   "@julusian/midi": true
   esbuild: true

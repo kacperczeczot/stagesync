@@ -31,7 +31,7 @@ ask_confirm() {
     fi
     # [T/n] = Enter/t/y → Tak (domyślnie tak)
     read -p "$(echo -e "${YELLOW}${message} [T/n] ${NC}")" response
-    response=${response,,}
+    response=$(echo "$response" | tr '[:upper:]' '[:lower:]')
     if [[ -z "$response" || "$response" == "t" || "$response" == "y" || "$response" == "tak" || "$response" == "yes" ]]; then
         return 0
     else
