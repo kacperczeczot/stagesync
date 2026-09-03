@@ -88,6 +88,9 @@ tmp/
 
 # Misc
 .DS_Store
+._*
+**/.DS_Store
+**/._*
 *.pem
 apps/server/tools/yt-dlp
 data/downloads/*.apk
