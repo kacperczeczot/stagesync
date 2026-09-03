@@ -267,7 +267,32 @@ export async function runDoctorScan() {
     );
   }
 
-  // 5. Android SDK
+  // 5. Narzędzia C/C++ / Build Tools (Tauri / natywne moduły @julusian/midi)
+  if (os.platform() === "darwin") {
+    try {
+      const xcodePath = execSync("xcode-select -p", { encoding: "utf8" }).trim();
+      clack.log.success(
+        `${pc.bold("Kompilator C/C++ (Xcode CLI)")}: ${pc.cyan(xcodePath)}`,
+      );
+    } catch {
+      clack.log.warn(
+        `${pc.bold("Kompilator C/C++ (Xcode CLI)")}: Brak xcode-select ${pc.dim("(wymagany dla Rusta i modułów natywnych)")}`,
+      );
+    }
+  } else if (os.platform() === "linux") {
+    try {
+      const gccVer = execSync("gcc --version", { encoding: "utf8" })
+        .trim()
+        .split("\n")[0];
+      clack.log.success(`${pc.bold("Kompilator C/C++ (gcc)")}: ${pc.cyan(gccVer)}`);
+    } catch {
+      clack.log.warn(
+        `${pc.bold("Kompilator C/C++ (gcc)")}: Brak gcc / build-essential`,
+      );
+    }
+  }
+
+  // 6. Android SDK, NDK i CMake (Performer / Console)
   const androidSdkPath =
     process.env.ANDROID_HOME ||
     process.env.ANDROID_SDK_ROOT ||
@@ -275,13 +300,45 @@ export async function runDoctorScan() {
       ? "/opt/homebrew/share/android-commandlinetools"
       : undefined);
   if (androidSdkPath && fs.existsSync(androidSdkPath)) {
+    const ndkPath = path.join(androidSdkPath, "ndk", "26.1.10909125");
+    const cmakePath = path.join(androidSdkPath, "cmake", "3.22.1");
+    const hasNdk = fs.existsSync(ndkPath);
+    const hasCmake = fs.existsSync(cmakePath);
+
     clack.log.success(
       `${pc.bold("Android SDK")}: ${pc.cyan(androidSdkPath)}`,
     );
+    if (hasNdk && hasCmake) {
+      clack.log.success(
+        `${pc.bold("Android NDK / CMake")}: ${pc.cyan("NDK 26.1")} + ${pc.cyan("CMake 3.22.1")} ${pc.dim("(gotowe dla Console)")}`,
+      );
+    } else {
+      clack.log.warn(
+        `${pc.bold("Android NDK / CMake")}: ${pc.yellow("Brak NDK 26.1 lub CMake 3.22.1")} ${pc.dim("(wymagane do budowy Console APK)")}`,
+      );
+    }
   } else {
     clack.log.warn(
       `${pc.bold("Android SDK")}: Brak ANDROID_HOME ${pc.dim("(wymagany dla Android Performer/Console)")}`,
     );
+  }
+
+  // 7. Playwright (przeglądarki E2E)
+  try {
+    const playwrightCache = path.join(os.homedir(), "Library", "Caches", "ms-playwright");
+    const linuxCache = path.join(os.homedir(), ".cache", "ms-playwright");
+    const hasCache = fs.existsSync(playwrightCache) || fs.existsSync(linuxCache);
+    if (hasCache) {
+      clack.log.success(
+        `${pc.bold("Playwright Browsers")}: ${pc.green("Zainstalowane")} ${pc.dim("(gotowe do E2E)")}`,
+      );
+    } else {
+      clack.log.warn(
+        `${pc.bold("Playwright Browsers")}: Brak pobranych przeglądarek ${pc.dim("(uruchom: pnpm --filter @stagesync/web exec playwright install)")}`,
+      );
+    }
+  } catch {
+    // ignoruj błąd weryfikacji cache
   }
 
   // 6. Docker (opcjonalny)
@@ -401,9 +458,14 @@ export async function runDoctorScan() {
       `${pc.bold("STAGESYNC_REPO_DEV")}: ${pc.dim("nieustawiona")}`,
     );
   }
-  if (process.env.STAGESYNC_DATA_DIR) {
-    clack.log.info(
-      `${pc.bold("STAGESYNC_DATA_DIR")}: ${pc.dim(process.env.STAGESYNC_DATA_DIR)}`,
+  // 12. Typ systemu plików i lokalizacja repozytorium
+  if (rootDir.startsWith("/Volumes/")) {
+    clack.log.warn(
+      `${pc.bold("System plików")}: Repozytorium na wolumenie zewnętrznym ${pc.yellow("(/Volumes/…)")} — ${pc.dim("uwaga na pliki metadanych macOS AppleDouble (._*)")}`,
+    );
+  } else {
+    clack.log.success(
+      `${pc.bold("System plików")}: ${pc.green("Lokalny dysk systemowy (APFS)")}`,
     );
   }
 }
