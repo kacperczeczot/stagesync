@@ -126,7 +126,22 @@ function parseTurboFailedPackages(output: string): string[] {
   return [...pkgs];
 }
 
+export function ensureNoAppleDoubleFiles(): void {
+  // Purge any ghost AppleDouble files (._*) on macOS/external volumes before running linter/tests
+  if (process.platform === "darwin" || rootDir.startsWith("/Volumes/")) {
+    try {
+      execSync("find . -name '._*' -not -path './.git/*' -delete", {
+        cwd: rootDir,
+        stdio: "ignore",
+      });
+    } catch {
+      // ignoruj ewentualne błędy find
+    }
+  }
+}
+
 export function ensureSharedBuiltForGate(): void {
+  ensureNoAppleDoubleFiles();
   const distEntry = path.join(rootDir, "packages/shared/dist/index.js");
   if (fs.existsSync(distEntry)) return;
   clack.log.warn(
@@ -781,6 +796,7 @@ export async function runFullAudit(): Promise<boolean> {
     "Kompletny audyt: format → CI → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",
     "Audyt",
   );
+  ensureNoAppleDoubleFiles();
   const steps: GateStep[] = [
     gateStepMutatingPnpm("format", "format (Prettier)", ["format"]),
     ...runCiLikeVerifySteps(),
