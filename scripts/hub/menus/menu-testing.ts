@@ -23,7 +23,7 @@ export async function menuTestingVerify() {
     options: [
       {
         value: "ci-mirror",
-        label: "1. ✅  Lustrzane CI (types + ss-css + lint + test, bez zapisu)",
+        label: "1. ✅  Lustrzane CI (clean ._* + types + ss-css + lint + test, bez zapisu)",
       },
       {
         value: "daily",

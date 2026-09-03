@@ -428,7 +428,7 @@ export function runCiLikeVerifySteps(): GateStep[] {
 
 export async function runCiLikeVerify(): Promise<boolean> {
   clack.note(
-    `Lustrzane CI: check-types → lint:ss-css → lint → test ${pc.dim("(bez formatu)")}…`,
+    `Lustrzane CI: clean ._* → check-types → lint:ss-css → lint → test ${pc.dim("(bez formatu)")}…`,
     "CI-like",
   );
   const steps = runCiLikeVerifySteps();
