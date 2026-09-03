@@ -23,18 +23,16 @@ export async function menuTestingVerify() {
     options: [
       {
         value: "ci-mirror",
-        label:
-          "1. ✅  Lustrzane CI (clean ._* → types → ss-css → lint → test, bez zapisu)",
+        label: "1. ✅  Lustrzane CI (types + ss-css + lint + test, bez zapisu)",
       },
       {
         value: "daily",
-        label:
-          "2. 🚀  Codzienny gate (clean ._* → format → types → ss-css → lint → test → links → knip)",
+        label: "2. 🚀  Codzienny gate (+ format + links + knip)",
       },
       {
         value: "full-audit",
         label:
-          "3. 🧨  Kompletny audyt (clean ._* → format → CI → links → unlinked → knip → map → coverage → e2e → build → launcher → version → audit)",
+          "3. 🧨  Kompletny audyt (+ unlinked, map, coverage, e2e, build, launcher, version, audit)",
       },
       { value: "back", label: "0. ↩️   Powrót" },
     ],

@@ -428,7 +428,7 @@ export function runCiLikeVerifySteps(): GateStep[] {
 
 export async function runCiLikeVerify(): Promise<boolean> {
   clack.note(
-    `Lustrzane CI: clean ._* → check-types → lint:ss-css → lint → test ${pc.dim("(bez formatu)")}…`,
+    `Lustrzane CI: check-types → lint:ss-css → lint → test ${pc.dim("(bez formatu)")}…`,
     "CI-like",
   );
   const steps = runCiLikeVerifySteps();
@@ -444,7 +444,7 @@ export async function runDailyGate(): Promise<boolean> {
     "Reszta kroków tylko sprawdza (types / ss-css / lint / test / links / knip)",
   ]);
   clack.note(
-    "Codzienny gate: clean ._* → format → check-types → lint:ss-css → lint → test → links → knip…",
+    "Codzienny gate: format → check-types → lint:ss-css → lint → test → links → knip…",
     "Gate",
   );
   const steps: GateStep[] = [
@@ -793,7 +793,7 @@ export async function runFullAudit(): Promise<boolean> {
     "sync:launcher-ui może nadpisać apps/desktop/launcher/vendor/*.css",
   ]);
   clack.note(
-    "Kompletny audyt: clean ._* → format → types → ss-css → lint → test → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",
+    "Kompletny audyt: format → CI → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",
     "Audyt",
   );
   ensureNoAppleDoubleFiles();
