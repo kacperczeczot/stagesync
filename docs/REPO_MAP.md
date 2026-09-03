@@ -6,15 +6,15 @@
 
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
-* **Liczba wszystkich plików:** 1625
+* **Liczba wszystkich plików:** 1628
 * **Liczba katalogów:** 247
-* **Data aktualizacji:** 2026-09-03T23:53:39.748Z
+* **Data aktualizacji:** 2026-09-03T23:56:15.602Z
 
 ### Kategorie
 
 | Kategoria | Liczba plików |
 | :--- | ---: |
-| Kod | 1224 |
+| Kod | 1227 |
 | Docs | 135 |
 | Config | 119 |
 | Assety | 120 |
@@ -25,7 +25,7 @@
 | Rozszerzenie | Liczba plików |
 | :--- | ---: |
 | `.ts` | 753 |
-| `.tsx` | 285 |
+| `.tsx` | 288 |
 | `.md` | 122 |
 | `.png` | 94 |
 | `.kt` | 71 |
@@ -40,18 +40,18 @@
 
 ## 🏛️ Przegląd Architektury
 
-- **apps/** (1230) — Aplikacje wykonawcze i powłoki klienckie w monorepo
+- **apps/** (1233) — Aplikacje wykonawcze i powłoki klienckie w monorepo
   - **console/** (97) — Android WebView shell dla interfejsu /admin (ADR 0016)
   - **desktop/** (108) — Tauri thin shell dla serwera lokalnego na desktop (ADR 0010)
   - **performer/** (71) — Android WebView shell dla interfejsu /client (ADR 0016)
   - **server/** (167) — Główny backend Node.js — SSOT Host, Master Clock, REST/WS API
-  - **web/** (757) — Aplikacja webowa React/Vite (Admin, Client, Timeline, Mikser)
+  - **web/** (760) — Aplikacja webowa React/Vite (Admin, Client, Timeline, Mikser)
     - **e2e/** (3) — Testy integracyjne E2E (Playwright)
     - **public/** (10) — Zasoby statyczne i favicon
       - **brand/** (5) — Materiały brandingowe i logotypy StageSync
     - **scripts/** (11) — Skrypty pomocnicze builda i benchmarków webowych
       - **benchmark/** (9) — Skrypty benchmarków wydajnościowych UI/Audio
-    - **src/** (713) — Kod źródłowy UI i logiki klienta
+    - **src/** (716) — Kod źródłowy UI i logiki klienta
       - **dev/** (18) — Narzędzia i panele deweloperskie wewnątrz aplikacji
       - **lib/** (247) — Biblioteki klienta (5 kategorii — bez plików w lib root)
         - **audio/** (62) — DSP, AudioContext, tempo, waveform
@@ -60,7 +60,7 @@
         - **timeline/** (51) — Silnik renderowania timeline (bez mutacji treści)
         - **timeline-edit/** (35) — Mutacje treści klipów (akordy, cue, forma, tekst)
       - **shells/** (424) — Powłoki Admin / Client / Timeline
-      - **transport/** (15) — Transport WS, playhead, probe wydajności
+      - **transport/** (18) — Transport WS, playhead, probe wydajności
     - **test/** (9) — Testy jednostkowe i mocki aplikacji webowej
       - **benchmark/** (1) — Testy wydajnościowe struktur danych
       - **fixtures/** (8) — Przykładowe dane testowe projektów i timeline
@@ -520,11 +520,14 @@ stagesync/
 │   │   │   │   ├── h01PerfProbe.test.ts
 │   │   │   │   ├── h01PerfProbe.ts
 │   │   │   │   ├── noteLatencySample.test.ts
+│   │   │   │   ├── transport.test-helpers.tsx
 │   │   │   │   ├── transportContext.ts
 │   │   │   │   ├── TransportProvider.test.tsx
 │   │   │   │   ├── TransportProvider.tsx
+│   │   │   │   ├── TransportProviderMessages.test.tsx
 │   │   │   │   ├── transportReducer.test.ts
 │   │   │   │   ├── transportReducer.ts
+│   │   │   │   ├── transportTestHelpers.tsx
 │   │   │   │   ├── useTransport.ts
 │   │   │   │   ├── useTransportInterpolation.ts
 │   │   │   │   ├── useTransportSocket.ts
