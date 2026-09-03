@@ -371,6 +371,16 @@ export function parseVitestTestsDetail(output: string): string | undefined {
   return parts.join(", ");
 }
 
+/** Extract ESLint warning count across turbo packages for gate summary detail. */
+export function parseEslintWarningsDetail(output: string): string | undefined {
+  const plain = stripAnsi(output);
+  const matches = [...plain.matchAll(/(\d+)\s+warning/gi)];
+  if (matches.length === 0) return undefined;
+  // Take the last summary line or sum distinct package reports
+  const last = matches.at(-1);
+  return last ? `${last[1]} warnings` : undefined;
+}
+
 export function parseCoverageStmtsDetail(output: string): string | undefined {
   const m = stripAnsi(output).match(
     /All files\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)/,
@@ -433,7 +443,9 @@ export function runCiLikeVerifySteps(): GateStep[] {
   return [
     gateStepFromCaptured("types", "check-types", "pnpm", ["check-types"]),
     gateStepFromCaptured("ss-css", "lint:ss-css", "pnpm", ["lint:ss-css"]),
-    gateStepFromCaptured("lint", "lint", "pnpm", ["lint"]),
+    gateStepFromCaptured("lint", "lint", "pnpm", ["lint"], {
+      ok: parseEslintWarningsDetail,
+    }),
     gateStepFromCaptured("test", "test", "pnpm", ["test"], {
       ok: parseVitestTestsDetail,
     }),
