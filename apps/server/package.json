@@ -16,13 +16,13 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@sentry/node": "^10.70.0",
+    "@sentry/node": "^10.73.0",
     "@stagesync/shared": "workspace:*",
     "bonjour-service": "^1.4.4",
     "easymidi": "^3.2.0",
     "express": "^5.2.1",
-    "express-rate-limit": "^8.6.2",
-    "multer": "^2.2.0",
+    "express-rate-limit": "^8.7.0",
+    "multer": "^2.3.0",
     "ws": "^8.21.3"
   },
   "devDependencies": {
@@ -30,12 +30,12 @@
     "@stagesync/typescript-config": "workspace:*",
     "@types/express": "^5.0.6",
     "@types/multer": "^2.2.0",
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.4.1",
     "@types/ws": "^8.18.1",
-    "@vitest/coverage-v8": "^4.1.10",
-    "eslint": "^10.8.1",
-    "tsx": "^4.23.12",
+    "@vitest/coverage-v8": "^5.0.0",
+    "eslint": "^10.9.1",
+    "tsx": "^4.23.13",
     "typescript": "7.0.2",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.0"
   }
 }
