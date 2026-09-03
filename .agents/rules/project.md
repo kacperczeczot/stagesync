@@ -53,6 +53,6 @@ Niniejszy plik stanowi **KANONICZNE ŹRÓDŁO PRAWDY (SSOT)** dla rozwoju StageS
 ## 📚 Dokumentacja i Proces
 
 - **Changelog (Keep a Changelog):** Wpisy tylko dla zmian widocznych dla użytkownika. Format: H3 (Dodano/Zmieniono/Naprawiono) + H4 z emoji (np. `#### ⏱️ Timeline & DAW`).
-- **TODO Hygiene:** Plik `docs/TODO.md` zawiera tylko aktywne zadania. Zakaz trzymania zrealizowanych `[x]`.
+- **TODO Hygiene:** Plik [`docs/TODO.md`](../../docs/TODO.md) zawiera tylko aktywne zadania. Zakaz trzymania zrealizowanych `[x]`.
 - **Rejestr Decyzji:** `docs/architecture/adr/`.
 - **Standardy Globalne:** Centralna Konstytucja [`devex-standards`](https://github.com/kacperczeczot/devex-standards).

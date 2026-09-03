@@ -42,16 +42,16 @@
 
 ## Co już jest na dysku (nie wdrażać drugi raz)
 
-| Temat dumpu                         | Stan w v5                                                                                                         |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Mapa tempa projektu (`tempoMap`)    | Zod + ticks↔ms along map                                                                                          |
+| Temat dumpu                         | Stan w v5                                                                                                      |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Mapa tempa projektu (`tempoMap`)    | Zod + ticks↔ms along map                                                                                       |
 | Smart Tempo = mapa za audio (Adapt) | [`smart-tempo.ts`](../../../../packages/shared/src/smart-tempo/smart-tempo.ts), ADR 0015                       |
 | Onset / beat grid z PCM             | [`audioTempoAnalysis.ts`](../../../../apps/web/src/lib/audio/audioTempoAnalysis.ts) (energy flux + ACF + grid) |
-| Drift Gate / rzadkie węzły          | `evaluateDriftGate`, `sparsifyTempoNodesFromBeatGrid`                                                             |
-| Beat Mapper + offset Beat 1         | Import UI / `BeatMapperPane`                                                                                      |
-| Keep / Flex stretch                 | **OUT**                                                                                                           |
-| Essentia / WASM / full Ellis DBN    | **Brak** (Viterbi-like DP on-tree — [AST](./Implementacja-Smart-Tempo-w-Antigravity.triage.md))                   |
-| Ciągły re-seek audio podczas play   | **Brak** (tylko jump / graph change)                                                                              |
+| Drift Gate / rzadkie węzły          | `evaluateDriftGate`, `sparsifyTempoNodesFromBeatGrid`                                                          |
+| Beat Mapper + offset Beat 1         | Import UI / `BeatMapperPane`                                                                                   |
+| Keep / Flex stretch                 | **OUT**                                                                                                        |
+| Essentia / WASM / full Ellis DBN    | **Brak** (Viterbi-like DP on-tree — [AST](./Implementacja-Smart-Tempo-w-Antigravity.triage.md))                |
+| Ciągły re-seek audio podczas play   | **Brak** (tylko jump / graph change)                                                                           |
 
 ## Pipeline dumpu vs StageSync (skrót)
 

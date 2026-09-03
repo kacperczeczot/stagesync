@@ -25,14 +25,14 @@
 | ------ | ------------------------------------------------------------------------------ | --------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | AST-01 | Tylko **Adapt**; Keep / Flex Time OUT; PCM 1.0× free-run                       | P0        | `confirmed` / shipped 5.4.2          | = ADR 0015 Smart Tempo; Flex OUT ADR 0017. Zgodne z DTM-01/02/04.                                                                                                                         |
 | AST-02 | Oś = **ticks** (PPQ 480); passive events na mapie                              | P0        | `confirmed`                          | ADR 0002; Zod `tempoMap`.                                                                                                                                                                 |
-| AST-03 | Sub-bas LPF ~250 Hz + flux `3·low + 1·wide`                                    | P0        | `confirmed` / on-tree                | `analyzeFromMono` async path w [`audioTempoAnalysis.ts`](../../../../apps/web/src/lib/audio/audioTempoAnalysis.ts).                                                                    |
+| AST-03 | Sub-bas LPF ~250 Hz + flux `3·low + 1·wide`                                    | P0        | `confirmed` / on-tree                | `analyzeFromMono` async path w [`audioTempoAnalysis.ts`](../../../../apps/web/src/lib/audio/audioTempoAnalysis.ts).                                                                       |
 | AST-04 | ACF 60–200 BPM + prior Gaussa (floor 0.45) vs octave error                     | P0        | `confirmed` / REVISE params          | Na dysku: `musicalPriorBpm` center **120**, σ **18** (dump: 121 / 15) — świadomie ogólny, nie song-band.                                                                                  |
 | AST-05 | `estimateBpmFromBarHarmonics` (harmonika taktowa / kick)                       | P1        | `confirmed` / on-tree                | Używane przy low-end lock gdy brak seed.                                                                                                                                                  |
 | AST-06 | Two-pass Viterbi + mediana IBI + EMA lokalnego okresu                          | P1        | `partial`                            | Dump: uproszczony nearest-onset „Viterbi”. Dysk: prawdziwszy DP (`buildBeatGridViterbi` + median IBI / period clamp). Brak pełnego Ellis DBN z kosztem $F(\Delta t,\tau_p)$ jak w DTM-06. |
 | AST-07 | Interpolacja paraboliczna szczytów ACF/ODF                                     | P1        | `confirmed` / partial                | Obecna przy lag ACF; nie każdy onset.                                                                                                                                                     |
 | AST-08 | Structural anchoring / $t_0$ → tick 0 + `trimInMs`                             | P0        | `confirmed`                          | `audioStartOffsetMs` + clip trim; override użytkownika chroniony.                                                                                                                         |
 | AST-09 | Sparsyfikacja: downbeat-only, okno 4 beaty, Drift Gate, maxStep 5, quiet clamp | P0        | `confirmed`                          | `SMART_TEMPO_SPARSE_*` + `sparsifyTempoNodesFromBeatGrid` (quietTooLong + clamp maxStep).                                                                                                 |
-| AST-10 | Metryka **Timestamp Drift** `errorMs(k)` + bariera t₀ ≤ 15 ms                  | P0        | `confirmed` / tooling                | `smartTempoBenchmark.test.ts`, [`record-benchmark.ts`](../../../../apps/web/scripts/benchmark/record-benchmark.ts), generate dataset — nie claim green PO.                             |
+| AST-10 | Metryka **Timestamp Drift** `errorMs(k)` + bariera t₀ ≤ 15 ms                  | P0        | `confirmed` / tooling                | `smartTempoBenchmark.test.ts`, [`record-benchmark.ts`](../../../../apps/web/scripts/benchmark/record-benchmark.ts), generate dataset — nie claim green PO.                                |
 | AST-11 | Bench 4 utworów (Survive / Winner / Billie / Teen Spirit) jako SSOT jakości    | P0        | `limit` / **reject as product SSOT** | Dataset OK do regresji lokalnej; **zakaz** wpinania Winner BPM / per-song hacks do silnika. Dryf żywej sekcji = residual jakości (Later), nie „brak Smart Tempo”.                         |
 | AST-12 | Blueprint TS (`extractSubBass…`, `runTwoPassViterbi…`) jako kanon API          | P2        | `rejected` as SSOT                   | Szkic agenta; kanon = istniejące moduły shared/web. Nie drugi silnik.                                                                                                                     |
 | AST-13 | WASM Essentia.js / STFT off-main-thread                                        | P2        | `hypothesis` / Later                 | = DTM-07; po bench vs obecny TS.                                                                                                                                                          |
@@ -41,18 +41,18 @@
 
 ## Co już jest na dysku (nie wdrażać drugi raz)
 
-| Temat dumpu                          | Stan w v5                                                                              |
-| ------------------------------------ | -------------------------------------------------------------------------------------- |
-| Adapt-only Smart Tempo 5.4.2         | Wydane (`v5.4.2`); ADR 0015                                                            |
+| Temat dumpu                          | Stan w v5                                                                           |
+| ------------------------------------ | ----------------------------------------------------------------------------------- |
+| Adapt-only Smart Tempo 5.4.2         | Wydane (`v5.4.2`); ADR 0015                                                         |
 | Sub-bas dual-band flux               | [`audioTempoAnalysis.ts`](../../../../apps/web/src/lib/audio/audioTempoAnalysis.ts) |
-| ACF + musical prior + bar harmonics  | on-tree                                                                                |
-| Beat path Viterbi-like + snap/scale  | `buildBeatGridViterbi` / `buildBeatGridAsync`                                          |
+| ACF + musical prior + bar harmonics  | on-tree                                                                             |
+| Beat path Viterbi-like + snap/scale  | `buildBeatGridViterbi` / `buildBeatGridAsync`                                       |
 | Sparsyfikacja + Drift Gate + maxStep | [`smart-tempo.ts`](../../../../packages/shared/src/smart-tempo/smart-tempo.ts)      |
-| Beat 1 / trimInMs                    | Import + Beat Mapper                                                                   |
-| Benchmark errorMs / ≤15 ms t₀        | testy + skrypty launch                                                                 |
-| Keep / Flex stretch                  | **OUT 5.x**                                                                            |
-| Essentia WASM / stem ML / full DBN   | **Brak** (Later)                                                                       |
-| Per-song Winner BPM w SSOT           | **Zakaz**                                                                              |
+| Beat 1 / trimInMs                    | Import + Beat Mapper                                                                |
+| Benchmark errorMs / ≤15 ms t₀        | testy + skrypty launch                                                              |
+| Keep / Flex stretch                  | **OUT 5.x**                                                                         |
+| Essentia WASM / stem ML / full DBN   | **Brak** (Later)                                                                    |
+| Per-song Winner BPM w SSOT           | **Zakaz**                                                                           |
 
 ## Sprzeczności / ryzyka
 

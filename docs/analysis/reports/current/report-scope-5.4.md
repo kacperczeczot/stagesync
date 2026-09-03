@@ -1,4 +1,3 @@
-
 # Scope 5.4 — Syllables (fundament timed lyrics + Ingest)
 
 **Wersja:** `5.4.x` — **Syllables**  
@@ -19,16 +18,16 @@ Jeden hero **Syllables**: timed lyrics (sylaby w tickach) + **widoczny** import 
 
 ## Kontrakt IN / OUT
 
-| IN 5.4                                                                               | OUT 5.4                                                                                                                      |
-| ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `formatVersion` bump + migrator bez milczącej utraty `tekst` / `akordy` / audio      | Osobny `StageSyncSongAST` jako drugi SSOT w storage                                                                          |
-| Sylaby / word blocks: `startTicks` + `lengthTicks` (+ tekst)                         | Czas w ms jako kanon storage                                                                                                 |
-| Opcjonalne `role` na liniach / blokach                                               | Widok publiczny `/karaoke` (TV) — **6.1**                                                                                    |
-| Opcjonalna ścieżka melodii w schemacie                                               | Guest `/request` / Jukebox queue — **6.1**                                                                                   |
-| Provenance opcjonalnie (`isAutoPlaced` / `isUserOverridden`) — gdy PO chce re-import | Cloud AI / zewnętrzne API ingestii                                                                                           |
+| IN 5.4                                                                               | OUT 5.4                                                                                                                   |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `formatVersion` bump + migrator bez milczącej utraty `tekst` / `akordy` / audio      | Osobny `StageSyncSongAST` jako drugi SSOT w storage                                                                       |
+| Sylaby / word blocks: `startTicks` + `lengthTicks` (+ tekst)                         | Czas w ms jako kanon storage                                                                                              |
+| Opcjonalne `role` na liniach / blokach                                               | Widok publiczny `/karaoke` (TV) — **6.1**                                                                                 |
+| Opcjonalna ścieżka melodii w schemacie                                               | Guest `/request` / Jukebox queue — **6.1**                                                                                |
+| Provenance opcjonalnie (`isAutoPlaced` / `isUserOverridden`) — gdy PO chce re-import | Cloud AI / zewnętrzne API ingestii                                                                                        |
 | Client: highlight timed lyrics na istniejącym `/client` Karaoke                      | InputStrip / Audio Suite / automation / recording ([ADR 0018../../../architecture/adr/0018-future-audio-architecture.md)) |
 | UltraStar → ticks → `tekst` (+ melody); bridging US+UG gdy fixtures                  | Atrapy UI „na zapas” ([ADR 0011../../../architecture/adr/0011-ui-parity-behavior.md) §1a)                                 |
-| Testy shared Zod + migrator golden (+ ścieżka importu przy cutcie)                   | Osobny hero / tag tylko za schema V6                                                                                         |
+| Testy shared Zod + migrator golden (+ ścieżka importu przy cutcie)                   | Osobny hero / tag tylko za schema V6                                                                                      |
 
 ## IN (must) — orientacja
 

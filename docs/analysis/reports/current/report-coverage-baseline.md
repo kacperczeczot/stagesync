@@ -1,4 +1,3 @@
-
 # Raport: Bazowe Pokrycie Testami (Coverage Baseline)
 
 **Data:** 2026-08-12  
@@ -93,4 +92,4 @@ W architekturze monorepo StageSync stosujemy zasadę **izolacji odpowiedzialnoś
 | **DSP Accuracy**        | `apps/web/scripts/benchmark`                        | Dataset 4 referencyjnych utworów     | **Brak regresji** DAW Grade / Stage Grade |
 | **Desktop Shell**       | `apps/desktop`                                      | Node test runner + Tauri cargo check | **100% pass** testów launchera            |
 | **Android Shells**      | `apps/console`, `apps/performer`                    | Gradle JVM unit tests                | Czysty build i poprawne działanie WebView |
-| **Bramka Beta/Release** | `docs/analysis/reports/current/report-beta-gate.md` | Checklista G1–G10                    | Weryfikacja operatorska na fizycznym HW   |
+| **Bramka Beta/Release** | [`docs/analysis/reports/current/report-beta-gate.md`](./report-beta-gate.md) | Checklista G1–G10                    | Weryfikacja operatorska na fizycznym HW   |

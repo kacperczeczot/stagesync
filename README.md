@@ -110,8 +110,8 @@ Więcej informacji znajdziesz w pełnej [Dokumentacji DX](./docs/guides/DX.md).
 | 💡 **[ADR](docs/architecture/adr/README.md)**                | Architektura | Dziennik decyzji architektonicznych (_Architecture Decision Records_) |
 | 🔌 **[API](docs/architecture/api/README.md)**                | Architektura | Specyfikacja powierzchni REST API i punktów końcowych WebSocket       |
 | 🎨 **[UI](docs/architecture/ui/README.md)**                  | Architektura | Przewodnik po Design Systemie, komponentach i tokenach CSS            |
-| 📐 **[STANDARDS](docs/STANDARDS.md)**              | Standardy    | Standardy zewnętrzne (SemVer, Conventional Commits, TSDoc)            |
-| 🧪 **[TESTING](docs/TESTING.md)**                  | Standardy    | Strategia testowa, bramki CI i minimalne/zalecane progi pokrycia      |
+| 📐 **[STANDARDS](docs/STANDARDS.md)**                        | Standardy    | Standardy zewnętrzne (SemVer, Conventional Commits, TSDoc)            |
+| 🧪 **[TESTING](docs/TESTING.md)**                            | Standardy    | Strategia testowa, bramki CI i minimalne/zalecane progi pokrycia      |
 | 🚀 **[INSTALL](docs/guides/INSTALL.md)**                     | Podręczniki  | Produkcyjne wdrożenie Docker Compose / GHCR (PIN, Safety Net, motyw)  |
 | 🖥️ **[DESKTOP](docs/guides/DESKTOP.md)**                     | Podręczniki  | Instalatory Tauri (`.dmg`, `.exe`), Launcher i aktualizacja           |
 | 📱 **[MOBILE](docs/guides/MOBILE.md)**                       | Podręczniki  | Performer / Console — sideload APK, QR, Offline-First                 |

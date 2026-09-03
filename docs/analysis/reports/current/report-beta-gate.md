@@ -1,4 +1,3 @@
-
 # Beta gate — bramka przed / po `5.0.0-beta.*`
 
 **Data:** 2026-07-21  

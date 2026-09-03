@@ -1,4 +1,3 @@
-
 # Report: Align ADR Dual Engine + VST Freeze
 
 **Data:** 2026-08-09  
@@ -22,8 +21,8 @@
 
 ## Zmienione pliki
 
-| Plik                                                                                                                             | Zmiana                                      |
-| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| Plik                                                                                                                          | Zmiana                                      |
+| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
 | [`docs/adr/0019-dual-engine-studio-live.md`../../../architecture/adr/0019-dual-engine-studio-live.md)                         | **Nowy** — Dual Engine                      |
 | [`docs/adr/0018-future-audio-architecture.md`../../../architecture/adr/0018-future-audio-architecture.md)                     | Amend Zero-Crash, filar 4, §5 IN/OUT, §6/§7 |
 | [`docs/adr/README.md`../../../architecture/adr/README.md)                                                                     | Indeks 0019                                 |
@@ -33,7 +32,7 @@
 | [`docs/ARCHITECTURE.md`../../architecture/ARCHITECTURE.md)                                                                    | Wskaźnik 0019                               |
 | [`docs/ROADMAP.md`../../../ROADMAP.md)                                                                                        | Język 6.0 Live Suite + Dual Engine          |
 | [`docs/TODO.md`../../../TODO.md)                                                                                              | Pozycja 6.0.0 + residual numeracji 6.1      |
-| `…/analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage.md`                                                                   | RM-08/09 → `adr`                            |
+| `…/analiza-produktowo-wdrozeniowa-stagesync-roadmap.triage.md`                                                                | RM-08/09 → `adr`                            |
 
 ## Poza zakresem
 
