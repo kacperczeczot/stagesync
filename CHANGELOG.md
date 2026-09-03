@@ -1535,7 +1535,7 @@ na helperach czasu / soft playhead (`@stagesync/shared`).
   indeks ADR + słownik statusów ([docs/architecture/adr/README.md](docs/architecture/adr/README.md)).
 - Fundament gęstości UI: skala `--ss-space-1…16`, elevation
   (`surface` / `elevated`), `border-muted`, scenic scrollbary, reguła
-  ``ui-density.mdc``; Button `iconOnly` +
+  `ui-density.mdc`; Button `iconOnly` +
   focus outline / `@media (hover: hover)`; remap shelli Admin / Client /
   Timeline na tokeny spacingu.
 - Tokeny typografii: `--ss-text-*` (w tym `control` pod Button/inputy),
