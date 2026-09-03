@@ -11,7 +11,6 @@ import {
 } from "../utils.js";
 import {
   runCiLikeVerify,
-  runDailyGate,
   runFullAudit,
   runWebE2eWithBrowserBootstrap,
 } from "../gate.js";
@@ -27,13 +26,9 @@ export async function menuTestingVerify() {
           "1. ✅  Lustrzane CI (clean ._* + types + ss-css + lint + test, bez zapisu)",
       },
       {
-        value: "daily",
-        label: "2. 🚀  Codzienny gate (+ format + links + knip)",
-      },
-      {
         value: "full-audit",
         label:
-          "3. 🧨  Kompletny audyt (+ unlinked + map + coverage + e2e + build + desktop + audit)",
+          "2. 🧨  Pełny audyt (+ format + links + unlinked + knip + map + coverage + e2e + build + desktop + audit)",
       },
       { value: "back", label: "0. ↩️   Powrót" },
     ],
@@ -44,27 +39,14 @@ export async function menuTestingVerify() {
   if (choice === "ci-mirror") {
     await runCiLikeVerify();
     await waitReturn();
-  } else if (choice === "daily") {
-    if (
-      !(await confirmDanger(
-        "Codzienny gate zapisze pliki (Prettier). Uruchomić?",
-        true,
-      ))
-    ) {
-      clack.log.info("Anulowano Codzienny gate.");
-      await waitReturn();
-      return;
-    }
-    await runDailyGate();
-    await waitReturn();
   } else if (choice === "full-audit") {
     if (
       !(await confirmDanger(
-        "Kompletny audyt: ~25s, format + auto-fix docs + e2e (zwalnia :3000/:4000). Uruchomić?",
+        "Pełny audyt: ~25s, format + auto-fix docs + e2e (zwalnia :3000/:4000). Uruchomić?",
         true,
       ))
     ) {
-      clack.log.info("Anulowano Kompletny audyt.");
+      clack.log.info("Anulowano Pełny audyt.");
       await waitReturn();
       return;
     }

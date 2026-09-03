@@ -50,6 +50,7 @@ const VERIFY_LOG_SLUGS: Record<string, string> = {
   "Lustrzane CI": "ci-mirror",
   "Codzienny gate": "daily",
   "Kompletny audyt": "full-audit",
+  "Pełny audyt": "full-audit",
 };
 
 export function initVerifySaveLogFromArgs(args: string[]): string[] {
@@ -806,7 +807,7 @@ export async function runFullAudit(): Promise<boolean> {
     "sync:launcher-ui może nadpisać apps/desktop/launcher/vendor/*.css",
   ]);
   clack.note(
-    "Kompletny audyt: format → CI → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",
+    "Pełny audyt: format → CI → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",
     "Audyt",
   );
   ensureNoAppleDoubleFiles();
@@ -873,7 +874,7 @@ export async function runFullAudit(): Promise<boolean> {
       fail: (output) => parsePnpmAuditDetail(output, false),
     }),
   ];
-  const ok = summarizeGate("Kompletny audyt", steps);
-  await offerSaveVerifyLog("Kompletny audyt", steps);
+  const ok = summarizeGate("Pełny audyt", steps);
+  await offerSaveVerifyLog("Pełny audyt", steps);
   return ok;
 }
