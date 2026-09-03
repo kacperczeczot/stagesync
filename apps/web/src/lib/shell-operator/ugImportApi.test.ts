@@ -55,8 +55,9 @@ describe("ugImportApi", () => {
 
     const data = await searchUgTabs("Hi", "A");
     expect(data.results).toHaveLength(1);
-    expect((fetchMock.mock.calls as any[])[0][0]).toBe(
+    expect(fetchMock).toHaveBeenCalledWith(
       "/api/import/ultimate-guitar/search",
+      expect.objectContaining({ method: "POST" }),
     );
   });
 

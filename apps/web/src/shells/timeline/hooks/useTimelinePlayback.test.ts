@@ -86,9 +86,10 @@ describe("useTimelinePlayback", () => {
         state: {
           playing: false,
           positionTicks: 0,
+          bpm: 120,
           timeSignature: { numerator: 4, denominator: 4 },
           ppq: 960,
-        } as any,
+        },
         seek,
         play,
         pause,
@@ -146,9 +147,10 @@ describe("useTimelinePlayback", () => {
         state: {
           playing: false,
           positionTicks: 0,
+          bpm: 120,
           timeSignature: { numerator: 4, denominator: 4 },
           ppq: 960,
-        } as any,
+        },
         seek,
         play,
         pause,

@@ -8,6 +8,8 @@ import {
   type DraftItem,
 } from "./setlistDraft.js";
 
+import type { LibraryProjectEntry, SetlistView } from "@stagesync/shared";
+
 describe("setlistDraft", () => {
   it("generates random break ids", () => {
     const id1 = newBreakId();
@@ -17,12 +19,26 @@ describe("setlistDraft", () => {
   });
 
   it("converts view items to draft items and back", () => {
-    const view: any = {
+    const view = {
+      id: "s1",
+      name: "Main Set",
       items: [
-        { type: "project", projectId: "p1" },
-        { type: "break", id: "b1", label: "Przerwa", durationMinutes: 15 },
+        {
+          type: "project",
+          projectId: "p1",
+          name: "Song 1",
+          durationMs: 180000,
+          estimated: false,
+        },
+        {
+          type: "break",
+          id: "b1",
+          label: "Przerwa",
+          durationMinutes: 15,
+          durationMs: 900000,
+        },
       ],
-    };
+    } as unknown as SetlistView;
 
     const draft = viewItemsToDraft(view);
     expect(draft).toHaveLength(2);
@@ -39,7 +55,12 @@ describe("setlistDraft", () => {
   });
 
   it("calculates project duration with fallback and estimates total duration", () => {
-    const entryWithDur: any = { id: "p1", durationMs: 180000 };
+    const entryWithDur: LibraryProjectEntry = {
+      id: "p1",
+      name: "Song 1",
+      updatedAt: "2026-07-20T12:00:00.000Z",
+      durationMs: 180000,
+    };
     expect(projectDurationMs(entryWithDur)).toBe(180000);
     expect(projectDurationMs(undefined)).toBeGreaterThan(0);
 

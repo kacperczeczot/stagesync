@@ -58,8 +58,9 @@ describe("ultrastarImportApi", () => {
 
     const data = await searchUltrastarSongs("Hi", "A");
     expect(data.results).toHaveLength(1);
-    expect((fetchMock.mock.calls as any[])[0][0]).toBe(
+    expect(fetchMock).toHaveBeenCalledWith(
       "/api/import/ultrastar/search",
+      expect.objectContaining({ method: "POST" }),
     );
   });
 

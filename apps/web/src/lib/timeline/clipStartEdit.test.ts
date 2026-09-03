@@ -14,7 +14,7 @@ describe("clipStartEdit", () => {
     "p",
     "S",
     "2026-07-23T00:00:00.000Z",
-  ) as any;
+  );
 
   it("converts ticks ↔ display bar.beat", () => {
     expect(clipStartBarBeat(project, 0)).toEqual({ bar: 1, beat: 1 });

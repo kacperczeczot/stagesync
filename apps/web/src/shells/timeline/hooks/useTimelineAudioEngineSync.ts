@@ -1,5 +1,9 @@
 import { useEffect, type Dispatch, type SetStateAction } from "react";
-import type { Project, TempoMapProject, TransportLoop } from "@stagesync/shared";
+import type {
+  Project,
+  TempoMapProject,
+  TransportLoop,
+} from "@stagesync/shared";
 import { wrapDisplayTicks } from "@stagesync/shared";
 import {
   allowAudioPlayback,

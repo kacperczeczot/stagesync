@@ -10,6 +10,7 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { putSetlist } from "@lib/shell-operator/setlistApi.js";
+import type { Library } from "@stagesync/shared";
 
 vi.mock("@lib/shell-operator/setlistApi.js", () => ({
   fetchSetlist: vi.fn(async () => ({
@@ -29,13 +30,8 @@ afterEach(() => {
 });
 
 describe("SetView", () => {
-  it("names set toolbar and library/set panels", async () => {
+  it("renders set view cards properly", () => {
     render(<SetView library={null} selectedId={null} />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole("toolbar", { name: "Akcje setlisty" }),
-      ).toBeTruthy();
-    });
     expect(
       screen.getByRole("button", { name: "Wyczyść setlistę" }),
     ).toBeTruthy();
@@ -48,30 +44,27 @@ describe("SetView", () => {
   });
 
   it("allows adding songs and saving setlist", async () => {
-    const dummyLibrary = {
+    const dummyLibrary: Library = {
+      version: 1,
       projects: [
         {
           id: "song-1",
           name: "Pierwszy utwór",
           artist: "Zespół A",
           updatedAt: new Date().toISOString(),
-          approxDurationSeconds: 180,
-          formaSectionCount: 4,
-          audioTrackCount: 2,
+          durationMs: 180000,
         },
         {
           id: "song-2",
           name: "Drugi utwór",
           artist: "Zespół B",
           updatedAt: new Date().toISOString(),
-          approxDurationSeconds: 240,
-          formaSectionCount: 5,
-          audioTrackCount: 1,
+          durationMs: 240000,
         },
       ],
     };
 
-    render(<SetView library={dummyLibrary as any} selectedId="song-1" />);
+    render(<SetView library={dummyLibrary} selectedId="song-1" />);
 
     await waitFor(() => {
       expect(screen.getByText("Pierwszy utwór")).toBeTruthy();

@@ -14,6 +14,7 @@ import {
 } from "@testing-library/react";
 import { CombinedUsUgImportForm } from "./CombinedUsUgImportForm.js";
 import { searchUltrastarSongs } from "@lib/shell-operator/ultrastarImportApi.js";
+import type { UgFetchResponse } from "@stagesync/shared";
 
 vi.mock("@lib/shell-operator/ultrastarImportApi.js", () => ({
   fetchUltrastarFromServer: vi.fn(),
@@ -251,14 +252,37 @@ describe("CombinedUsUgImportForm", () => {
       ],
     });
 
-    fetchUgTabFromServerMock.mockImplementation(async (url: string) => {
+    fetchUgTabFromServerMock.mockImplementation(async (url: string): Promise<UgFetchResponse> => {
       if (url === "https://ug.com/tab1") {
         return {
           content: "[Verse]\nRandom unrelated text",
-          metadata: { title: "Low Match Version" },
-        } as any;
+          metadata: {
+            title: "Low Match Version",
+            artist: "ABBA",
+            type: "Chords",
+            tonality: "C",
+            timeSignature: "4/4",
+            tempo: 120,
+            tuning: "E A D G B E",
+            tabId: 1,
+            url: "https://ug.com/tab1",
+          },
+        };
       }
-      return { content: ug, metadata: { title: "High Match Version" } } as any;
+      return {
+        content: ug,
+        metadata: {
+          title: "High Match Version",
+          artist: "ABBA",
+          type: "Chords",
+          tonality: "C",
+          timeSignature: "4/4",
+          tempo: 120,
+          tuning: "E A D G B E",
+          tabId: 2,
+          url: "https://ug.com/tab2",
+        },
+      };
     });
 
     render(

@@ -1,7 +1,10 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { TimelineDialogsContainer } from "./TimelineDialogsContainer.js";
+import {
+  TimelineDialogsContainer,
+  type TimelineDialogsContainerProps,
+} from "./TimelineDialogsContainer.js";
 import type { Project } from "@stagesync/shared";
 
 describe("TimelineDialogsContainer", () => {
@@ -27,7 +30,7 @@ describe("TimelineDialogsContainer", () => {
     assets: [],
   };
 
-  const baseProps: any = {
+  const baseProps: TimelineDialogsContainerProps = {
     blocker: { state: "unblocked" },
     projectId: "p1",
     draftProject: dummyProject,
@@ -57,7 +60,7 @@ describe("TimelineDialogsContainer", () => {
     eyeMenuPos: null,
     eyeMenuRef: { current: null },
     eyeMenuId: "eye-id",
-    trackVisibility: { forma: true } as any,
+    trackVisibility: { forma: true },
     toggleTrack: vi.fn(),
     toolsVisOpen: false,
     toolsVisMenuPos: null,

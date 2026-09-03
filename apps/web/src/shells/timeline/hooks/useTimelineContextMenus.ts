@@ -71,8 +71,10 @@ export type UseTimelineContextMenusOptions = {
   pasteClipClipboard: (targetTicks: number) => void;
   focusInspectorPanel: () => void;
   openContextMenu: (args: OpenContextMenuArgs) => void;
-  laneImportTrackIdRef: MutableRefObject<string | null> | RefObject<string | null>;
-  laneImportStartTicksRef: MutableRefObject<number | null> | RefObject<number | null>;
+  laneImportTrackIdRef:
+    MutableRefObject<string | null> | RefObject<string | null>;
+  laneImportStartTicksRef:
+    MutableRefObject<number | null> | RefObject<number | null>;
   laneAudioFileRef: RefObject<HTMLInputElement | null>;
   locatorTicks: number;
 };
@@ -365,10 +367,12 @@ export function useTimelineContextMenus({
           onImportAudio:
             laneKind === "audio" && audioTrackId
               ? () => {
-                  (laneImportTrackIdRef as MutableRefObject<string | null>).current =
-                    audioTrackId;
-                  (laneImportStartTicksRef as MutableRefObject<number | null>).current =
-                    null;
+                  (
+                    laneImportTrackIdRef as MutableRefObject<string | null>
+                  ).current = audioTrackId;
+                  (
+                    laneImportStartTicksRef as MutableRefObject<number | null>
+                  ).current = null;
                   laneAudioFileRef.current?.click();
                 }
               : undefined,

@@ -2,14 +2,18 @@
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { TimelineCanvasViewport } from "./TimelineCanvasViewport.js";
+import {
+  TimelineCanvasViewport,
+  type TimelineCanvasViewportProps,
+} from "./TimelineCanvasViewport.js";
 import type { Project } from "@stagesync/shared";
 
-global.ResizeObserver = class ResizeObserver {
+class MockResizeObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
-} as any;
+}
+global.ResizeObserver = MockResizeObserver as unknown as typeof ResizeObserver;
 
 describe("TimelineCanvasViewport", () => {
   const dummyProject: Project = {
@@ -44,7 +48,7 @@ describe("TimelineCanvasViewport", () => {
     assets: [],
   };
 
-  const baseProps: any = {
+  const baseProps = {
     inspectorOpen: false,
     uiScale: 1,
     effectiveZoomV: 1,
@@ -101,7 +105,7 @@ describe("TimelineCanvasViewport", () => {
     bindTrackRowsRef: vi.fn(),
     lanesCoordRef: { current: null },
     marqueeBox: null,
-    trackVisibility: { forma: true } as any,
+    trackVisibility: { forma: true },
     rowHeightStyle: () => ({ height: 40 }),
     laneHeights: {},
     zoomV: 1,
@@ -159,7 +163,7 @@ describe("TimelineCanvasViewport", () => {
     onAudioClipPointerDown: vi.fn(),
     onFormaClipPointerDown: vi.fn(),
     onContentClipPointerDown: vi.fn(),
-  };
+  } as unknown as TimelineCanvasViewportProps;
 
   it("renders timeline lanes view when surface is timeline", () => {
     render(<TimelineCanvasViewport {...baseProps} />);

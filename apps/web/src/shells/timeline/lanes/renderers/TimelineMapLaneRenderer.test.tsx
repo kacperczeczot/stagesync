@@ -48,8 +48,7 @@ describe("TimelineMapLaneRenderer", () => {
         label: "120 BPM",
         startTicks: 0,
         endTicks: 3840,
-        raw: 120,
-      } as any,
+      },
     ],
     meterSegments: [
       {
@@ -59,8 +58,7 @@ describe("TimelineMapLaneRenderer", () => {
         label: "4/4",
         startTicks: 0,
         endTicks: 3840,
-        raw: { numerator: 4, denominator: 4 },
-      } as any,
+      },
     ],
     keySegments: [
       {
@@ -70,8 +68,7 @@ describe("TimelineMapLaneRenderer", () => {
         label: "C dur",
         startTicks: 0,
         endTicks: 3840,
-        raw: { tonic: "C", scale: "major" },
-      } as any,
+      },
     ],
     selectedAnchorId: null,
     viewSpan: { start: 0, end: 7680 },

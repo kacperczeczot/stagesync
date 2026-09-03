@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { slotBarUnitsStyle, css, partsToInlineHtml } from "./gridPaneUtils.js";
 
+import type { ChordNameParts } from "@stagesync/shared";
+
 describe("gridPaneUtils", () => {
   it("creates CSS properties for slot bar units", () => {
     expect(slotBarUnitsStyle(2)).toEqual({ "--slot-bar-units": "2" });
@@ -14,7 +16,12 @@ describe("gridPaneUtils", () => {
   });
 
   it("serializes chord parts to inline HTML", () => {
-    const parts = { root: "C", quality: "maj7", bass: "G" } as any;
+    const parts: ChordNameParts = {
+      root: "C",
+      sup: "maj7",
+      bass: "/G",
+      plain: "Cmaj7/G",
+    };
     const html = partsToInlineHtml(parts);
     expect(html).toContain("C");
   });

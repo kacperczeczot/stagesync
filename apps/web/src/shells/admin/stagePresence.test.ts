@@ -8,6 +8,7 @@ import {
   formatExpiresAt,
   CLIENT_STALE_MS,
   type PresenceClient,
+  type SessionStageMessage,
 } from "./stagePresence.js";
 
 describe("stagePresence", () => {
@@ -15,35 +16,43 @@ describe("stagePresence", () => {
 
   it("resolves client phases correctly", () => {
     const staleClient: PresenceClient = {
-      clientId: "c1",
+      id: "c1",
       displayName: "iPad",
       roles: ["karaoke"],
+      latencyMs: 10,
+      connectedAt: now - 50000,
       updatedAt: now - CLIENT_STALE_MS - 1000,
-    } as any;
+    };
     expect(resolveClientPhase(staleClient, now)).toBe("stale");
 
     const noDataClient: PresenceClient = {
-      clientId: "c2",
+      id: "c2",
       displayName: "",
       roles: [],
+      latencyMs: null,
+      connectedAt: now - 10000,
       updatedAt: now - 1000,
-    } as any;
+    };
     expect(resolveClientPhase(noDataClient, now)).toBe("awaiting-data");
 
     const noRoleClient: PresenceClient = {
-      clientId: "c3",
+      id: "c3",
       displayName: "Tablet",
       roles: [],
+      latencyMs: 20,
+      connectedAt: now - 10000,
       updatedAt: now - 1000,
-    } as any;
+    };
     expect(resolveClientPhase(noRoleClient, now)).toBe("awaiting-role");
 
     const readyClient: PresenceClient = {
-      clientId: "c4",
+      id: "c4",
       displayName: "Stage Screen",
       roles: ["score"],
+      latencyMs: 15,
+      connectedAt: now - 10000,
       updatedAt: now - 1000,
-    } as any;
+    };
     expect(resolveClientPhase(readyClient, now)).toBe("ready");
   });
 
@@ -60,9 +69,13 @@ describe("stagePresence", () => {
   });
 
   it("formats expiresAt date correctly", () => {
-    const msg = {
+    const msg: SessionStageMessage = {
+      id: "m1",
+      text: "Test message",
+      ttlMs: 5000,
+      sentAtMs: 1000,
       expiresAt: new Date("2026-08-12T20:00:00Z").toISOString(),
-    } as any;
+    };
     const formatted = formatExpiresAt(msg);
     expect(formatted).toContain("do ");
   });

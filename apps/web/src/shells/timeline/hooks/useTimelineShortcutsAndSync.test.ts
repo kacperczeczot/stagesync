@@ -4,6 +4,7 @@ import { renderHook, act } from "@testing-library/react";
 import { useTimelineShortcutsAndSync } from "./useTimelineShortcutsAndSync.js";
 import type { TimelineKeyHandlers } from "./useTimelineShortcuts.js";
 import { SONG_IMPORT_EVENT } from "@lib/client/songImportEvents.js";
+import type { DraftHistory } from "@lib/client/draftHistory.js";
 import type { Project } from "@stagesync/shared";
 
 function createTestProject(): Project {
@@ -53,7 +54,7 @@ describe("useTimelineShortcutsAndSync", () => {
   let commitDraft: (next: Project) => void;
   let reloadProject: (id: string) => Promise<void>;
   let setDraftProject: React.Dispatch<React.SetStateAction<Project | null>>;
-  let setDraftHistory: React.Dispatch<any>;
+  let setDraftHistory: React.Dispatch<React.SetStateAction<DraftHistory | null>>;
   let clearClipSelection: () => void;
   let openSongImportWizard: (asNew: boolean) => void;
 
@@ -152,7 +153,13 @@ describe("useTimelineShortcutsAndSync", () => {
       setTrackVisibility: vi.fn(),
       setFailedAudioAssetIds: vi.fn(),
       setSoftClockTempoMaps: vi.fn(),
-      state: { playing: false },
+      state: {
+        playing: false,
+        positionTicks: 0,
+        bpm: 120,
+        timeSignature: { numerator: 4, denominator: 4 },
+        ppq: 960,
+      },
       displayTicks: 0,
       loopOn: false,
       soloAudioTrackIds: [],

@@ -2,6 +2,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useAdminImportHandlers } from "./useAdminImportHandlers.js";
+import type { TextAnchorBridgeOk } from "@stagesync/shared";
 
 const mockNavigate = vi.fn();
 vi.mock("react-router", () => ({
@@ -85,11 +86,19 @@ describe("useAdminImportHandlers", () => {
 
     await act(async () => {
       await result.current.onApplyUg({
+        result: {
+          ok: true,
+          tekst: { clips: [] },
+          akordy: { clips: [] },
+          formaMusic: { clips: [] },
+          sections: [],
+          barsPerLine: 4,
+        },
         text: "[Verse]\nC G",
         barsPerLine: 4,
-        sectionBars: {},
+        sectionBars: [],
         runWand: false,
-        metadata: { title: "Updated Title" },
+        metadata: null,
       });
     });
 
@@ -122,7 +131,7 @@ describe("useAdminImportHandlers", () => {
           ok: true,
           title: "New Bridge Song",
           ugDoc: { metadata: {} },
-        } as any,
+        } as unknown as TextAnchorBridgeOk,
       });
     });
 

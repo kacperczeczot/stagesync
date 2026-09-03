@@ -1,7 +1,16 @@
 import React, { useEffect, useCallback } from "react";
 import type { NavigateFunction } from "react-router";
-import type { Project, TempoMapProject, TransportState, WandMode, FormaClip } from "@stagesync/shared";
-import { resetDraftHistory, type DraftHistory } from "@lib/client/draftHistory.js";
+import type {
+  Project,
+  TempoMapProject,
+  TransportState,
+  WandMode,
+  FormaClip,
+} from "@stagesync/shared";
+import {
+  resetDraftHistory,
+  type DraftHistory,
+} from "@lib/client/draftHistory.js";
 import {
   SONG_IMPORT_EVENT,
   parseSongImportDetail,
@@ -105,7 +114,7 @@ interface Params {
   soloBusIds: string[];
   latencyCompMs: number;
   openSongImportWizard: (asNew: boolean) => void;
-  selectedClip: FormaClip | null;
+  selectedClip: FormaClip | null | undefined;
 }
 
 export function useTimelineShortcutsAndSync({

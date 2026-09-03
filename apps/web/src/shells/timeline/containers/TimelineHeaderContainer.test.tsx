@@ -2,7 +2,10 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
-import { TimelineHeaderContainer } from "./TimelineHeaderContainer.js";
+import {
+  TimelineHeaderContainer,
+  type TimelineHeaderContainerProps,
+} from "./TimelineHeaderContainer.js";
 import type { Project } from "@stagesync/shared";
 
 describe("TimelineHeaderContainer", () => {
@@ -28,7 +31,7 @@ describe("TimelineHeaderContainer", () => {
     assets: [],
   };
 
-  const baseProps: any = {
+  const baseProps: TimelineHeaderContainerProps = {
     operatorNavCompact: false,
     draftProject: dummyProject,
     projectId: "p1",

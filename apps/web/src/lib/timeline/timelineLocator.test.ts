@@ -99,7 +99,7 @@ describe("timelineLocator", () => {
   });
 
   it("snapLoopRange expands collapsed drag and falls back to ppq", () => {
-    const p = createProjectSeed("p", "S", "2026-07-23T00:00:00.000Z") as any;
+    const p = createProjectSeed("p", "S", "2026-07-23T00:00:00.000Z");
     const collapsed = snapLoopRange(p, 0, 0, "bar");
     expect(collapsed.endTicks).toBeGreaterThan(collapsed.startTicks);
     const off = snapLoopRange(p, 100, 100, "off");
@@ -107,7 +107,7 @@ describe("timelineLocator", () => {
   });
 
   it("snapMovedLoopRange off preserves raw move", () => {
-    const p = createProjectSeed("p", "S", "2026-07-23T00:00:00.000Z") as any;
+    const p = createProjectSeed("p", "S", "2026-07-23T00:00:00.000Z");
     const moved = snapMovedLoopRange(
       p,
       { startTicks: 0, endTicks: 960 },

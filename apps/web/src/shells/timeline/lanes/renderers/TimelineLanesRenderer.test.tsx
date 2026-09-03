@@ -112,8 +112,7 @@ describe("renderLaneContent", () => {
               label: "120 BPM",
               startTicks: 0,
               endTicks: 3840,
-              raw: 120,
-            } as any,
+            },
           ],
         })}
       </div>,

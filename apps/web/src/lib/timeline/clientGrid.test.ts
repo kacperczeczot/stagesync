@@ -25,7 +25,7 @@ const BAR = 4 * DEFAULT_PPQ; // 3840 in 4/4
 
 describe("clientGrid", () => {
   it("resolves current akord at ticks", () => {
-    let p = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z") as any;
+    let p = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     p = pencilAkordyClick(p, 0, "Dm");
     const ctx = buildGridLiveContext(p, 100);
     expect(ctx.current?.symbol).toBe("Dm");
@@ -33,7 +33,7 @@ describe("clientGrid", () => {
   });
 
   it("shows synthetic CD digits when playhead is in Countdown", () => {
-    const p = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z") as any;
+    const p = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     const ctx = buildGridLiveContext(p, -5000);
     expect(ctx.emptyReason).toBeNull();
     expect(ctx.current?.symbol).toBe("2");
@@ -70,7 +70,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     // Intro is 2 bars (0..7680). Put Am then F.
     p = {
       ...p,
@@ -108,7 +108,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     p = {
       ...p,
       forma: {
@@ -179,7 +179,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     p = {
       ...p,
       forma: {
@@ -247,7 +247,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     p = {
       ...p,
       forma: {
@@ -296,7 +296,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     p = {
       ...p,
       akordy: {
@@ -384,7 +384,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     const half = BAR / 2;
     p = {
       ...p,
@@ -420,7 +420,7 @@ describe("clientGrid", () => {
 
   it("buildGridLiveContext empty project and no chords", () => {
     expect(buildGridLiveContext(null, 0).emptyReason).toMatch(/Oczekiwanie/);
-    const p = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z") as any;
+    const p = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     expect(
       buildGridLiveContext({ ...p, akordy: { clips: [] } }, 0).emptyReason,
     ).toMatch(/Brak akordów/);
@@ -431,7 +431,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     const intro = p.forma.clips.find((c) => c.name === "Intro")!;
     const verse = {
       id: "forma-verse",
@@ -475,7 +475,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     // Only chords, wipe forma sections after countdown so sectionInfo may be null mid-song
     p = {
       ...p,
@@ -502,7 +502,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     const intro = p.forma.clips.find((c) => c.kind === "section")!;
     p = {
       ...p,
@@ -530,7 +530,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     p = {
       ...p,
       forma: { clips: p.forma.clips.filter((c) => c.kind === "countdown") },
@@ -552,7 +552,7 @@ describe("clientGrid", () => {
       "p",
       "S",
       "2026-07-20T12:00:00.000Z",
-    ) as any;
+    );
     p = {
       ...p,
       forma: {
@@ -588,8 +588,8 @@ describe("clientGrid", () => {
   });
 
   it("mergeAkordyWithCountdownDigits synth inside CD and strips legacy", () => {
-    const p = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z") as any;
-    const cd = p.forma.clips.find((c: any) => c.kind === "countdown")!;
+    const p = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
+    const cd = p.forma.clips.find((c) => c.kind === "countdown")!;
     const inside = mergeAkordyWithCountdownDigits(p, cd.startTicks);
     expect(
       inside.some((c) => /^\d+$/.test(c.symbol) || c.id.includes("cd")),

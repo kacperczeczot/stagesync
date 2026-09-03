@@ -4,6 +4,7 @@
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { HostUpdateStatus } from "@lib/shell-operator/setlistApi.js";
 
 vi.mock("@lib/client/desktopBridge.js", () => ({
   canUseDesktopUpdater: () => false,
@@ -53,7 +54,7 @@ const setlistMocks = vi.hoisted(() => {
       },
       clockOutActive: false,
     })),
-    fetchHostUpdateStatus: vi.fn(async () => ({
+    fetchHostUpdateStatus: vi.fn(async (): Promise<HostUpdateStatus> => ({
       current: "5.2.3",
       latest: null,
       updateAvailable: false,
@@ -304,7 +305,7 @@ describe("SystemView APK download aria", () => {
       applyAvailable: false,
       updateMode: "manual",
       error: null,
-    } as any);
+    });
 
     render(
       <MemoryRouter>

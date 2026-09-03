@@ -2,14 +2,18 @@
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { TimelineLanesView } from "./TimelineLanesView.js";
+import {
+  TimelineLanesView,
+  type TimelineLanesViewProps,
+} from "./TimelineLanesView.js";
 import type { Project } from "@stagesync/shared";
 
-global.ResizeObserver = class ResizeObserver {
+class MockResizeObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
-} as any;
+}
+global.ResizeObserver = MockResizeObserver as unknown as typeof ResizeObserver;
 
 describe("TimelineLanesView", () => {
   const dummyProject: Project = {
@@ -46,7 +50,7 @@ describe("TimelineLanesView", () => {
     assets: [],
   };
 
-  const baseProps: any = {
+  const baseProps: TimelineLanesViewProps = {
     canvasScrollRef: { current: null },
     canvasInnerWidth: "1200px",
     dockWidthBase: 120,
@@ -93,7 +97,7 @@ describe("TimelineLanesView", () => {
       kotwice: false,
     },
     rowHeightStyle: () => ({ height: 40 }),
-    trackSelection: { kind: "none", ids: [], primaryId: null },
+    trackSelection: { ids: [], primaryId: null },
     soloAudioTrackIds: [],
     trackRename: null,
     buildChannelStripCallbacks: () => ({}),

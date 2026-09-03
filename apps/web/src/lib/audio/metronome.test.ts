@@ -83,7 +83,11 @@ function mockAudioContext(state: AudioContextState = "running") {
     context: ctx,
   }));
 
-  return { ctx: ctx as unknown as AudioContext, oscillators, gains, starts };
+  const setTime = (time: number) => {
+    ctx.currentTime = time;
+  };
+
+  return { ctx: ctx as unknown as AudioContext, oscillators, gains, starts, setTime };
 }
 
 describe("clickLevelLinear", () => {
@@ -415,8 +419,8 @@ describe("metronome", () => {
     expect(oscillators.length).toBe(7);
   });
 
-  it("cancels old scheduled clicks and resets cleanly when manual seek / jump occurs", () => {
-    const { ctx, oscillators } = mockAudioContext("running");
+  it("cancels and reschedules when seek skips forward past look-ahead window", () => {
+    const { ctx, oscillators, setTime } = mockAudioContext("running");
     const input = {
       enabled: true,
       playing: true,
@@ -437,7 +441,7 @@ describe("metronome", () => {
 
     // Manual seek forward to beat 10 (displayTicks = 9600)
     // 16ms later (ctx.currentTime slightly advanced)
-    (ctx as any).currentTime = 1.016;
+    setTime(1.016);
     input.displayTicks = 9600;
 
     const beat2 = advanceMetronomeClicks(input, beat1, ctx);
@@ -450,7 +454,7 @@ describe("metronome", () => {
   });
 
   it("cancels old scheduled clicks on backward seek within look-ahead window", () => {
-    const { ctx, oscillators } = mockAudioContext("running");
+    const { ctx, oscillators, setTime } = mockAudioContext("running");
     const input = {
       enabled: true,
       playing: true,
@@ -465,7 +469,7 @@ describe("metronome", () => {
     const initialOscCount = oscillators.length;
 
     // Manual seek backward by 2 beats (to beat 8: displayTicks = 7680)
-    (ctx as any).currentTime = 1.016;
+    setTime(1.016);
     input.displayTicks = 7680;
 
     const beat2 = advanceMetronomeClicks(input, beat1, ctx);

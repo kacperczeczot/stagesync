@@ -2,7 +2,13 @@
 import { describe, it, expect, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useTimelineFormaGestures } from "./useTimelineFormaGestures.js";
-import { EMPTY_CLIP_SELECTION } from "@lib/timeline/timelineSelection.js";
+import {
+  EMPTY_CLIP_SELECTION,
+  type ClipSelection,
+  type ClipSelectionLane,
+} from "@lib/timeline/timelineSelection.js";
+import type { FormaGestureSession, FormaGesturePreview } from "@lib/timeline/timelineGesture.js";
+import type { ToolId } from "../timelineToolsData.js";
 import type { Project } from "@stagesync/shared";
 
 // ---------------------------------------------------------------------------
@@ -39,44 +45,49 @@ function createTestProject(): Project {
           name: "Chorus",
           kind: "section",
           startTicks: 16320,
-          lengthTicks: 3840,
+          lengthTicks: 15360,
         },
       ],
     },
-    tempoMap: [],
-    meterMap: [],
-    keyMap: [],
     akordy: {
       clips: [{ id: "ak1", symbol: "Cmaj7", startTicks: 0, lengthTicks: 7680 }],
-    },
-    cue: {
-      clips: [{ id: "cue1", label: "Cue 1", startTicks: 0, lengthTicks: 7680 }],
     },
     tekst: {
       clips: [
         {
           id: "t1",
-          text: "Tekst 1",
+          text: "Lyrics line",
           startTicks: 960,
           lengthTicks: 7680,
           blocks: [
-            { id: "tb1", startTicks: 0, lengthTicks: 7680, text: "Tekst 1" },
+            { id: "tb1", startTicks: 0, lengthTicks: 7680, text: "Lyrics line" },
           ],
         },
       ],
     },
-    melody: { clips: [] },
-    scoreBarMap: { anchors: [] },
+    cue: {
+      clips: [{ id: "cue1", label: "Cue 1", startTicks: 0, lengthTicks: 7680 }],
+    },
+    tempoMap: [],
+    meterMap: [],
+    keyMap: [],
     audioTracks: [
-      { id: "trk1", name: "Vocals", gainDb: 0, pan: 0, muted: false },
+      {
+        id: "trk1",
+        name: "Backing",
+        gainDb: 0,
+        pan: 0,
+        muted: false,
+        channelMode: "stereo",
+      },
     ],
     audioClips: [
       {
         id: "ac1",
         trackId: "trk1",
+        assetId: "a1",
         startTicks: 960,
         lengthTicks: 15360,
-        assetId: "a1",
         trimInMs: 0,
         fadeInMs: 100,
         fadeOutMs: 100,
@@ -90,22 +101,22 @@ function createTestProject(): Project {
 // ---------------------------------------------------------------------------
 // Pointer event factory
 // ---------------------------------------------------------------------------
-function makeEl(width = 200, height = 40) {
+function makeEl(width = 200, height = 40): HTMLElement {
   const el = document.createElement("button");
-  el.setPointerCapture = vi.fn();
-  el.releasePointerCapture = vi.fn();
-  el.hasPointerCapture = vi.fn().mockReturnValue(true);
   el.getBoundingClientRect = vi
     .fn()
     .mockReturnValue({ left: 0, top: 0, width, height });
+  el.setPointerCapture = vi.fn();
+  el.releasePointerCapture = vi.fn();
+  el.hasPointerCapture = vi.fn().mockReturnValue(true);
   return el;
 }
 
-function mockPointerEvent(
-  overrides: Partial<React.PointerEvent<any>> = {},
-  el?: HTMLElement,
-): React.PointerEvent<any> {
-  const target = el ?? makeEl();
+function mockPointerEvent<T extends HTMLElement = HTMLElement>(
+  overrides: Partial<React.PointerEvent<T>> = {},
+  el?: T,
+): React.PointerEvent<T> {
+  const target = el ?? (makeEl() as unknown as T);
   return {
     button: 0,
     pointerId: 1,
@@ -121,7 +132,7 @@ function mockPointerEvent(
     shiftKey: false,
     altKey: false,
     ...overrides,
-  } as any;
+  } as unknown as React.PointerEvent<T>;
 }
 
 // ---------------------------------------------------------------------------
@@ -129,24 +140,26 @@ function mockPointerEvent(
 // ---------------------------------------------------------------------------
 function buildHook(
   overrides: {
-    tool?: any;
+    tool?: ToolId;
     gesturePolicy?: { pencilDraw: boolean; clipDragResize: boolean };
     selectedClipId?: string | null;
-    clipSelection?: any;
+    clipSelection?: ClipSelection;
     soloAudioTrackIds?: string[];
     rawTicksAtClientX?: (x: number) => number | null;
-    commitDraft?: any;
-    setClipSelection?: any;
-    selectLaneClip?: any;
-    setTouchAlertOpen?: any;
-    beginMarquee?: any;
-    beginTouchCanvasNav?: any;
-    deleteSelectedFormaClip?: any;
+    commitDraft?: (p: Project) => void;
+    setClipSelection?: React.Dispatch<React.SetStateAction<ClipSelection>>;
+    selectLaneClip?: (lane: ClipSelectionLane, id: string) => void;
+    setTouchAlertOpen?: (v: boolean) => void;
+    beginMarquee?: () => void;
+    beginTouchCanvasNav?: () => void;
+    deleteSelectedFormaClip?: () => void;
   } = {},
 ) {
   const draftProject = createTestProject();
   const commitDraft = overrides.commitDraft ?? vi.fn();
-  const setClipSelection = overrides.setClipSelection ?? vi.fn();
+  const setClipSelection =
+    overrides.setClipSelection ??
+    (vi.fn() as unknown as React.Dispatch<React.SetStateAction<ClipSelection>>);
   const selectLaneClip = overrides.selectLaneClip ?? vi.fn();
   const setTouchAlertOpen = overrides.setTouchAlertOpen ?? vi.fn();
   const beginMarquee = overrides.beginMarquee ?? vi.fn();
@@ -221,7 +234,7 @@ describe("useTimelineFormaGestures", () => {
     it("sets and clears gesture session via begin/end pair", () => {
       const { result } = buildHook();
 
-      const session: any = {
+      const session: FormaGestureSession = {
         kind: "move",
         clipId: "c1",
         lane: "forma",
@@ -229,9 +242,11 @@ describe("useTimelineFormaGestures", () => {
         moveIds: ["c1"],
         originClipStart: 960,
         originClipLength: 15360,
+        originTicks: 960,
       };
-      const preview: any = {
+      const preview: FormaGesturePreview = {
         kind: "move",
+        clipId: "c1",
         startTicks: 960,
         lengthTicks: 15360,
       };
@@ -249,7 +264,7 @@ describe("useTimelineFormaGestures", () => {
 
     it("commits forma move gesture on endFormaGesture", () => {
       const { result, commitDraft } = buildHook();
-      const session: any = {
+      const session: FormaGestureSession = {
         kind: "move",
         clipId: "c1",
         lane: "forma",
@@ -257,9 +272,11 @@ describe("useTimelineFormaGestures", () => {
         moveIds: ["c1"],
         originClipStart: 960,
         originClipLength: 15360,
+        originTicks: 960,
       };
-      const preview: any = {
+      const preview: FormaGesturePreview = {
         kind: "move",
+        clipId: "c1",
         startTicks: 3840,
         lengthTicks: 15360,
       };
@@ -276,7 +293,7 @@ describe("useTimelineFormaGestures", () => {
 
     it("commits content move gesture (tekst lane)", () => {
       const { result, commitDraft } = buildHook();
-      const session: any = {
+      const session: FormaGestureSession = {
         kind: "move",
         clipId: "t1",
         lane: "tekst",
@@ -284,9 +301,11 @@ describe("useTimelineFormaGestures", () => {
         moveIds: ["t1"],
         originClipStart: 960,
         originClipLength: 7680,
+        originTicks: 960,
       };
-      const preview: any = {
+      const preview: FormaGesturePreview = {
         kind: "move",
+        clipId: "t1",
         startTicks: 3840,
         lengthTicks: 7680,
       };
@@ -303,7 +322,7 @@ describe("useTimelineFormaGestures", () => {
 
     it("commits audio gesture (audio lane)", () => {
       const { result, commitDraft } = buildHook();
-      const session: any = {
+      const session: FormaGestureSession = {
         kind: "move",
         clipId: "ac1",
         lane: "audio:trk1",
@@ -311,9 +330,11 @@ describe("useTimelineFormaGestures", () => {
         moveIds: ["ac1"],
         originClipStart: 960,
         originClipLength: 15360,
+        originTicks: 960,
       };
-      const preview: any = {
+      const preview: FormaGesturePreview = {
         kind: "move",
+        clipId: "ac1",
         startTicks: 3840,
         lengthTicks: 15360,
       };
@@ -330,7 +351,7 @@ describe("useTimelineFormaGestures", () => {
 
     it("handles optionCopy gesture on forma (Alt+drag copy)", () => {
       const { result, commitDraft } = buildHook();
-      const session: any = {
+      const session: FormaGestureSession = {
         kind: "move",
         clipId: "c1",
         lane: "forma",
@@ -339,9 +360,11 @@ describe("useTimelineFormaGestures", () => {
         moveIds: ["c1"],
         originClipStart: 960,
         originClipLength: 15360,
+        originTicks: 960,
       };
-      const preview: any = {
+      const preview: FormaGesturePreview = {
         kind: "move",
+        clipId: "c1",
         startTicks: 20160,
         lengthTicks: 15360,
       };
@@ -358,7 +381,7 @@ describe("useTimelineFormaGestures", () => {
 
     it("handles optionCopy gesture on tekst lane (Alt+drag copy)", () => {
       const { result, commitDraft } = buildHook();
-      const session: any = {
+      const session: FormaGestureSession = {
         kind: "move",
         clipId: "t1",
         lane: "tekst",
@@ -367,9 +390,11 @@ describe("useTimelineFormaGestures", () => {
         moveIds: ["t1"],
         originClipStart: 960,
         originClipLength: 7680,
+        originTicks: 960,
       };
-      const preview: any = {
+      const preview: FormaGesturePreview = {
         kind: "move",
+        clipId: "t1",
         startTicks: 10000,
         lengthTicks: 7680,
       };

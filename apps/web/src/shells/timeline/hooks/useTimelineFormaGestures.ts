@@ -507,7 +507,7 @@ export function useTimelineFormaGestures({
 
   const onContentClipPointerDown = useCallback(
     (
-      e: React.PointerEvent<HTMLButtonElement>,
+      e: React.PointerEvent<HTMLElement>,
       lane: ContentLaneId,
       clip: { id: string; startTicks: number; lengthTicks: number },
     ) => {
@@ -654,7 +654,7 @@ export function useTimelineFormaGestures({
 
   const onAudioClipPointerDown = useCallback(
     (
-      e: React.PointerEvent<HTMLButtonElement>,
+      e: React.PointerEvent<HTMLElement>,
       lane: AudioLaneId,
       clip: { id: string; startTicks: number; lengthTicks: number },
     ) => {
@@ -880,7 +880,7 @@ export function useTimelineFormaGestures({
   );
 
   const onFormaLanePointerDown = useCallback(
-    (e: React.PointerEvent<HTMLDivElement>) => {
+    (e: React.PointerEvent<HTMLElement>) => {
       if (e.button !== 0 || !draftProject) return;
       if (tool === "eraser") {
         e.preventDefault();
@@ -967,7 +967,7 @@ export function useTimelineFormaGestures({
   );
 
   const onFormaLanePointerMove = useCallback(
-    (e: React.PointerEvent<HTMLDivElement>) => {
+    (e: React.PointerEvent<HTMLElement>) => {
       if (!gestureSessionRef.current) return;
       if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
       const raw = rawTicksAtClientX(e.clientX);
@@ -978,7 +978,7 @@ export function useTimelineFormaGestures({
   );
 
   const onFormaLanePointerUp = useCallback(
-    (e: React.PointerEvent<HTMLDivElement>) => {
+    (e: React.PointerEvent<HTMLElement>) => {
       if (!gestureSessionRef.current) return;
       if (e.currentTarget.hasPointerCapture(e.pointerId)) {
         e.currentTarget.releasePointerCapture(e.pointerId);
@@ -989,7 +989,7 @@ export function useTimelineFormaGestures({
   );
 
   const onFormaClipPointerDown = useCallback(
-    (e: React.PointerEvent<HTMLButtonElement>, clip: FormaClip) => {
+    (e: React.PointerEvent<HTMLElement>, clip: FormaClip) => {
       if (e.button !== 0 || !draftProject) return;
       e.preventDefault();
       e.stopPropagation();
@@ -1250,7 +1250,7 @@ export function useTimelineFormaGestures({
   );
 
   const onFormaClipPointerMove = useCallback(
-    (e: React.PointerEvent<HTMLButtonElement>) => {
+    (e: React.PointerEvent<HTMLElement>) => {
       if (!gestureSessionRef.current) return;
       if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
       const raw = rawTicksAtClientX(e.clientX);
@@ -1267,7 +1267,7 @@ export function useTimelineFormaGestures({
   );
 
   const onFormaClipPointerUp = useCallback(
-    (e: React.PointerEvent<HTMLButtonElement>) => {
+    (e: React.PointerEvent<HTMLElement>) => {
       if (!gestureSessionRef.current) return;
       if (e.currentTarget.hasPointerCapture(e.pointerId)) {
         e.currentTarget.releasePointerCapture(e.pointerId);

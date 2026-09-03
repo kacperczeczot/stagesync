@@ -46,7 +46,7 @@ describe("TimelineContentLaneRenderer", () => {
     melody: { clips: [] },
     cue: {
       clips: [
-        { id: "cu1", label: "SOLO", startTicks: 0, lengthTicks: 1920 } as any,
+        { id: "cu1", label: "SOLO", startTicks: 0, lengthTicks: 1920 },
       ],
     },
     scoreBarMap: { anchors: [] },
