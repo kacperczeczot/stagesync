@@ -119,6 +119,11 @@ export async function menuClean() {
         label:
           "2. 🤖  Czyszczenie cache budowania Android (Gradle - pnpm clean:android)",
       },
+      {
+        value: "appledouble",
+        label:
+          "3. 🍏  Usuń pliki metadanych macOS AppleDouble (._*) z repozytorium",
+      },
       { value: "back", label: "0. ↩️   Powrót" },
     ],
   });
@@ -134,6 +139,14 @@ export async function menuClean() {
       "Czyszczenie",
     );
     runCommand("pnpm", ["clean:android"]);
+    await waitReturn();
+  } else if (choice === "appledouble") {
+    clack.note(
+      `Usuwanie plików AppleDouble ${pc.dim("(pnpm clean:appledouble)")}...`,
+      "Czyszczenie",
+    );
+    runCommand("pnpm", ["clean:appledouble"]);
+    clack.log.success("Usunięto wszystkie pliki metadanych AppleDouble (._*)");
     await waitReturn();
   }
 }

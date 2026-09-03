@@ -23,7 +23,8 @@
     "generate:map": "node scripts/quality/generate-repo-map.mjs",
     "dev:hub": "tsx --no-warnings scripts/hub/dev-hub.ts",
     "clean:android": "cd apps/console/android && ./gradlew clean && cd ../../../apps/performer/android && ./gradlew clean",
-    "clean": "pnpm run clean:android"
+    "clean:appledouble": "find . -name '._*' -not -path './.git/*' -delete",
+    "clean": "pnpm run clean:appledouble && pnpm run clean:android"
   },
   "devDependencies": {
     "@clack/prompts": "^1.7.0",
