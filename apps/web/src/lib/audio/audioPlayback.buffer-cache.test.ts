@@ -1,5 +1,4 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createProjectSeed } from "@stagesync/shared";
 import {
   assetFileUrl,
   clearAudioBufferCache,

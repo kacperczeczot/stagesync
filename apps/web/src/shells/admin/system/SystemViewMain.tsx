@@ -1,47 +1,26 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { renderSVG } from "uqr";
 import { Button } from "@stagesync/ui";
-import { MetricGrid, NetworkUrlList, QrWrap } from "../../shared/index.js";
+import { NetworkUrlList, QrWrap } from "../../shared/index.js";
 import {
   clearHostLogs,
   downloadDiagnosticsExport,
   fetchNetworkInfo,
   fetchMidiHostStatus,
-  fetchHostUpdateStatus,
   fetchSafetyNetStatus,
   pickPrimaryJoinUrl,
   networkDisplayUrls,
   apkDownloadUrlsFromJoin,
   probeApkAvailable,
-  postApplyHostUpdate,
-  postSafetyNetPromote,
   type HostLogLine,
   type NetworkInfo,
-  type HostUpdateStatus,
   type MidiHostStatus,
   type SafetyNetStatus,
 } from "@lib/shell-operator/setlistApi.js";
-import {
-  canUseDesktopUpdater,
-  checkDesktopUpdate,
-  installDesktopUpdate,
-  openExternalUrl,
-  formatUnknownError,
-  type DesktopUpdateInfo,
-} from "@lib/client/desktopBridge.js";
-import {
-  DOCS_INSTALL_URL,
-  DOCS_ISSUES_URL,
-  DOCS_RELEASES_URL,
-} from "@lib/client/docsLinks.js";
+import { openExternalUrl } from "@lib/client/desktopBridge.js";
+import { DOCS_INSTALL_URL, DOCS_ISSUES_URL } from "@lib/client/docsLinks.js";
 import { APP_VERSION } from "@lib/client/appVersion.js";
-import {
-  fetchAndroidLatestManifest,
-  isSemverNewer,
-} from "@lib/client/androidLatest.js";
-import { isAndroidUpdateSurface } from "@lib/client/nativeShell.js";
 import { useMqMobileCompact } from "@lib/client/useMqMobileCompact.js";
-import { ShellConfirmDialog } from "../../components/ShellBlockingDialog.js";
 import { BrandName } from "../../components/BrandName.js";
 import shell from "../AdminShell.module.css";
 import { AdminAccordionCard } from "../AdminAccordionCard.js";

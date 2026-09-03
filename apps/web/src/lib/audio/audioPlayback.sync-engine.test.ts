@@ -2,10 +2,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { createProjectSeed, projectEndTicks } from "@stagesync/shared";
 import {
   allowAudioPlayback,
-  clearAudioBufferCache,
   ensureAudioBuffered,
   getAudioPlaybackDebugState,
-  loadAudioBuffer,
   restartAudioPlayback,
   resumeAndSyncAudioPlayback,
   shouldSoftStopPastSongEnd,

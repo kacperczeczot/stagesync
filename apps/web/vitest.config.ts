@@ -20,7 +20,8 @@ export default defineConfig({
     environment: "node",
     globals: true,
     // Playwright lives under e2e/ (*.spec.ts) — do not run under Vitest.
-    exclude: ["**/node_modules/**", "**/dist/**", "e2e/**"],
+    // Exclude macOS AppleDouble files created on external filesystems.
+    exclude: ["**/node_modules/**", "**/dist/**", "e2e/**", "**/._*"],
     // GitHub Actions annotations for failed assertions (CI only).
     reporters: process.env.CI
       ? [

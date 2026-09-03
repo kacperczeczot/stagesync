@@ -52,13 +52,8 @@ describe("useTimelineDockCallbacks", () => {
     const setSelectedHwOutputId = vi.fn();
     const setSoloAudioTrackIds = vi.fn();
     const setSoloBusIds = vi.fn();
-    const setContextMenus = vi.fn();
     const setTrackRename = vi.fn();
     const setLoadError = vi.fn();
-    const clearTrackHold = vi.fn();
-    const clearBusHold = vi.fn();
-    const clearHwHold = vi.fn();
-    const clearMasterHold = vi.fn();
 
     const { result } = renderHook(() =>
       useTimelineDockCallbacks({

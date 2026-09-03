@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useTimelineFormaGestures } from "./useTimelineFormaGestures.js";
 import { EMPTY_CLIP_SELECTION } from "@lib/timeline/timelineSelection.js";
@@ -536,7 +536,7 @@ describe("useTimelineFormaGestures", () => {
     });
 
     it("joins adjacent tekst clips with join tool", () => {
-      const { result, commitDraft, draftProject } = buildHook({ tool: "join" });
+      const { result, draftProject } = buildHook({ tool: "join" });
       const el = makeEl();
       const evt = mockPointerEvent({}, el);
 
@@ -695,7 +695,7 @@ describe("useTimelineFormaGestures", () => {
     });
 
     it("splits audio clip with scissors tool", () => {
-      const { result, commitDraft, draftProject } = buildHook({
+      const { result, draftProject } = buildHook({
         tool: "scissors",
         rawTicksAtClientX: vi.fn().mockReturnValue(5000),
       });
@@ -935,7 +935,7 @@ describe("useTimelineFormaGestures", () => {
     });
 
     it("splits forma section with scissors tool on lane", () => {
-      const { result, commitDraft } = buildHook({
+      const { result } = buildHook({
         tool: "scissors",
         selectedClipId: "c1",
         rawTicksAtClientX: vi.fn().mockReturnValue(3840),

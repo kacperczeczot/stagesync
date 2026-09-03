@@ -3,53 +3,13 @@
  */
 
 import {
-  audioClipPlayableMs,
-  applyAbutCrossfade,
-  clampAudioClipToAsset,
-  clampAudioFades,
-  channelModeFromChannelCount,
-  DEFAULT_TRACK_ICON,
-  elapsedToTicks,
-  findAbutNeighbor,
-  lengthTicksFromAssetWindow,
-  MAX_AUDIO_BUSSES,
-  moveClipNoOverlap,
-  moveClipsRigidDelta,
-  nextBusName,
-  placeClipNoOverlap,
-  resizeAudioClipEnd,
-  resizeAudioClipStart,
   resolveMeterAt,
   resolveTempoAt,
-  ticksToMs,
-  ticksToMsAlongTempoMap,
-  trackColorForIndex,
   type AudioClip,
-  type BusOutputDest,
-  type ChannelMode,
   type FormaClip,
-  type MixerOutputDest,
   type Project,
-  type SnapMode,
-  type TrackColor,
-  type TrackIcon,
-  wouldCreateBusCycle,
 } from "@stagesync/shared";
-import {
-  contentFloorTicks,
-  snapEditTicks,
-} from "@lib/timeline-edit/formaCanvas.js";
 import { resolveSplitParentId } from "@lib/timeline-edit/contentLaneEdit.js";
-import type {
-  FormaGesturePreview,
-  FormaGestureSession,
-} from "@lib/timeline/timelineGesture.js";
-import { contentSnapModeFromModifiers } from "@lib/timeline/timelineGesture.js";
-import {
-  audioTrackIdFromLane,
-  isAudioLaneId,
-  type AudioLaneId,
-} from "@lib/timeline/timelineTracks.js";
 
 export function audioAsForma(clips: AudioClip[]): FormaClip[] {
   return clips.map((c) => ({

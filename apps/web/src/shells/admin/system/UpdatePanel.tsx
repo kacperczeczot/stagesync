@@ -13,11 +13,7 @@ import {
   formatUnknownError,
   type DesktopUpdateInfo,
 } from "@lib/client/desktopBridge.js";
-import {
-  DOCS_INSTALL_URL,
-  DOCS_ISSUES_URL,
-  DOCS_RELEASES_URL,
-} from "@lib/client/docsLinks.js";
+import { DOCS_RELEASES_URL } from "@lib/client/docsLinks.js";
 import { APP_VERSION } from "@lib/client/appVersion.js";
 import {
   fetchAndroidLatestManifest,

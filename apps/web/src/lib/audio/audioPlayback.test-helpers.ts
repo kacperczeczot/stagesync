@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { createProjectSeed, projectEndTicks } from "@stagesync/shared";
+import { createProjectSeed } from "@stagesync/shared";
 import {
   allowAudioPlayback,
   clearAudioBufferCache,

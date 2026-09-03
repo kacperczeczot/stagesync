@@ -6,7 +6,6 @@ import {
   type TekstBlock,
   type TekstBlockRole,
   type TekstClip,
-  type TimeSignature,
 } from "@stagesync/shared";
 import { type ClientBarCell } from "@lib/timeline/clientBarCells.js";
 

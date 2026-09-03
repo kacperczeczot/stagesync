@@ -45,7 +45,7 @@ export function MidiSafetyCard({
   midiInLabel: string;
   midiOutLabel: string;
   rateLabel: (n: number | undefined) => string;
-  refreshMidi: () => void | Promise<void>;
+  refreshMidi?: () => void | Promise<void>;
 }) {
   return (
     <AdminAccordionCard
@@ -122,7 +122,24 @@ export function MidiSafetyCard({
         </div>
 
         <div className={styles.sectionSplit} aria-label="Telemetria MIDI">
-          <p className={styles.sectionLabel}>Telemetria MIDI</p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <p className={styles.sectionLabel}>Telemetria MIDI</p>
+            {refreshMidi ? (
+              <Button
+                variant="secondary"
+                aria-label="Odśwież MIDI"
+                onClick={() => void refreshMidi()}
+              >
+                Odśwież
+              </Button>
+            ) : null}
+          </div>
           <div className={styles.midiBody}>
             {midiError ? (
               <p className={shell.error} role="alert">
