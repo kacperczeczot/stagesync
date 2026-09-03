@@ -31,6 +31,7 @@ const e2eStorageState = {
 
 export default defineConfig({
   testDir: "./e2e",
+  testIgnore: ["**/._*"],
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,

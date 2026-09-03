@@ -91,6 +91,7 @@ tmp/
 ._*
 **/.DS_Store
 **/._*
+.metadata_never_index
 *.pem
 apps/server/tools/yt-dlp
 data/downloads/*.apk

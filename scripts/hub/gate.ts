@@ -252,11 +252,24 @@ export function summarizeGate(title: string, steps: GateStep[]): boolean {
   }
   const mutated = steps.filter((s) => s.mutated);
   if (mutated.length > 0) {
-    clack.log.warn(
-      pc.yellow(
-        `Zmienione pliki: ${mutated.map((s) => s.id).join(", ")}. Sprawdź git diff.`,
-      ),
-    );
+    try {
+      const gitStatus = execSync("git status --porcelain", {
+        cwd: rootDir,
+        encoding: "utf8",
+      }).trim();
+      const changedCount = gitStatus ? gitStatus.split("\n").length : 0;
+      clack.log.warn(
+        pc.yellow(
+          `Zmienione pliki (${mutated.map((s) => s.id).join(", ")}): ${changedCount} plik(ów) w git status. Sprawdź git diff.`,
+        ),
+      );
+    } catch {
+      clack.log.warn(
+        pc.yellow(
+          `Zmienione pliki: ${mutated.map((s) => s.id).join(", ")}. Sprawdź git diff.`,
+        ),
+      );
+    }
   }
   const failed = steps.filter((s) => !s.ok);
   if (failed.length === 0) {
