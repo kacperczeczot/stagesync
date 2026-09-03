@@ -6,15 +6,15 @@
 
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
-* **Liczba wszystkich plików:** 1617
+* **Liczba wszystkich plików:** 1618
 * **Liczba katalogów:** 247
-* **Data aktualizacji:** 2026-09-03T23:42:33.275Z
+* **Data aktualizacji:** 2026-09-03T23:44:13.622Z
 
 ### Kategorie
 
 | Kategoria | Liczba plików |
 | :--- | ---: |
-| Kod | 1216 |
+| Kod | 1217 |
 | Docs | 135 |
 | Config | 119 |
 | Assety | 120 |
@@ -24,7 +24,7 @@
 
 | Rozszerzenie | Liczba plików |
 | :--- | ---: |
-| `.ts` | 746 |
+| `.ts` | 747 |
 | `.tsx` | 284 |
 | `.md` | 122 |
 | `.png` | 94 |
@@ -40,17 +40,17 @@
 
 ## 🏛️ Przegląd Architektury
 
-- **apps/** (1222) — Aplikacje wykonawcze i powłoki klienckie w monorepo
+- **apps/** (1223) — Aplikacje wykonawcze i powłoki klienckie w monorepo
   - **console/** (97) — Android WebView shell dla interfejsu /admin (ADR 0016)
   - **desktop/** (108) — Tauri thin shell dla serwera lokalnego na desktop (ADR 0010)
   - **performer/** (71) — Android WebView shell dla interfejsu /client (ADR 0016)
   - **server/** (167) — Główny backend Node.js — SSOT Host, Master Clock, REST/WS API
-  - **web/** (749) — Aplikacja webowa React/Vite (Admin, Client, Timeline, Mikser)
+  - **web/** (750) — Aplikacja webowa React/Vite (Admin, Client, Timeline, Mikser)
     - **e2e/** (3) — Testy integracyjne E2E (Playwright)
     - **public/** (10) — Zasoby statyczne i favicon
       - **brand/** (5) — Materiały brandingowe i logotypy StageSync
-    - **scripts/** (10) — Skrypty pomocnicze builda i benchmarków webowych
-      - **benchmark/** (8) — Skrypty benchmarków wydajnościowych UI/Audio
+    - **scripts/** (11) — Skrypty pomocnicze builda i benchmarków webowych
+      - **benchmark/** (9) — Skrypty benchmarków wydajnościowych UI/Audio
     - **src/** (706) — Kod źródłowy UI i logiki klienta
       - **dev/** (18) — Narzędzia i panele deweloperskie wewnątrz aplikacji
       - **lib/** (241) — Biblioteki klienta (5 kategorii — bez plików w lib root)
@@ -467,6 +467,7 @@ stagesync/
 │   │   │   └── sw.js
 │   │   ├── scripts/
 │   │   │   ├── benchmark/
+│   │   │   │   ├── benchmark-helpers.ts
 │   │   │   │   ├── debug-bar-alignment.ts
 │   │   │   │   ├── debug-winner-beats.ts
 │   │   │   │   ├── extract-logic-features.ts
