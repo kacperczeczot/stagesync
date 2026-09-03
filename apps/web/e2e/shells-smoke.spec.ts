@@ -18,7 +18,9 @@ function setupConsoleGuard(page: Page, errors: string[]): void {
 }
 
 test.describe("Core Shells Smoke", () => {
-  test("Admin shell loads and renders sections without console errors", async ({ page }) => {
+  test("Admin shell loads and renders sections without console errors", async ({
+    page,
+  }) => {
     const errors: string[] = [];
     setupConsoleGuard(page, errors);
 
@@ -39,7 +41,9 @@ test.describe("Core Shells Smoke", () => {
     expect(errors, `Errors in Admin: ${errors.join(", ")}`).toEqual([]);
   });
 
-  test("Client shell loads stage surface without console errors", async ({ page }) => {
+  test("Client shell loads stage surface without console errors", async ({
+    page,
+  }) => {
     const errors: string[] = [];
     setupConsoleGuard(page, errors);
 
