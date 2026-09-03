@@ -148,7 +148,38 @@ else
     fi
 fi
 
-# 4. Instalacja pakietów NPM
+# 4. Weryfikacja środowiska Android (Java JDK 17+ i Android SDK)
+echo -e "\n${CYAN}➤ Weryfikacja wymagań dla aplikacji mobilnych (Android)...${NC}"
+HAS_JAVA=false
+if [[ -z "${JAVA_HOME:-}" && -d "/opt/homebrew/opt/openjdk@17" ]]; then
+    export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+    export PATH="$JAVA_HOME/bin:$PATH"
+fi
+if command -v java &> /dev/null && java -version &> /dev/null; then
+    HAS_JAVA=true
+    JAVA_VER=$(java -version 2>&1 | head -n 1)
+    echo -e "${GREEN}✅ Java Runtime obecna ($JAVA_VER).${NC}"
+else
+    echo -e "${YELLOW}⚠️ Brak działającego Java Runtime (JDK 17+).${NC}"
+    if ask_confirm "Czy chcesz zainstalować OpenJDK 17 przez brew/apt?"; then
+        if [[ "$OSTYPE" == "darwin"* ]] && command -v brew &> /dev/null; then
+            echo "Instalacja openjdk@17 przez brew..."
+            brew install openjdk@17 || true
+            if [ -d "/opt/homebrew/opt/openjdk@17" ]; then
+                export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+                export PATH="$JAVA_HOME/bin:$PATH"
+                HAS_JAVA=true
+            fi
+        elif [[ "$OSTYPE" == "linux-gnu"* ]] && command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y openjdk-17-jdk || true
+        fi
+    fi
+    if [ "$HAS_JAVA" = false ]; then
+        SETUP_ERRORS=$((SETUP_ERRORS + 1))
+    fi
+fi
+
+# 5. Instalacja pakietów NPM
 echo -e "\n${CYAN}➤ Instalacja zależności Node...${NC}"
 if pnpm install; then
     echo -e "${GREEN}✅ Zależności zostały zainstalowane.${NC}"

@@ -244,7 +244,47 @@ export async function runDoctorScan() {
     );
   }
 
-  // 4. Docker (opcjonalny)
+  // 4. Java / JDK (dla Android / Performer / Console)
+  try {
+    const javaEnv = { ...process.env };
+    if (!javaEnv.JAVA_HOME && fs.existsSync("/opt/homebrew/opt/openjdk@17")) {
+      javaEnv.JAVA_HOME = "/opt/homebrew/opt/openjdk@17";
+      javaEnv.PATH = `${javaEnv.JAVA_HOME}/bin${path.delimiter}${javaEnv.PATH ?? ""}`;
+    }
+    const javaVer = execSync("java -version", {
+      encoding: "utf8",
+      env: javaEnv,
+      stdio: ["pipe", "pipe", "pipe"],
+    })
+      .trim()
+      .split("\n")[0];
+    clack.log.success(
+      `${pc.bold("Java (JDK)")}: ${pc.cyan(javaVer)} ${javaEnv.JAVA_HOME ? pc.dim(`(${javaEnv.JAVA_HOME})`) : ""}`,
+    );
+  } catch {
+    clack.log.warn(
+      `${pc.bold("Java (JDK)")}: Nie znaleziono ${pc.dim("(wymagany dla Android Performer/Console)")}`,
+    );
+  }
+
+  // 5. Android SDK
+  const androidSdkPath =
+    process.env.ANDROID_HOME ||
+    process.env.ANDROID_SDK_ROOT ||
+    (fs.existsSync("/opt/homebrew/share/android-commandlinetools")
+      ? "/opt/homebrew/share/android-commandlinetools"
+      : undefined);
+  if (androidSdkPath && fs.existsSync(androidSdkPath)) {
+    clack.log.success(
+      `${pc.bold("Android SDK")}: ${pc.cyan(androidSdkPath)}`,
+    );
+  } else {
+    clack.log.warn(
+      `${pc.bold("Android SDK")}: Brak ANDROID_HOME ${pc.dim("(wymagany dla Android Performer/Console)")}`,
+    );
+  }
+
+  // 6. Docker (opcjonalny)
   try {
     const dockerVer = execSync("docker -v", {
       encoding: "utf8",
@@ -257,7 +297,7 @@ export async function runDoctorScan() {
     );
   }
 
-  // 5. GitHub CLI (Release Hub)
+  // 7. GitHub CLI (Release Hub)
   try {
     const ghVer = execSync("gh --version", {
       encoding: "utf8",
