@@ -84,7 +84,6 @@ import {
   listBrowseDirectory,
   resolveBrowseStartPath,
   toEnvPath,
-  validateBrowseChildPath,
 } from "./path-browser.js";
 import { REPO_ROOT } from "../storage/paths.js";
 
