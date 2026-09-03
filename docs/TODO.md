@@ -40,7 +40,7 @@ Kolejność i kryteria Done: [ROADMAP.md](./ROADMAP.md).
 ### Studio Shell / Notation / Timeline
 
 - [ ] **Studio Shell:** Multi-Window (Tauri), sync tła, pedały Bluetooth/HID, eksport ZAiKS CSV
-- [ ] **Extended Notation:** Selection Filter OSMD, notacja akordów, 2-col Karaoke, Rehearsal Marks
+- [ ] **Extended Notation:** import i podgląd MuseScore (`.mscz`), Offline Score Reader na mobile/web, Selection Filter OSMD, notacja akordów, 2-col Karaoke, Rehearsal Marks
 - [ ] **Advanced Timeline:** Insert Silence / Delete Time, Nudge, Select All Following, Split at Playhead, Find & Replace, Collect All and Save
 
 ### Live Suite & dalej
