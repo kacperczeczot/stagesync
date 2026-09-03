@@ -397,7 +397,6 @@ export function parseSyncVersionDetail(output: string, ok: boolean): string {
   return ok ? "OK" : (firstFailureHint(output) ?? "błąd");
 }
 
-
 // ── High-level gate runners ──────────────────────────────────────────────────
 
 export function runCiLikeVerifySteps(): GateStep[] {
@@ -779,7 +778,7 @@ export async function runFullAudit(): Promise<boolean> {
     "Długi przebieg (często wiele minut)",
   ]);
   clack.note(
-    "Kompletny audyt: format → CI → links → unlinked → knip → map → coverage → e2e → build → launcher → version → owner → pnpm audit…",
+    "Kompletny audyt: format → CI → links → unlinked → knip → map → coverage → e2e → build → launcher → version → pnpm audit…",
     "Audyt",
   );
   const steps: GateStep[] = [
