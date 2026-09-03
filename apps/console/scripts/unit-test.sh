@@ -15,9 +15,23 @@ if [[ -z "${ANDROID_HOME:-}" && -z "${ANDROID_SDK_ROOT:-}" ]]; then
   fi
 fi
 
+# Auto-detect OpenJDK on macOS if JAVA_HOME is not explicitly set
+if [[ -z "${JAVA_HOME:-}" && -d "/opt/homebrew/opt/openjdk@17" ]]; then
+  export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+  export PATH="$JAVA_HOME/bin:$PATH"
+fi
+
 cd "$ANDROID_DIR"
 if [[ ! -f local.properties ]]; then
   SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
   echo "sdk.dir=$SDK" > local.properties
 fi
-./gradlew test --no-daemon "$@"
+
+GRADLE_ARGS=()
+# On FAT/exFAT external drives, macOS AppleDouble files (._*) cause AAPT/ParseLibraryResourcesTask to fail.
+# Redirect buildDir to /tmp if current filesystem doesn't support native POSIX attributes or has AppleDouble risks.
+if [[ "$ROOT" == /Volumes/* ]]; then
+  GRADLE_ARGS+=("-PbuildDir=/tmp/stagesync-console-build")
+fi
+
+./gradlew test --no-daemon "${GRADLE_ARGS[@]}" "$@"
