@@ -6,15 +6,15 @@
 
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
-* **Liczba wszystkich plików:** 1643
+* **Liczba wszystkich plików:** 1645
 * **Liczba katalogów:** 247
-* **Data aktualizacji:** 2026-09-04T00:15:19.053Z
+* **Data aktualizacji:** 2026-09-04T00:16:51.451Z
 
 ### Kategorie
 
 | Kategoria | Liczba plików |
 | :--- | ---: |
-| Kod | 1242 |
+| Kod | 1244 |
 | Docs | 135 |
 | Config | 119 |
 | Assety | 120 |
@@ -24,7 +24,7 @@
 
 | Rozszerzenie | Liczba plików |
 | :--- | ---: |
-| `.ts` | 769 |
+| `.ts` | 771 |
 | `.tsx` | 287 |
 | `.md` | 122 |
 | `.png` | 94 |
@@ -79,11 +79,11 @@
     - **ui/** (9) — Dokumentacja systemu designu, tokenów i komponentów UI
   - **examples/** (2) — Przykładowe pliki baz danych i pakiety projektowe v5
   - **guides/** (5) — Podręczniki operatorskie (INSTALL, DESKTOP, MOBILE, DX)
-- **packages/** (222) — Współdzielone pakiety wewnętrzne monorepo
+- **packages/** (224) — Współdzielone pakiety wewnętrzne monorepo
   - **android-keystore/** (2) — Keystore do sideloadu / podpisywania APK (lokalny, nie sekret produkcyjny CI)
   - **eslint-config/** (5) — Wspólne reguły ESLint dla całego repozytorium
   - **plugins/** (4)
-  - **shared/** (179) — Logika domenowa SSOT, Zod schematy, przeliczenia czasu i akordów
+  - **shared/** (181) — Logika domenowa SSOT, Zod schematy, przeliczenia czasu i akordów
   - **typescript-config/** (5) — Bazowe pliki tsconfig.json dla paczek i aplikacji
   - **ui/** (26) — Biblioteka komponentów UI (przycisk, pole, menu, badge)
 - **scripts/** (33) — Skrypty monorepo (mapa repo, release notes, lint CSS, merge-train)
@@ -779,6 +779,8 @@ stagesync/
 │   │   │   │   ├── project-seed.test.ts
 │   │   │   │   ├── project-seed.ts
 │   │   │   │   ├── protocol-version-android.test.ts
+│   │   │   │   ├── schema-library-setlist.test.ts
+│   │   │   │   ├── schema-messages.test.ts
 │   │   │   │   ├── schema.test.ts
 │   │   │   │   ├── schema.ts
 │   │   │   │   ├── working-titles.test.ts
