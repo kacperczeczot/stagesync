@@ -306,8 +306,9 @@ export function gateStepFromCaptured(
     ok?: (output: string) => string | undefined;
     fail?: (output: string) => string | undefined;
   },
+  options?: { cwd?: string; env?: NodeJS.ProcessEnv; timeout?: number },
 ): GateStep {
-  const { ok, output } = runCommandCaptured(command, args);
+  const { ok, output } = runCommandCaptured(command, args, options);
   const detail = ok
     ? detailFrom?.ok?.(output)
     : (detailFrom?.fail?.(output) ?? firstFailureHint(output) ?? "błąd");
@@ -421,6 +422,12 @@ export function parsePnpmAuditDetail(output: string, ok: boolean): string {
     return `${found[1]} found (${severity[1].trim()})`;
   }
   if (found) return `${found[1]} found`;
+  if (
+    /The operation was aborted due to timeout/i.test(plain) ||
+    /ETIMEDOUT|ESOCKETTIMEDOUT/i.test(plain)
+  ) {
+    return "timeout rejestru npm (pominięto)";
+  }
   return ok ? "OK" : (firstFailureHint(output) ?? "błąd");
 }
 
@@ -881,10 +888,24 @@ export async function runFullAudit(): Promise<boolean> {
         fail: (output) => parseSyncVersionDetail(output, false),
       },
     ),
-    gateStepFromCaptured("audit", "pnpm audit", "pnpm", ["audit"], {
-      ok: (output) => parsePnpmAuditDetail(output, true),
-      fail: (output) => parsePnpmAuditDetail(output, false),
-    }),
+    gateStepFromCaptured(
+      "audit",
+      "pnpm audit",
+      "pnpm",
+      [
+        "audit",
+        "--fetch-timeout",
+        "15000",
+        "--fetch-retries",
+        "0",
+        "--ignore-registry-errors",
+      ],
+      {
+        ok: (output) => parsePnpmAuditDetail(output, true),
+        fail: (output) => parsePnpmAuditDetail(output, false),
+      },
+      { timeout: 20000 },
+    ),
   ];
   const ok = summarizeGate("Pełny audyt", steps);
   await offerSaveVerifyLog("Pełny audyt", steps);

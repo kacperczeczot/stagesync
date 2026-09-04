@@ -236,7 +236,7 @@ export type CommandResult = { ok: boolean; output: string };
 export function runCommandCaptured(
   command: string,
   args: string[],
-  options: { cwd?: string; env?: NodeJS.ProcessEnv } = {},
+  options: { cwd?: string; env?: NodeJS.ProcessEnv; timeout?: number } = {},
 ): CommandResult {
   protectScrollback();
   console.log();
@@ -245,6 +245,7 @@ export function runCommandCaptured(
     encoding: "utf8",
     shell: true,
     env: { ...process.env, NODE_NO_WARNINGS: "1", ...options.env },
+    timeout: options.timeout,
   });
   const output = `${result.stdout ?? ""}${result.stderr ?? ""}`;
   if (output) {
