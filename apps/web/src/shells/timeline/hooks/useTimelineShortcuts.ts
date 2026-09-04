@@ -37,6 +37,35 @@ export type TimelineKeyHandlers = {
   nextSetlistId: string | null;
 };
 
+export function createDefaultTimelineKeyHandlers(): TimelineKeyHandlers {
+  return {
+    onSave: async () => {},
+    onDiscard: () => {},
+    onUndo: () => {},
+    onRedo: () => {},
+    onClipCut: () => false,
+    onClipCopy: () => false,
+    onClipPaste: () => false,
+    onPlayOrPause: () => {},
+    onStop: async () => {},
+    onMetronomeToggle: async () => {},
+    onLoopToggle: () => {},
+    onTool: () => {},
+    applyWand: () => {},
+    nudgeLocator: () => {},
+    fitZoom: () => {},
+    zoomHorizontalBySteps: () => {},
+    applyAbsoluteZoomH: () => {},
+    zoomVerticalBySteps: () => {},
+    dirty: false,
+    savePending: false,
+    playing: false,
+    tool: "pointer",
+    prevSetlistId: null,
+    nextSetlistId: null,
+  };
+}
+
 export type UseTimelineShortcutsParams = {
   keyHandlersRef: RefObject<TimelineKeyHandlers>;
   songImportOpen: boolean;
