@@ -20,7 +20,7 @@
     "check-types": "tsc -p tsconfig.build.json --noEmit",
     "check-types:tests": "tsc -p tsconfig.json --noEmit",
     "check-types:all": "tsc -p tsconfig.json --noEmit",
-    "lint": "eslint . --max-warnings 4",
+    "lint": "eslint . --max-warnings 3",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
