@@ -1,10 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createProjectSeed } from "../../project/project-seed.js";
 import { ProjectSchema } from "../../project/schema.js";
-import {
-  DEFAULT_PPQ,
-  elapsedToTicks,
-} from "../../time-tempo/time.js";
+import { DEFAULT_PPQ, elapsedToTicks } from "../../time-tempo/time.js";
 import {
   applyUltrastarImportToProject,
   importUltrastarText,

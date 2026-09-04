@@ -62,13 +62,7 @@ export function useTimelineShellState() {
 
   // 1. Transport & Clock
   const transport = useTimelineTransportClock();
-  const {
-    state,
-    displayTicks,
-    setLoop,
-    snapMode,
-    setSnapMode,
-  } = transport;
+  const { state, displayTicks, setLoop, snapMode, setSnapMode } = transport;
 
   // 2. Modals & UI Viewport State
   const modals = useTimelineModals();
@@ -159,13 +153,7 @@ export function useTimelineShellState() {
       selection.setClipSelection(sel);
     },
   });
-  const {
-    draftProject,
-    loading,
-    loadError,
-    draftRef,
-    commitDraft,
-  } = draft;
+  const { draftProject, loading, loadError, draftRef, commitDraft } = draft;
 
   const songImport = useTimelineSongImport({
     projectId: projectId ?? null,

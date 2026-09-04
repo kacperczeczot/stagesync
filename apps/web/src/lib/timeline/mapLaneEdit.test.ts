@@ -155,9 +155,9 @@ describe("mapLaneEdit remaining", () => {
     expect(upsertTempoAt(p, 0, 10)).toBe(p);
     expect(upsertMeterAt(p, 100, 0, 4)).toBe(p); // invalid
     const keyUp = upsertKeyAt(p, 7680, { tonic: "D", mode: "minor" });
-    expect(
-      keyUp.keyMap?.find((e) => e.startTicks === 7680)?.key.tonic,
-    ).toBe("D");
+    expect(keyUp.keyMap?.find((e) => e.startTicks === 7680)?.key.tonic).toBe(
+      "D",
+    );
 
     const meterExtra = p.meterMap.find((e) => e.startTicks === 7680)!;
     const keyExtra = p.keyMap!.find((e) => e.startTicks === 7680)!;
@@ -268,9 +268,7 @@ it("covers key default, meter upsert update, negative multi-delta sort", () => {
   let p = seed();
   p = insertMapEventAt(p, "tempo", 7680, "bar");
   p = insertMapEventAt(p, "tempo", 15360, "bar");
-  const ids = p.tempoMap
-    .filter((e) => e.startTicks !== 0)
-    .map((e) => e.id);
+  const ids = p.tempoMap.filter((e) => e.startTicks !== 0).map((e) => e.id);
   const back = moveMapEventsByDelta(p, "tempo", ids, -3840, "bar");
   expect(back.tempoMap.find((e) => e.id === ids[0])!.startTicks).toBeLessThan(
     7680,

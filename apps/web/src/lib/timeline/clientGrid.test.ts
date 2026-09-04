@@ -60,11 +60,7 @@ describe("clientGrid", () => {
   });
 
   it("buildGridLiveContext exposes cycle cells for section chords", () => {
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     // Intro is 2 bars (0..7680). Put Am then F.
     p = {
       ...p,
@@ -98,11 +94,7 @@ describe("clientGrid", () => {
   it("scopes cycle to active Forma subsection only", () => {
     // 12-bar Verse with 4-bar subsections @ 4·BAR and 8·BAR.
     const verseLen = 12 * BAR;
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     p = {
       ...p,
       forma: {
@@ -169,11 +161,7 @@ describe("clientGrid", () => {
 
   it("exposes nextCycle for upcoming subsection (2-line carousel)", () => {
     const verseLen = 12 * BAR;
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     p = {
       ...p,
       forma: {
@@ -237,11 +225,7 @@ describe("clientGrid", () => {
   });
 
   it("heroNext points to next step within subsection cycle", () => {
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     p = {
       ...p,
       forma: {
@@ -286,11 +270,7 @@ describe("clientGrid", () => {
   });
 
   it("countdownPreview collapses current and previews first section", () => {
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     p = {
       ...p,
       akordy: {
@@ -315,5 +295,4 @@ describe("clientGrid", () => {
     expect(detectCycleLength(["A", "B", "A"])).toBe(3);
     expect(detectCycleLength(["C"])).toBe(1);
   });
-
 });

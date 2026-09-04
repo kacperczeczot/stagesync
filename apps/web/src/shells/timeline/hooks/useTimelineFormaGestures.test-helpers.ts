@@ -58,7 +58,12 @@ export function createTestProject(): Project {
           startTicks: 960,
           lengthTicks: 7680,
           blocks: [
-            { id: "tb1", startTicks: 0, lengthTicks: 7680, text: "Lyrics line" },
+            {
+              id: "tb1",
+              startTicks: 0,
+              lengthTicks: 7680,
+              text: "Lyrics line",
+            },
           ],
         },
       ],

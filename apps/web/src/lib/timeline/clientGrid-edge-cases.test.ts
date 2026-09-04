@@ -79,11 +79,7 @@ describe("clientGrid edge cases and helpers", () => {
   });
 
   it("chordStepsForTickRange uses clip onsets (not only bar starts)", () => {
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     const half = BAR / 2;
     p = {
       ...p,
@@ -126,11 +122,7 @@ describe("clientGrid edge cases and helpers", () => {
   });
 
   it("resolveNextPhraseBand crosses into next section subsections", () => {
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     const intro = p.forma.clips.find((c) => c.name === "Intro")!;
     const verse = {
       id: "forma-verse",
@@ -170,11 +162,7 @@ describe("clientGrid edge cases and helpers", () => {
   });
 
   it("carouselKey clip fallback without sectionInfo", () => {
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     // Only chords, wipe forma sections after countdown so sectionInfo may be null mid-song
     p = {
       ...p,
@@ -197,11 +185,7 @@ describe("clientGrid edge cases and helpers", () => {
   });
 
   it("resolveNextPhraseBand without countdown uses displayTicks as after", () => {
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     const intro = p.forma.clips.find((c) => c.kind === "section")!;
     p = {
       ...p,
@@ -225,11 +209,7 @@ describe("clientGrid edge cases and helpers", () => {
   });
 
   it("buildGridLiveContext hero dash and empty carouselKey in gaps", () => {
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     p = {
       ...p,
       forma: { clips: p.forma.clips.filter((c) => c.kind === "countdown") },
@@ -247,11 +227,7 @@ describe("clientGrid edge cases and helpers", () => {
 
   it("chordStepsForTickRange works when bar map cannot walk the range", () => {
     const far = 20_000_000;
-    let p: Project = createProjectSeed(
-      "p",
-      "S",
-      "2026-07-20T12:00:00.000Z",
-    );
+    let p: Project = createProjectSeed("p", "S", "2026-07-20T12:00:00.000Z");
     p = {
       ...p,
       forma: {

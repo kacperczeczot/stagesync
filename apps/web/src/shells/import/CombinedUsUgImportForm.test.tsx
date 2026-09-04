@@ -252,38 +252,40 @@ describe("CombinedUsUgImportForm", () => {
       ],
     });
 
-    fetchUgTabFromServerMock.mockImplementation(async (url: string): Promise<UgFetchResponse> => {
-      if (url === "https://ug.com/tab1") {
+    fetchUgTabFromServerMock.mockImplementation(
+      async (url: string): Promise<UgFetchResponse> => {
+        if (url === "https://ug.com/tab1") {
+          return {
+            content: "[Verse]\nRandom unrelated text",
+            metadata: {
+              title: "Low Match Version",
+              artist: "ABBA",
+              type: "Chords",
+              tonality: "C",
+              timeSignature: "4/4",
+              tempo: 120,
+              tuning: "E A D G B E",
+              tabId: 1,
+              url: "https://ug.com/tab1",
+            },
+          };
+        }
         return {
-          content: "[Verse]\nRandom unrelated text",
+          content: ug,
           metadata: {
-            title: "Low Match Version",
+            title: "High Match Version",
             artist: "ABBA",
             type: "Chords",
             tonality: "C",
             timeSignature: "4/4",
             tempo: 120,
             tuning: "E A D G B E",
-            tabId: 1,
-            url: "https://ug.com/tab1",
+            tabId: 2,
+            url: "https://ug.com/tab2",
           },
         };
-      }
-      return {
-        content: ug,
-        metadata: {
-          title: "High Match Version",
-          artist: "ABBA",
-          type: "Chords",
-          tonality: "C",
-          timeSignature: "4/4",
-          tempo: 120,
-          tuning: "E A D G B E",
-          tabId: 2,
-          url: "https://ug.com/tab2",
-        },
-      };
-    });
+      },
+    );
 
     render(
       <CombinedUsUgImportForm

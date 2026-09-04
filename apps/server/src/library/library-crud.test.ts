@@ -314,7 +314,6 @@ describe("library / projects CRUD", () => {
     expect(ids.size).toBe(6);
   });
 
-
   it("clears transport activeProjectId when that project is deleted", async () => {
     const createRes = await fetch(`${baseUrl}/api/projects`, {
       method: "POST",
@@ -348,4 +347,3 @@ describe("library / projects CRUD", () => {
     expect(stop.status).toBe(200);
   });
 });
-

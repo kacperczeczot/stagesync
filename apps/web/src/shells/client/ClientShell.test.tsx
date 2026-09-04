@@ -135,8 +135,6 @@ function startGridRole() {
   if (start) fireEvent.click(start);
 }
 
-
-
 function renderClient() {
   return render(
     <MemoryRouter initialEntries={["/client"]}>
@@ -413,4 +411,3 @@ describe("ClientShell chrome", () => {
     expect(screen.queryByLabelText("Meta utworu")).toBeNull();
   });
 });
-

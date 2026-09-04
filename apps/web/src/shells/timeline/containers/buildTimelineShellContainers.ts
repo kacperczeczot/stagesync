@@ -15,7 +15,9 @@ export interface TimelineShellContainersInput {
   tool: ToolId;
 }
 
-export function buildTimelineShellContainers(input: TimelineShellContainersInput) {
+export function buildTimelineShellContainers(
+  input: TimelineShellContainersInput,
+) {
   const headerContainerProps = buildTimelineHeaderProps(input.header);
   const canvasViewportProps = buildTimelineCanvasViewportProps(input.viewport);
   const dialogsContainerProps = buildTimelineDialogsProps(input.dialogs);

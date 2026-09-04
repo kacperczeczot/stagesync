@@ -15,7 +15,10 @@ import {
   ZOOM_H_MIN as PREFS_ZOOM_H_MIN,
 } from "@lib/timeline/timelineZoomPrefs.js";
 import { openPreferences } from "@lib/client/preferencesEvents.js";
-import type { TimelineSurface, ClipSelection } from "@lib/timeline/timelineSelection.js";
+import type {
+  TimelineSurface,
+  ClipSelection,
+} from "@lib/timeline/timelineSelection.js";
 import type { TrackVisibilityMap } from "@lib/timeline/timelineTracks.js";
 import type { ToolId } from "../timelineToolsData.js";
 import {
@@ -47,7 +50,9 @@ export interface UseTimelineShellInteractionsParams {
   showOperatorNav: boolean;
   navigate: NavigateFunction;
   isMobilePreview: boolean;
-  gesturePolicy: ReturnType<typeof import("@lib/timeline/timelineTouchTier.js").timelineGesturesAllowed>;
+  gesturePolicy: ReturnType<
+    typeof import("@lib/timeline/timelineTouchTier.js").timelineGesturesAllowed
+  >;
   tool: ToolId;
   setTool: (tool: ToolId | ((prev: ToolId) => ToolId)) => void;
   toolRef: RefObject<ToolId>;

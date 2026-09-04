@@ -56,7 +56,13 @@ export function useTimelineTouchTierState(params: {
     setSongMetaOpen(false);
     setTimelineSurface("timeline");
     setTool((t) => (t === "tap" ? "pointer" : t));
-  }, [isMobilePreview, setInspectorVisible, setSongMetaOpen, setTimelineSurface, setTool]);
+  }, [
+    isMobilePreview,
+    setInspectorVisible,
+    setSongMetaOpen,
+    setTimelineSurface,
+    setTool,
+  ]);
 
   return { touchTier, isMobilePreview, gesturePolicy };
 }

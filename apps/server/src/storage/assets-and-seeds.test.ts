@@ -3,11 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createProjectV5Seed } from "@stagesync/shared";
-import {
-  NotFoundError,
-  StorageError,
-  createStores,
-} from "./index.js";
+import { NotFoundError, StorageError, createStores } from "./index.js";
 
 const fsHooks = vi.hoisted(() => ({
   access: null as null | ((path: string) => Promise<void>),

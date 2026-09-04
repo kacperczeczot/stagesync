@@ -393,6 +393,4 @@ describe("formaEdit remaining coverage", () => {
     const tinyEnd = previewFromSession(p, re, -100, true, false);
     expect(tinyEnd.lengthTicks).toBe(3840);
   });
-
-
 });

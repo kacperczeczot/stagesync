@@ -19,7 +19,7 @@ describe("mapSegments", () => {
 
   it("tempoMapSegments returns synthetic default when tempoMap empty", () => {
     const project = {
-      ...(createProjectSeed("id", "Demo", "2026-07-20T00:00:00.000Z")),
+      ...createProjectSeed("id", "Demo", "2026-07-20T00:00:00.000Z"),
       tempoMap: [],
     };
     expect(tempoMapSegments(project, { start: 0, end: 100 })).toEqual([
@@ -36,7 +36,7 @@ describe("mapSegments", () => {
 
   it("tempoMapSegments skips events wholly outside span", () => {
     const project = {
-      ...(createProjectSeed("id", "Demo", "2026-07-20T00:00:00.000Z")),
+      ...createProjectSeed("id", "Demo", "2026-07-20T00:00:00.000Z"),
       tempoMap: [
         { id: "early", startTicks: -1000, bpm: 90 },
         { id: "late", startTicks: 10_000, bpm: 140 },
@@ -77,11 +77,7 @@ describe("mapSegments", () => {
   });
 
   it("meterMapSegments default fill and leading gap", () => {
-    const base = createProjectSeed(
-      "id",
-      "Demo",
-      "2026-07-20T00:00:00.000Z",
-    );
+    const base = createProjectSeed("id", "Demo", "2026-07-20T00:00:00.000Z");
     const empty = { ...base, meterMap: [] };
     expect(meterMapSegments(empty, { start: 0, end: 50 })).toEqual([
       {

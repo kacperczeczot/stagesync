@@ -429,5 +429,4 @@ describe("scoreOsmd", () => {
       );
     });
   });
-
 });

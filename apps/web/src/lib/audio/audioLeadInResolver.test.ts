@@ -183,7 +183,9 @@ describe("audioLeadInResolver", () => {
       getChannelData: () => channelData,
     };
     expect(
-      resolveAudioLeadInDelayMs(buffer as unknown as AudioBuffer, { formatHint: "unknown" }),
+      resolveAudioLeadInDelayMs(buffer as unknown as AudioBuffer, {
+        formatHint: "unknown",
+      }),
     ).toBe(20);
   });
 

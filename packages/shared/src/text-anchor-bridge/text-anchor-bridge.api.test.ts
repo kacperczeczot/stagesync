@@ -15,7 +15,6 @@ import {
   suggestBeat1MsFromPipeAndGap,
 } from "../smart-tempo/smart-tempo.js";
 
-
 const FIX = join(
   dirname(fileURLToPath(import.meta.url)),
   "..",

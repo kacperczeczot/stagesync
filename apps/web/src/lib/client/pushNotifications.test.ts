@@ -196,11 +196,10 @@ describe("pushNotifications (#810)", () => {
       expect.objectContaining({ method: "POST" }),
     );
     const callArgs = (fetchMock.mock.calls as unknown[][])[0]?.[1] as
-      | RequestInit
-      | undefined;
-    const body = JSON.parse(
-      (callArgs?.body as string) || "{}",
-    ) as { token: string };
+      RequestInit | undefined;
+    const body = JSON.parse((callArgs?.body as string) || "{}") as {
+      token: string;
+    };
     expect(body.token).toBe("fcm-token-abcdefgh");
   });
 

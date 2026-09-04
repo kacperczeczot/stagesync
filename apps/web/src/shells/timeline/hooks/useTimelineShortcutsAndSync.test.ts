@@ -54,7 +54,9 @@ describe("useTimelineShortcutsAndSync", () => {
   let commitDraft: (next: Project) => void;
   let reloadProject: (id: string) => Promise<void>;
   let setDraftProject: React.Dispatch<React.SetStateAction<Project | null>>;
-  let setDraftHistory: React.Dispatch<React.SetStateAction<DraftHistory | null>>;
+  let setDraftHistory: React.Dispatch<
+    React.SetStateAction<DraftHistory | null>
+  >;
   let clearClipSelection: () => void;
   let openSongImportWizard: (asNew: boolean) => void;
 

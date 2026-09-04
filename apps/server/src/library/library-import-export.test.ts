@@ -5,10 +5,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { createApp } from "../app.js";
 import type { Server } from "node:http";
 import type { AddressInfo } from "node:net";
-import {
-  LibrarySchema,
-  ProjectSchema,
-} from "@stagesync/shared";
+import { LibrarySchema, ProjectSchema } from "@stagesync/shared";
 
 async function listen(
   dataDir: string,

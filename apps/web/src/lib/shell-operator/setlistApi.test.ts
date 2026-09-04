@@ -287,5 +287,4 @@ describe("setlistApi", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(okJson({})));
     await expect(sendStageMessage({ text: "Hi" })).resolves.toEqual([]);
   });
-
 });

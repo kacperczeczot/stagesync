@@ -236,9 +236,7 @@ export function logExplainableDspTrace({
   }
 
   console.log(`\n--- [FAILING BARS TRACE (DAW FAIL > 60 ms)] ---`);
-  const failingBars = barPoints
-    .filter((bp) => bp.tier === "fail")
-    .slice(0, 5);
+  const failingBars = barPoints.filter((bp) => bp.tier === "fail").slice(0, 5);
   if (failingBars.length === 0) {
     console.log(`✅ Brak taktów przekraczających 60 ms w tym utworze!`);
   } else {

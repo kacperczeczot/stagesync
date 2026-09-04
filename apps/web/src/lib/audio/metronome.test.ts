@@ -87,7 +87,13 @@ function mockAudioContext(state: AudioContextState = "running") {
     ctx.currentTime = time;
   };
 
-  return { ctx: ctx as unknown as AudioContext, oscillators, gains, starts, setTime };
+  return {
+    ctx: ctx as unknown as AudioContext,
+    oscillators,
+    gains,
+    starts,
+    setTime,
+  };
 }
 
 describe("clickLevelLinear", () => {

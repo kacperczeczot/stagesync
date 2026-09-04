@@ -354,5 +354,4 @@ describe("clientKaraoke", () => {
     expect(ctx!.sectionBars).toEqual([]);
     expect(ctx!.sectionName).toBe("—");
   });
-
 });
