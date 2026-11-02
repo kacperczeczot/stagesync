@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 import type { Project } from "@stagesync/shared";
 import { putProject } from "@lib/shell-operator/libraryApi.js";
 import type { ClientDisplayPrefs } from "@lib/client/clientDisplayPrefs.js";
@@ -82,6 +82,29 @@ export function ClientStagePanes({
   setScoreHiddenPartIds: Dispatch<SetStateAction<string[]>>;
   seek: (ticks: number) => void | Promise<void>;
 }) {
+  const drumsSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingDrumsSaveRef = useRef<{
+    projectId: string;
+    project: Project;
+  } | null>(null);
+  const lastSavedDrumsProjectRef = useRef<Project | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (drumsSaveTimerRef.current) {
+        clearTimeout(drumsSaveTimerRef.current);
+        drumsSaveTimerRef.current = null;
+      }
+      const pending = pendingDrumsSaveRef.current;
+      if (pending) {
+        pendingDrumsSaveRef.current = null;
+        void putProject(pending.projectId, pending.project).catch(() => {
+          /* best-effort flush on unmount */
+        });
+      }
+    };
+  }, []);
+
   return (
     <div
       className={[styles.stage, picked.length === 2 ? styles.stageSplit : ""]
@@ -166,7 +189,9 @@ export function ClientStagePanes({
                   sectionNamesPolish={displayPrefs.sectionNamesPolish}
                   onNoteChange={(clipId, note) => {
                     if (!activeProjectId || !liveDesk.clientEditEnabled) return;
-                    const prev = activeProject;
+                    if (!pendingDrumsSaveRef.current) {
+                      lastSavedDrumsProjectRef.current = activeProject;
+                    }
                     const next: Project = {
                       ...activeProject,
                       forma: {
@@ -182,16 +207,34 @@ export function ClientStagePanes({
                     };
                     setDrumsNoteError(null);
                     setActiveProject(next);
-                    void putProject(activeProjectId, next)
-                      .then((saved) => setActiveProject(saved))
-                      .catch((err) => {
-                        setActiveProject(prev);
-                        setDrumsNoteError(
-                          err instanceof Error
-                            ? err.message
-                            : "Nie udało się zapisać notatki perkusji",
-                        );
-                      });
+                    pendingDrumsSaveRef.current = {
+                      projectId: activeProjectId,
+                      project: next,
+                    };
+                    if (drumsSaveTimerRef.current) {
+                      clearTimeout(drumsSaveTimerRef.current);
+                    }
+                    drumsSaveTimerRef.current = setTimeout(() => {
+                      drumsSaveTimerRef.current = null;
+                      const pending = pendingDrumsSaveRef.current;
+                      pendingDrumsSaveRef.current = null;
+                      if (!pending) return;
+                      void putProject(pending.projectId, pending.project)
+                        .then((saved) => {
+                          lastSavedDrumsProjectRef.current = saved;
+                          setActiveProject(saved);
+                        })
+                        .catch((err) => {
+                          if (lastSavedDrumsProjectRef.current) {
+                            setActiveProject(lastSavedDrumsProjectRef.current);
+                          }
+                          setDrumsNoteError(
+                            err instanceof Error
+                              ? err.message
+                              : "Nie udało się zapisać notatki perkusji",
+                          );
+                        });
+                    }, 400);
                   }}
                 />
               ) : (

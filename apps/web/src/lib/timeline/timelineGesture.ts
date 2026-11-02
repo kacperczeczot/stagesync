@@ -324,6 +324,8 @@ export type FormaGestureSession = {
   originGainDb?: number;
   /** Gain gesture: clientY at pointerdown. */
   originClientY?: number;
+  /** Pointer has moved past drag threshold (distinguishes click from drag). */
+  hasDragged?: boolean;
 };
 
 export type FormaGesturePreview = {

@@ -45,7 +45,7 @@ export function extractYoutubeVideoId(raw: string): string | null {
 export function msPerBarAtBpm(
   bpm: number,
   meter: TimeSignature = { numerator: 4, denominator: 4 },
-  ppq = 480,
+  ppq = DEFAULT_PPQ,
 ): number {
   const barTicks = ticksPerBar(meter, ppq);
   return ticksToMs(barTicks, bpm, meter, ppq);

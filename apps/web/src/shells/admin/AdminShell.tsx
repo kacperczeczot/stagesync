@@ -249,7 +249,7 @@ export function AdminShell() {
     return () => {
       cancelled = true;
     };
-  }, [sectionProjectId, state.activeProjectId, displayTicks]);
+  }, [sectionProjectId, state.activeProjectId]);
 
   const { onApplyUg, onApplyUltrastar, onApplyUsUg } = useAdminImportHandlers({
     selectedId,

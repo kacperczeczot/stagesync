@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { TimelineDialogsContainerProps } from "./TimelineDialogsContainer.js";
+import {
+  defaultTrackVisibility,
+  type TrackVisibilityMap,
+} from "@lib/timeline/timelineTracks.js";
 
 interface DialogsContext {
+  projectId?: string | null;
   draft: any;
   shortcuts: any;
   modals: any;
@@ -9,6 +14,8 @@ interface DialogsContext {
   songImport: any;
   floatingMenus: any;
   audioState: any;
+  trackVisibility?: TrackVisibilityMap;
+  toggleTrack?: (id: string) => void;
   mapEdits: any;
   toolbarVisibleSet: Set<string>;
   setToolbarVisibleTools: any;
@@ -16,6 +23,7 @@ interface DialogsContext {
   touchAlertOpen: boolean;
   setTouchAlertOpen: any;
   tool: any;
+  wandTool?: any;
 }
 
 export function buildTimelineDialogsProps(
@@ -36,11 +44,12 @@ export function buildTimelineDialogsProps(
     touchAlertOpen,
     setTouchAlertOpen,
     tool,
+    wandTool,
   } = ctx;
 
   return {
     blocker: draft.blocker,
-    projectId: draft.projectId,
+    projectId: ctx.projectId ?? draft.projectId,
     draftProject: draft.draftProject,
     savePending: draft.savePending,
     setSavePending: draft.setSavePending,
@@ -68,8 +77,11 @@ export function buildTimelineDialogsProps(
     eyeMenuPos: floatingMenus.eyeMenuPos,
     eyeMenuRef: floatingMenus.eyeMenuRef,
     eyeMenuId: floatingMenus.eyeMenuId ?? "tl-eye-menu",
-    trackVisibility: audioState.trackVisibility ?? ctx.draft.trackVisibility,
-    toggleTrack: audioState.toggleTrack,
+    trackVisibility:
+      ctx.trackVisibility ??
+      audioState?.trackVisibility ??
+      defaultTrackVisibility(),
+    toggleTrack: ctx.toggleTrack ?? audioState?.toggleTrack ?? (() => {}),
     toolsVisOpen: floatingMenus.toolsVisOpen,
     toolsVisMenuPos: floatingMenus.toolsVisMenuPos,
     toolsVisMenuRef: floatingMenus.toolsVisMenuRef,
@@ -82,7 +94,7 @@ export function buildTimelineDialogsProps(
     onTool: floatingMenus.onTool,
     wandMenu: floatingMenus.wandMenu,
     wandMenuRef: floatingMenus.wandMenuRef,
-    applyWand: (mode: any) => shortcuts.applyWand?.(mode),
+    applyWand: (mode: any) => wandTool?.applyWand?.(mode) ?? shortcuts?.applyWand?.(mode),
     displayTicks,
     mapEditTicks: mapEdits.mapEditTicks,
     commitDraft: draft.commitDraft,

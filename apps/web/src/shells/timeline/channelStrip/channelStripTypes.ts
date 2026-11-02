@@ -69,6 +69,10 @@ export type MasterStripState = {
   outputOptions?: readonly OutputSelectorOption[];
   /** ADR 0017 — lock Master physical remapping while PLAYING. */
   outputDisabled?: boolean;
+  /** Whether any track or bus in the mixer is soloed. */
+  hasAnySolo?: boolean;
+  /** Whether any track, bus, or hw output in the mixer is muted. */
+  hasAnyMute?: boolean;
 };
 
 export type MasterStripCallbacks = {
@@ -77,6 +81,12 @@ export type MasterStripCallbacks = {
   onHoldClear?: () => void;
   /** Raw select value `ch:<offset>`. */
   onOutputChange?: (value: string) => void;
+  /** Solo Off for All (reset all solos). */
+  onClearAllSolo?: () => void;
+  /** Mute Off for All (unmute all tracks/busses/hw). */
+  onClearAllMute?: () => void;
+  /** Panic button (clear both solo and mute). */
+  onClearAllSoloMute?: () => void;
 };
 
 export type ClickStripCallbacks = {

@@ -16,15 +16,6 @@ import styles from "./TimelineShell.module.css";
 export function TimelineShell() {
   const shell = useTimelineShellState();
 
-  if (!shell.projectId) {
-    return (
-      <div className={styles.shell}>
-        <p className={styles.muted}>Brak identyfikatora projektu.</p>
-        <Link to="/admin">Admin</Link>
-      </div>
-    );
-  }
-
   if (shell.loading && !shell.draftProject) {
     return (
       <div className={styles.shell}>
@@ -57,6 +48,12 @@ export function TimelineShell() {
       />
 
       <TimelineHeaderContainer {...shell.headerContainerProps} />
+
+      {shell.loadError ? (
+        <p className={styles.chromeAlert} role="alert">
+          {shell.loadError}
+        </p>
+      ) : null}
 
       <TimelineCanvasViewport {...shell.canvasViewportProps} />
 

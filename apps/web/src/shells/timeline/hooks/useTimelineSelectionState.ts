@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState, type RefObject } from "react";
-import type { Project, SnapMode } from "@stagesync/shared";
+import type { Project, SnapMode, AudioClipProperties } from "@stagesync/shared";
+import { extractAudioClipProperties } from "@stagesync/shared";
 import {
   clearSelection as clearClipSelectionHelper,
   clearTrackSelection,
@@ -28,6 +29,7 @@ import {
   splitContentClipAt,
 } from "@lib/timeline-edit/contentLaneEdit.js";
 import {
+  commitPasteAudioClipProperties,
   joinAdjacentAudioClips,
   splitAudioClipAt,
 } from "@lib/audio/audioLaneEdit.js";
@@ -269,6 +271,52 @@ export function useTimelineSelectionState({
     return true;
   }, [clipSelection, draftRef]);
 
+  const [hasCopiedAudioClipProperties, setHasCopiedAudioClipProperties] =
+    useState(false);
+  const audioClipPropsClipboardRef = useRef<AudioClipProperties | null>(null);
+
+  const copyAudioClipProperties = useCallback(
+    (clipId?: string): boolean => {
+      const draft = draftRef.current;
+      if (!draft) return false;
+      const lane = primaryLane(clipSelection);
+      const targetId =
+        clipId ??
+        (lane && isAudioSelectionLane(lane)
+          ? (clipSelection.primaryId ?? undefined)
+          : undefined);
+      if (!targetId) return false;
+      const clip = draft.audioClips.find((c) => c.id === targetId);
+      if (!clip) return false;
+      audioClipPropsClipboardRef.current = extractAudioClipProperties(clip);
+      setHasCopiedAudioClipProperties(true);
+      return true;
+    },
+    [clipSelection, draftRef],
+  );
+
+  const pasteAudioClipProperties = useCallback(
+    (targetClipIds?: string[]): boolean => {
+      const draft = draftRef.current;
+      const props = audioClipPropsClipboardRef.current;
+      if (!draft || !props) return false;
+      const lane = primaryLane(clipSelection);
+      const ids =
+        targetClipIds ??
+        (lane && isAudioSelectionLane(lane)
+          ? idsOnLane(clipSelection, lane)
+          : []);
+      if (!ids.length) return false;
+      const next = commitPasteAudioClipProperties(draft, ids, props);
+      if (next !== draft) {
+        commitDraft(next);
+        return true;
+      }
+      return false;
+    },
+    [clipSelection, commitDraft, draftRef],
+  );
+
   const pasteClipClipboard = useCallback(
     (anchorTicks: number): boolean => {
       const draft = draftRef.current;
@@ -436,5 +484,8 @@ export function useTimelineSelectionState({
     joinSelectionAdjacent,
     setCycleFromSelectedAudioClip,
     nudgeSelectedClip,
+    hasCopiedAudioClipProperties,
+    copyAudioClipProperties,
+    pasteAudioClipProperties,
   };
 }

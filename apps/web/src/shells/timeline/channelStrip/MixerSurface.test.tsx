@@ -333,4 +333,121 @@ describe("MixerSurface", () => {
     fireEvent.click(addHw);
     expect(onAddHwOut).not.toHaveBeenCalled();
   });
+
+  it("Solo / Mute Off: Master S/M buttons disabled when idle, active with panic button when solo/mute present", () => {
+    const onClearAllSolo = vi.fn();
+    const onClearAllMute = vi.fn();
+    const onClearAllSoloMute = vi.fn();
+
+    const project = createProjectSeed(
+      "song-1",
+      "Test Song",
+      "2026-07-26T00:00:00.000Z",
+    );
+    project.audioTracks = [
+      {
+        id: "trk-1",
+        name: "Track A",
+        muted: true,
+        gainDb: 0,
+        pan: 0,
+        channelMode: "stereo",
+      },
+    ];
+
+    const { rerender } = render(
+      <MixerSurface
+        project={project}
+        trackSelection={{ ids: [], primaryId: null }}
+        soloAudioTrackIds={["trk-1"]}
+        soloBusIds={[]}
+        renamingTrackId={null}
+        renameValue=""
+        renamingBusId={null}
+        busRenameValue=""
+        buildCallbacks={() => emptyCallbacks()}
+        buildBusCallbacks={() => emptyCallbacks()}
+        masterCallbacks={{
+          onGainChange: () => {},
+          onGainReset: () => {},
+          onClearAllSolo,
+          onClearAllMute,
+          onClearAllSoloMute,
+        }}
+        clickCallbacks={{ onMuteClick: () => {} }}
+        clickMuted={false}
+        playing={false}
+        onAddAudioTrack={() => {}}
+        onAddBus={() => {}}
+      />,
+    );
+
+    // Panic button in Master header is visible
+    const panicBtn = screen.getByRole("button", {
+      name: "Wyłącz wszystkie solo i wyciszenia (⌥X)",
+    });
+    expect(panicBtn).toBeDefined();
+    fireEvent.click(panicBtn);
+    expect(onClearAllSoloMute).toHaveBeenCalled();
+
+    // Master S button is active
+    const masterSoloBtn = screen.getByRole("button", {
+      name: "Wyłącz wszystkie solo (⌥S)",
+    });
+    expect(masterSoloBtn).toHaveProperty("disabled", false);
+    fireEvent.click(masterSoloBtn);
+    expect(onClearAllSolo).toHaveBeenCalled();
+
+    // Master M button is active
+    const masterMuteBtn = screen.getByRole("button", {
+      name: "Włącz wszystkie wyciszone ścieżki (⌥M)",
+    });
+    expect(masterMuteBtn).toHaveProperty("disabled", false);
+    fireEvent.click(masterMuteBtn);
+    expect(onClearAllMute).toHaveBeenCalled();
+
+    // Now re-render with clean project and empty solo
+    project.audioTracks[0]!.muted = false;
+    rerender(
+      <MixerSurface
+        project={project}
+        trackSelection={{ ids: [], primaryId: null }}
+        soloAudioTrackIds={[]}
+        soloBusIds={[]}
+        renamingTrackId={null}
+        renameValue=""
+        renamingBusId={null}
+        busRenameValue=""
+        buildCallbacks={() => emptyCallbacks()}
+        buildBusCallbacks={() => emptyCallbacks()}
+        masterCallbacks={{
+          onGainChange: () => {},
+          onGainReset: () => {},
+          onClearAllSolo,
+          onClearAllMute,
+          onClearAllSoloMute,
+        }}
+        clickCallbacks={{ onMuteClick: () => {} }}
+        clickMuted={false}
+        playing={false}
+        onAddAudioTrack={() => {}}
+        onAddBus={() => {}}
+      />,
+    );
+
+    // Panic button should not be present
+    expect(
+      screen.queryByRole("button", {
+        name: "Wyłącz wszystkie solo i wyciszenia (⌥X)",
+      }),
+    ).toBeNull();
+
+    // Master S & M buttons are disabled
+    expect(
+      screen.getByRole("button", { name: "Brak aktywnych solo" }),
+    ).toHaveProperty("disabled", true);
+    expect(
+      screen.getByRole("button", { name: "Brak aktywnych wyciszeń" }),
+    ).toHaveProperty("disabled", true);
+  });
 });

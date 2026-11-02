@@ -16,6 +16,7 @@ import {
   type AudioHwCapability,
 } from "@lib/audio/audioHwCapability.js";
 import { canAddHardwareOutput } from "@lib/audio/audioHwEdit.js";
+import { hasAnyMutedTrackOrBus } from "@lib/audio/audioLaneEdit.js";
 import {
   getMetronomePrefs,
   METRONOME_PREFS_CHANGED_EVENT,
@@ -151,6 +152,8 @@ export function MixerSurface({
   );
 
   const masterOutValue = `ch:${resolveMasterOutputRouting(project.masterOutput).channelOffset}`;
+  const hasAnySolo = soloAudioTrackIds.length > 0 || soloBusIds.length > 0;
+  const hasAnyMute = hasAnyMutedTrackOrBus(project);
 
   function setZoneVisible(zoneId: MixerZoneId) {
     setZoneVis((prev) => {
@@ -409,6 +412,22 @@ export function MixerSurface({
             title="Master"
             visible={zoneVis.master}
             onToggle={() => setZoneVisible("master")}
+            extraAction={
+              hasAnySolo || hasAnyMute ? (
+                <button
+                  type="button"
+                  className={styles.panicBtn}
+                  title="Wyłącz wszystkie solo i wyciszenia (⌥X)"
+                  aria-label="Wyłącz wszystkie solo i wyciszenia (⌥X)"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    masterCallbacks.onClearAllSoloMute?.();
+                  }}
+                >
+                  Solo/Mute Off
+                </button>
+              ) : null
+            }
           />
           {zoneVis.master ? (
             <div className={styles.masterRailStrips}>
@@ -440,6 +459,8 @@ export function MixerSurface({
                   outputValue: masterOutValue,
                   outputOptions: masterOutOptions,
                   outputDisabled: playing && masterOutOptions.length > 0,
+                  hasAnySolo,
+                  hasAnyMute,
                 }}
                 callbacks={{
                   ...masterCallbacks,

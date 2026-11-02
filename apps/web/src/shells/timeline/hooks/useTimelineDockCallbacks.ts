@@ -36,6 +36,7 @@ import {
   type ClipSelection,
   type TrackSelection,
 } from "@lib/timeline/timelineSelection.js";
+import { clearAllAudioMutes } from "@lib/audio/audioLaneEdit.js";
 import type { OpenContextMenuArgs } from "@stagesync/ui";
 
 export type UseTimelineDockCallbacksOptions = {
@@ -199,34 +200,13 @@ export function useTimelineDockCallbacks({
         },
         onSoloClick: (e) => onAudioTrackSoloClick(e, trackId),
         onMuteClick: (e) => onAudioTrackMuteClick(e, trackId),
-        onGainChange: (v) => {
-          if (!draftProject) return;
-          commitDraft(setAudioTrackGainDb(draftProject, trackId, v));
-        },
-        onGainReset: () => {
-          if (!draftProject) return;
-          commitDraft(setAudioTrackGainDb(draftProject, trackId, 0));
-        },
-        onPanChange: (v) => {
-          if (!draftProject) return;
-          commitDraft(setAudioTrackPan(draftProject, trackId, v));
-        },
-        onPanReset: () => {
-          if (!draftProject) return;
-          commitDraft(setAudioTrackPan(draftProject, trackId, 0));
-        },
-        onChannelModeChange: (mode) => {
-          if (!draftProject) return;
-          commitDraft(setAudioTrackChannelMode(draftProject, trackId, mode));
-        },
-        onColorChange: (color) => {
-          if (!draftProject) return;
-          commitDraft(setAudioTrackColor(draftProject, trackId, color));
-        },
-        onIconChange: (icon) => {
-          if (!draftProject) return;
-          commitDraft(setAudioTrackIcon(draftProject, trackId, icon));
-        },
+        onGainChange: (v) => draftProject && commitDraft(setAudioTrackGainDb(draftProject, trackId, v)),
+        onGainReset: () => draftProject && commitDraft(setAudioTrackGainDb(draftProject, trackId, 0)),
+        onPanChange: (v) => draftProject && commitDraft(setAudioTrackPan(draftProject, trackId, v)),
+        onPanReset: () => draftProject && commitDraft(setAudioTrackPan(draftProject, trackId, 0)),
+        onChannelModeChange: (mode) => draftProject && commitDraft(setAudioTrackChannelMode(draftProject, trackId, mode)),
+        onColorChange: (color) => draftProject && commitDraft(setAudioTrackColor(draftProject, trackId, color)),
+        onIconChange: (icon) => draftProject && commitDraft(setAudioTrackIcon(draftProject, trackId, icon)),
         onOutputChange: (output) => {
           if (!draftProject) return;
           const prev = draftProject.audioTracks.find(
@@ -262,16 +242,29 @@ export function useTimelineDockCallbacks({
     ],
   );
 
+  const onClearAllSolo = useCallback(() => {
+    setSoloAudioTrackIds([]);
+    setSoloBusIds([]);
+  }, [setSoloAudioTrackIds, setSoloBusIds]);
+
+  const onClearAllMute = useCallback(() => {
+    if (!draftProject) return;
+    const next = clearAllAudioMutes(draftProject);
+    if (next !== draftProject) commitDraft(next);
+  }, [draftProject, commitDraft]);
+
+  const onClearAllSoloMute = useCallback(() => {
+    setSoloAudioTrackIds([]);
+    setSoloBusIds([]);
+    if (!draftProject) return;
+    const next = clearAllAudioMutes(draftProject);
+    if (next !== draftProject) commitDraft(next);
+  }, [setSoloAudioTrackIds, setSoloBusIds, draftProject, commitDraft]);
+
   const buildMasterStripCallbacks = useCallback((): MasterStripCallbacks => {
     return {
-      onGainChange: (v) => {
-        if (!draftProject) return;
-        commitDraft(setMasterGainDb(draftProject, v));
-      },
-      onGainReset: () => {
-        if (!draftProject) return;
-        commitDraft(setMasterGainDb(draftProject, 0));
-      },
+      onGainChange: (v) => draftProject && commitDraft(setMasterGainDb(draftProject, v)),
+      onGainReset: () => draftProject && commitDraft(setMasterGainDb(draftProject, 0)),
       onOutputChange: (value) => {
         if (!draftProject || state.playing) return;
         const m = /^ch:(\d+)$/.exec(value);
@@ -287,8 +280,19 @@ export function useTimelineDockCallbacks({
           );
         }
       },
+      onClearAllSolo,
+      onClearAllMute,
+      onClearAllSoloMute,
     };
-  }, [draftProject, commitDraft, state.playing, setLoadError]);
+  }, [
+    draftProject,
+    commitDraft,
+    state.playing,
+    setLoadError,
+    onClearAllSolo,
+    onClearAllMute,
+    onClearAllSoloMute,
+  ]);
 
   const onAddBus = useCallback(() => {
     if (!draftProject) return;
@@ -423,26 +427,11 @@ export function useTimelineDockCallbacks({
           const bus = draftProject.audioBusses?.find((b) => b.id === busId);
           commitDraft(setAudioBusMuted(draftProject, busId, !bus?.muted));
         },
-        onGainChange: (v) => {
-          if (!draftProject) return;
-          commitDraft(setAudioBusGainDb(draftProject, busId, v));
-        },
-        onGainReset: () => {
-          if (!draftProject) return;
-          commitDraft(setAudioBusGainDb(draftProject, busId, 0));
-        },
-        onPanChange: (v) => {
-          if (!draftProject) return;
-          commitDraft(setAudioBusPan(draftProject, busId, v));
-        },
-        onPanReset: () => {
-          if (!draftProject) return;
-          commitDraft(setAudioBusPan(draftProject, busId, 0));
-        },
-        onChannelModeChange: (mode) => {
-          if (!draftProject) return;
-          commitDraft(setAudioBusChannelMode(draftProject, busId, mode));
-        },
+        onGainChange: (v) => draftProject && commitDraft(setAudioBusGainDb(draftProject, busId, v)),
+        onGainReset: () => draftProject && commitDraft(setAudioBusGainDb(draftProject, busId, 0)),
+        onPanChange: (v) => draftProject && commitDraft(setAudioBusPan(draftProject, busId, v)),
+        onPanReset: () => draftProject && commitDraft(setAudioBusPan(draftProject, busId, 0)),
+        onChannelModeChange: (mode) => draftProject && commitDraft(setAudioBusChannelMode(draftProject, busId, mode)),
         onOutputChange: (output) => {
           if (!draftProject) return;
           const bus = draftProject.audioBusses?.find((b) => b.id === busId);
@@ -498,5 +487,8 @@ export function useTimelineDockCallbacks({
     onHwSelect,
     onHwContextMenu,
     buildBusCallbacks,
+    onClearAllSolo,
+    onClearAllMute,
+    onClearAllSoloMute,
   };
 }

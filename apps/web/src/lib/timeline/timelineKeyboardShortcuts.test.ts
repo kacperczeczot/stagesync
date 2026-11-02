@@ -169,4 +169,85 @@ describe("resolveTimelineShortcut", () => {
       resolveTimelineShortcut(base({ key: "ArrowUp", tapToolActive: true })),
     ).toBe("tap-line-prev");
   });
+
+  it("maps Solo / Mute Off for All (⌥S, ⌥M, ⌥X, ⌥⇧S, ⌥⇧M)", () => {
+    expect(resolveTimelineShortcut(base({ key: "s", alt: true }))).toBe(
+      "clear-solo",
+    );
+    expect(resolveTimelineShortcut(base({ key: "m", alt: true }))).toBe(
+      "clear-mute",
+    );
+    expect(resolveTimelineShortcut(base({ key: "x", alt: true }))).toBe(
+      "clear-all-solo-mute",
+    );
+    expect(
+      resolveTimelineShortcut(base({ key: "s", alt: true, shift: true })),
+    ).toBe("clear-all-solo-mute");
+    expect(
+      resolveTimelineShortcut(base({ key: "m", alt: true, shift: true })),
+    ).toBe("clear-all-solo-mute");
+  });
+
+  it("maps Solo / Mute Off for All on macOS with Polish / US layouts (⌥S=ś, ⌥M=µ/´, ⌥X=ź)", () => {
+    // macOS Polish Programmer: Option+S produces "ś"
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "ś", code: "KeyS", alt: true }),
+      ),
+    ).toBe("clear-solo");
+    // macOS US / German: Option+S produces "ß"
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "ß", code: "KeyS", alt: true }),
+      ),
+    ).toBe("clear-solo");
+    // macOS Polish Programmer: Option+M produces "µ" or "´"
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "µ", code: "KeyM", alt: true }),
+      ),
+    ).toBe("clear-mute");
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "´", code: "KeyM", alt: true }),
+      ),
+    ).toBe("clear-mute");
+    // macOS Polish Programmer: Option+X produces "ź"
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "ź", code: "KeyX", alt: true }),
+      ),
+    ).toBe("clear-all-solo-mute");
+    // macOS US: Option+X produces "≈"
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "≈", code: "KeyX", alt: true }),
+      ),
+    ).toBe("clear-all-solo-mute");
+    // Shift+Option: "Ś", "Ź"
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "Ś", code: "KeyS", alt: true, shift: true }),
+      ),
+    ).toBe("clear-all-solo-mute");
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "Ź", code: "KeyX", alt: true, shift: true }),
+      ),
+    ).toBe("clear-all-solo-mute");
+  });
+
+  it("maps Copy / Paste Properties (⌥⌘C, ⌥⌘V) on macOS layouts", () => {
+    // macOS Polish Programmer: ⌥⌘C -> "ć", ⌥⌘V -> "√"
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "ć", code: "KeyC", mod: true, alt: true }),
+      ),
+    ).toBe("copy-properties");
+    expect(
+      resolveTimelineShortcut(
+        base({ key: "√", code: "KeyV", mod: true, alt: true }),
+      ),
+    ).toBe("paste-properties");
+  });
 });

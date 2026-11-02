@@ -20,6 +20,15 @@ export function useTimelineFloatingMenus({
   isMobilePreview,
   setTouchAlertOpen,
 }: Params) {
+  // Track the real cursor position so openToolMenuAt knows where the mouse is.
+  useEffect(() => {
+    function onPointerMove(e: PointerEvent) {
+      lastPointerRef.current = { x: e.clientX, y: e.clientY };
+    }
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onPointerMove);
+  }, [lastPointerRef]);
+
   const eyeBtnRef = useRef<HTMLButtonElement>(null);
   const eyeMenuRef = useRef<HTMLDivElement>(null);
   const toolsVisBtnRef = useRef<HTMLButtonElement>(null);
@@ -125,13 +134,14 @@ export function useTimelineFloatingMenus({
 
   useEffect(() => {
     if (!toolMenu) return;
-    function onPointerDown(e: PointerEvent) {
+    function onMouseDown(e: MouseEvent) {
       const el = toolMenuRef.current;
       if (el && e.target instanceof Node && el.contains(e.target)) return;
       setToolMenu(null);
     }
-    window.addEventListener("pointerdown", onPointerDown);
-    return () => window.removeEventListener("pointerdown", onPointerDown);
+    // Use capture phase so this fires before any element can swallow the event.
+    document.addEventListener("mousedown", onMouseDown, true);
+    return () => document.removeEventListener("mousedown", onMouseDown, true);
   }, [toolMenu]);
 
   // --- Wand menu outside click --------------------------------------------

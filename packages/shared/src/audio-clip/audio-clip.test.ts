@@ -170,6 +170,50 @@ describe("clamp / resize — no stretch beyond file", () => {
     expect((next.trimInMs ?? 0) > 0).toBe(true);
     expect(next.startTicks + next.lengthTicks).toBe(end);
   });
+
+  it("resize start on a snippet without trimOutMs does not explode or jump backwards", () => {
+    // 60-second asset, clip placed for 10 seconds (5000 ticks) from 0 ticks.
+    const longAsset = { durationMs: 60000 };
+    const snippet = {
+      ...base,
+      startTicks: 1000,
+      lengthTicks: elapsedToTicks(10000, 120, TS_4_4), // ~10s
+      trimInMs: 0,
+      trimOutMs: undefined,
+    };
+    const end = snippet.startTicks + snippet.lengthTicks;
+    // Trim 2 seconds from the start (drag start 2s to the right)
+    const twoSecTicks = elapsedToTicks(2000, 120, TS_4_4);
+    const newStart = snippet.startTicks + twoSecTicks;
+    const next = resizeAudioClipStart(snippet, longAsset, newStart, CTX);
+
+    // End must stay pinned
+    expect(next.startTicks + next.lengthTicks).toBe(end);
+    // Start must move to newStart
+    expect(next.startTicks).toBe(newStart);
+    // Length must shorten
+    expect(next.lengthTicks).toBe(end - newStart);
+    // trimInMs must be approx 2000ms
+    expect(next.trimInMs).toBeCloseTo(2000, -1);
+    // trimOutMs must account for the remainder of the 60s asset
+    expect(next.trimOutMs).toBeCloseTo(50000, -1);
+  });
+
+  it("resize start clamped when dragged to the left past beginning of asset", () => {
+    const asset60 = { durationMs: 60000 };
+    const clip = {
+      ...base,
+      startTicks: 1000,
+      lengthTicks: elapsedToTicks(5000, 120, TS_4_4),
+      trimInMs: 1000,
+      trimOutMs: 54000,
+    };
+    const end = clip.startTicks + clip.lengthTicks;
+    // Try to drag start to -10,000 ticks (way before file starts)
+    const next = resizeAudioClipStart(clip, asset60, -10000, CTX);
+    expect(next.trimInMs).toBeUndefined(); // 0ms trimmed in
+    expect(next.startTicks + next.lengthTicks).toBe(end);
+  });
 });
 
 describe("audioClipBufferOffsetSec", () => {

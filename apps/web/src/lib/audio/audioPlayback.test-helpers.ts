@@ -18,7 +18,15 @@ export function fakeAudioBuffer(
   } as AudioBuffer;
 }
 
-export function mockAudioParam(value = 1): unknown {
+export type MockAudioParam = {
+  value: number;
+  cancelScheduledValues: ReturnType<typeof vi.fn>;
+  setValueAtTime: ReturnType<typeof vi.fn>;
+  linearRampToValueAtTime: ReturnType<typeof vi.fn>;
+  setTargetAtTime: ReturnType<typeof vi.fn>;
+};
+
+export function mockAudioParam(value = 1): MockAudioParam {
   const param = {
     value,
     cancelScheduledValues: vi.fn(),
@@ -36,7 +44,10 @@ export function mockAudioParam(value = 1): unknown {
   return param;
 }
 
-export function mockConnectable(): unknown {
+export function mockConnectable(): {
+  connect: ReturnType<typeof vi.fn>;
+  disconnect: ReturnType<typeof vi.fn>;
+} {
   return { connect: vi.fn(), disconnect: vi.fn() };
 }
 

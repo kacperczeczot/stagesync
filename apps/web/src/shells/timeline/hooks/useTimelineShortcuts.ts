@@ -35,6 +35,11 @@ export type TimelineKeyHandlers = {
   tool: ToolId;
   prevSetlistId: string | null;
   nextSetlistId: string | null;
+  onClearAllSolo?: () => void;
+  onClearAllMute?: () => void;
+  onClearAllSoloMute?: () => void;
+  onCopyClipProperties?: () => boolean;
+  onPasteClipProperties?: () => boolean;
 };
 
 export function createDefaultTimelineKeyHandlers(): TimelineKeyHandlers {
@@ -63,6 +68,8 @@ export function createDefaultTimelineKeyHandlers(): TimelineKeyHandlers {
     tool: "pointer",
     prevSetlistId: null,
     nextSetlistId: null,
+    onCopyClipProperties: () => false,
+    onPasteClipProperties: () => false,
   };
 }
 
@@ -376,6 +383,21 @@ export function useTimelineShortcuts({
           return;
         case "wand-both":
           h.applyWand("both");
+          return;
+        case "clear-solo":
+          h.onClearAllSolo?.();
+          return;
+        case "clear-mute":
+          h.onClearAllMute?.();
+          return;
+        case "clear-all-solo-mute":
+          h.onClearAllSoloMute?.();
+          return;
+        case "copy-properties":
+          h.onCopyClipProperties?.();
+          return;
+        case "paste-properties":
+          h.onPasteClipProperties?.();
           return;
         default:
           return;

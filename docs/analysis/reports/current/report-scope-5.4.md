@@ -46,7 +46,7 @@ Jeden hero **Syllables**: timed lyrics (sylaby w tickach) + **widoczny** import 
 ## OUT (świadome)
 
 - `/karaoke` zero-chrome, Idle/QR, Up Next — **6.1** ([#824](https://github.com/kacperczeczot/stagesync/issues/824); dawne „7.0”)
-- Pitch & FX — **5.5**
+- Mix & Monitoring — **5.5**
 - Live Input, Suite, automation lanes, MIDI Patch Matrix, recording — **6.0 Live Suite**
 - Cloud AI / zewnętrzne API ingestii
 - Heurystyki szerokości znaków / spacji monospaced (zakaz utrzymany)
@@ -55,10 +55,10 @@ Jeden hero **Syllables**: timed lyrics (sylaby w tickach) + **widoczny** import 
 ## Zależności i następny etap
 
 ```
-5.4 Syllables (schema + Ingest)  →  5.5 Pitch & FX  →  6.0 Live Suite  →  6.1 Karaoke & Jukebox
+5.4 Syllables (schema + Ingest)  →  5.5 Mix & Monitoring  →  6.0 Live Suite  →  6.1 Karaoke & Jukebox
 ```
 
-Cut **5.4.0** dopiero gdy operator widzi UltraStar → Karaoke. Po cutcie: scope **5.5 Pitch & FX**. Schema V6 na `main` = fundament, nie osobny hero.
+Cut **5.4.0** dopiero gdy operator widzi UltraStar → Karaoke. Po cutcie: scope **5.5 Mix & Monitoring**. Schema V6 na `main` = fundament, nie osobny hero.
 
 ## Ryzyka
 

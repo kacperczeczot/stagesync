@@ -13,7 +13,6 @@ import {
   toolUsesMarqueeGesture,
   isTouchPointerType,
   hitTestClipZone,
-  hitTestAudioClipZone,
   type FormaGesturePreview,
   type FormaGestureSession,
 } from "@lib/timeline/timelineGesture.js";
@@ -47,6 +46,8 @@ import {
 } from "@lib/audio/audioGestureOperations.js";
 import {
   joinAdjacentAudioClips,
+  setAudioClipFadeMs,
+  setAudioClipGainDb,
   splitAudioClipAt,
   toggleAudioClipMute,
 } from "@lib/audio/audioClipOperations.js";
@@ -188,9 +189,20 @@ export function useTimelineFormaGestures({
           ctrlKey,
           clientY,
           targetAudioLane,
+          clientX,
         );
         gesturePreviewRef.current = preview;
         setGesturePreview(preview);
+        if (session.hasDragged) {
+          if (preview.kind === "gain" && preview.gainDb != null) {
+            const db = preview.gainDb;
+            setCanvasNotice(`Gain: ${db > 0 ? "+" : ""}${db.toFixed(1)} dB`);
+          } else if (preview.kind === "fade-in" && preview.fadeInMs != null) {
+            setCanvasNotice(`Fade In: ${Math.round(preview.fadeInMs)} ms`);
+          } else if (preview.kind === "fade-out" && preview.fadeOutMs != null) {
+            setCanvasNotice(`Fade Out: ${Math.round(preview.fadeOutMs)} ms`);
+          }
+        }
         return;
       }
 
@@ -223,7 +235,7 @@ export function useTimelineFormaGestures({
       gesturePreviewRef.current = preview;
       setGesturePreview(preview);
     },
-    [draftRef, zoomHRef],
+    [draftRef, zoomHRef, setCanvasNotice],
   );
 
   const endFormaGesture = useCallback(
@@ -277,6 +289,28 @@ export function useTimelineFormaGestures({
       }
 
       if (isAudioLaneId(lane)) {
+        if (
+          !session.hasDragged &&
+          (session.kind === "fade-in" ||
+            session.kind === "fade-out" ||
+            session.kind === "gain")
+        ) {
+          if (session.clipId) {
+            selectLaneClip(lane as AudioLaneId, session.clipId);
+          }
+          setCanvasNotice(null);
+          return;
+        }
+
+        if (session.hasDragged) {
+          if (canvasNoticeTimerRef.current) {
+            clearTimeout(canvasNoticeTimerRef.current);
+          }
+          canvasNoticeTimerRef.current = setTimeout(() => {
+            setCanvasNotice(null);
+          }, 1200);
+        }
+
         const destLane = (
           preview.targetLane && isAudioLaneId(preview.targetLane)
             ? preview.targetLane
@@ -423,6 +457,8 @@ export function useTimelineFormaGestures({
       selectLaneClip,
       clearClipSelection,
       setSelectedSubsectionIdx,
+      canvasNoticeTimerRef,
+      setCanvasNotice,
     ],
   );
 
@@ -433,8 +469,9 @@ export function useTimelineFormaGestures({
     function onMove(e: PointerEvent) {
       if (e.pointerId !== pointerId) return;
       if (!gestureSessionRef.current) return;
-      const raw = rawTicksAtClientX(e.clientX);
-      if (raw == null) return;
+      const raw =
+        rawTicksAtClientX(e.clientX) ?? gestureSessionRef.current.originTicks;
+      if (raw == null && gestureSessionRef.current.kind !== "gain") return;
       updateFormaGesturePreview(
         raw,
         e.metaKey,
@@ -709,20 +746,32 @@ export function useTimelineFormaGestures({
           return;
         }
         const rect = e.currentTarget.getBoundingClientRect();
-        const zone = hitTestAudioClipZone(
-          e.clientX - rect.left,
-          e.clientY - rect.top,
-          rect.width,
-          rect.height,
-          true,
-          true,
-        );
-        const fadeKind =
-          zone === "fade-out" || zone === "end" ? "fade-out" : "fade-in";
+        const localX = e.clientX - rect.left;
+        const ratio = rect.width > 0 ? localX / rect.width : 0.5;
+
+        // Logic Pro standard: Option-click removes existing fade
+        if (e.altKey) {
+          const next =
+            ratio <= 0.5
+              ? setAudioClipFadeMs(draftProject, clip.id, { fadeInMs: 0 })
+              : setAudioClipFadeMs(draftProject, clip.id, { fadeOutMs: 0 });
+          commitDraft(next);
+          setCanvasNotice("Usunięto fade (Option+Click)");
+          if (canvasNoticeTimerRef.current) {
+            clearTimeout(canvasNoticeTimerRef.current);
+          }
+          canvasNoticeTimerRef.current = setTimeout(() => {
+            setCanvasNotice(null);
+          }, 1500);
+          return;
+        }
+
         const full = draftProject.audioClips.find((c) => c.id === clip.id);
         const raw = rawTicksAtClientX(e.clientX);
         if (raw == null || !full) return;
         (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+
+        const fadeKind = ratio <= 0.5 ? "fade-in" : "fade-out";
         const session: FormaGestureSession = {
           kind: fadeKind,
           clipId: clip.id,
@@ -732,21 +781,22 @@ export function useTimelineFormaGestures({
           originClipLength: clip.lengthTicks,
           lane,
           originClientX: e.clientX,
+          originClientY: e.clientY,
           originFadeMs:
             fadeKind === "fade-in"
               ? (full.fadeInMs ?? 0)
               : (full.fadeOutMs ?? 0),
+          hasDragged: false,
         };
-        beginFormaGesture(
-          session,
-          previewAudioFromSession(
-            draftProject,
-            session,
-            raw,
-            e.metaKey,
-            e.ctrlKey,
-          ),
-        );
+        // Initial preview keeps current clip fades untouched until drag threshold
+        beginFormaGesture(session, {
+          kind: fadeKind,
+          clipId: clip.id,
+          startTicks: clip.startTicks,
+          lengthTicks: clip.lengthTicks,
+          fadeInMs: full.fadeInMs,
+          fadeOutMs: full.fadeOutMs,
+        });
         return;
       }
       if (tool === "gain") {
@@ -754,10 +804,24 @@ export function useTimelineFormaGestures({
           selectLaneClip(lane, clip.id);
           return;
         }
+        // Logic Pro standard: Option-click resets gain to unity (0 dB)
+        if (e.altKey) {
+          commitDraft(setAudioClipGainDb(draftProject, clip.id, 0));
+          setCanvasNotice("Zresetowano gain do 0 dB (Option+Click)");
+          if (canvasNoticeTimerRef.current) {
+            clearTimeout(canvasNoticeTimerRef.current);
+          }
+          canvasNoticeTimerRef.current = setTimeout(() => {
+            setCanvasNotice(null);
+          }, 1500);
+          return;
+        }
+
         const full = draftProject.audioClips.find((c) => c.id === clip.id);
         const raw = rawTicksAtClientX(e.clientX);
         if (raw == null || !full) return;
         (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+
         const session: FormaGestureSession = {
           kind: "gain",
           clipId: clip.id,
@@ -769,18 +833,16 @@ export function useTimelineFormaGestures({
           originClientX: e.clientX,
           originClientY: e.clientY,
           originGainDb: full.gainDb ?? 0,
+          hasDragged: false,
         };
-        beginFormaGesture(
-          session,
-          previewAudioFromSession(
-            draftProject,
-            session,
-            raw,
-            e.metaKey,
-            e.ctrlKey,
-            e.clientY,
-          ),
-        );
+        // Initial preview keeps current clip gain untouched until drag threshold
+        beginFormaGesture(session, {
+          kind: "gain",
+          clipId: clip.id,
+          startTicks: clip.startTicks,
+          lengthTicks: clip.lengthTicks,
+          gainDb: full.gainDb ?? 0,
+        });
         return;
       }
       if (toolIsPencilDraw(tool) || tool === "marquee" || tool === "zoom") {
@@ -876,6 +938,8 @@ export function useTimelineFormaGestures({
       setSelectedAnchorId,
       setSongMetaOpen,
       clipSelection,
+      canvasNoticeTimerRef,
+      setCanvasNotice,
     ],
   );
 

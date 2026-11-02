@@ -235,11 +235,10 @@ export function parseUgSearchResults(
       (per as UgSearchHit).marketing_type === undefined,
   );
 
-  const artistQ = artist?.trim();
+  const artistQ = artist?.trim().toLowerCase();
   if (artistQ) {
-    const art = new RegExp(artistQ, "gi");
     value = value.filter(
-      (per) => per.artist_name && art.test(String(per.artist_name)),
+      (per) => per.artist_name && String(per.artist_name).toLowerCase().includes(artistQ),
     );
   }
 

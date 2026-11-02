@@ -242,6 +242,18 @@ export function SongsView({
           </p>
         ) : null}
 
+        {!dbMenuOpen && actionError ? (
+          <p className={styles.error} role="alert">
+            {actionError}
+          </p>
+        ) : null}
+
+        {!dbMenuOpen && actionNotice ? (
+          <p className={styles.notice} role="status">
+            {actionNotice}
+          </p>
+        ) : null}
+
         <div className={styles.list}>
           {visibleProjects.map((p) => {
             const badges = catalogSongBadges(p);

@@ -173,4 +173,63 @@ describe("useTimelineMixerCallbacks", () => {
     });
     expect(commitDraft).toHaveBeenCalled();
   });
+
+  it("handles onClearAllSolo, onClearAllMute, and onClearAllSoloMute", () => {
+    const commitDraft = vi.fn();
+    const setSoloBusIds = vi.fn();
+    const setSoloAudioTrackIds = vi.fn();
+
+    const mutedProject: Project = {
+      ...dummyProject,
+      audioTracks: [{ ...dummyProject.audioTracks[0]!, muted: true }],
+    };
+
+    const { result } = renderHook(() =>
+      useTimelineMixerCallbacks({
+        draftProject: mutedProject,
+        commitDraft,
+        playing: false,
+        setClipSelection: vi.fn(),
+        setTrackSelection: vi.fn(),
+        setSelectedBusId: vi.fn(),
+        setSelectedHwOutputId: vi.fn(),
+        setSoloBusIds,
+        setSoloAudioTrackIds,
+        setLoadError: vi.fn(),
+        onAudioTrackHeaderClick: vi.fn(),
+        openAudioTrackContextMenu: vi.fn(),
+        onAudioTrackSoloClick: vi.fn(),
+        onAudioTrackMuteClick: vi.fn(),
+        openTrackRename: vi.fn(),
+        setTrackRename: vi.fn(),
+        commitTrackRename: vi.fn(),
+        cancelTrackRename: vi.fn(),
+        openBusContextMenu: vi.fn(),
+        openBusRename: vi.fn(),
+        setBusRename: vi.fn(),
+        commitBusRename: vi.fn(),
+      }),
+    );
+
+    act(() => {
+      result.current.onClearAllSolo();
+    });
+    expect(setSoloAudioTrackIds).toHaveBeenCalledWith([]);
+    expect(setSoloBusIds).toHaveBeenCalledWith([]);
+
+    act(() => {
+      result.current.onClearAllMute();
+    });
+    expect(commitDraft).toHaveBeenCalled();
+    const nextProject = commitDraft.mock.calls[0]![0] as Project;
+    expect(nextProject.audioTracks[0]!.muted).toBeUndefined();
+
+    const master = result.current.buildMasterStripCallbacks();
+    act(() => {
+      master.onClearAllSoloMute?.();
+    });
+    expect(setSoloAudioTrackIds).toHaveBeenCalledTimes(2);
+    expect(setSoloBusIds).toHaveBeenCalledTimes(2);
+    expect(commitDraft).toHaveBeenCalledTimes(2);
+  });
 });

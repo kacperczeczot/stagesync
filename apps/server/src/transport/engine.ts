@@ -17,6 +17,9 @@ import {
   resolveMeterAt,
   resolveTempoAt,
   transportHomeTicks,
+  chaseMidiNotes,
+  type ChasedMidiNote,
+  type MelodyNoteClip,
   type Project,
   type TempoMapProject,
   type TimeSignature,
@@ -72,6 +75,8 @@ export function createTransportEngine(options: TransportEngineOptions = {}) {
    * until the next loadProject / play(project) without overrides.
    */
   let useTempoMap = false;
+  let activeMelodyClips: readonly MelodyNoteClip[] = [];
+  let lastChasedNotes: ChasedMidiNote[] = [];
 
   let originMs = 0;
   let originTicks = 0;
@@ -202,6 +207,8 @@ export function createTransportEngine(options: TransportEngineOptions = {}) {
       idleReason = "stopped";
       stopTimer();
       loop = null; // loop is per-song — never carry into the next project
+      activeMelodyClips = project.melody?.clips ?? [];
+      lastChasedNotes = [];
       applyMapsFromProject(project, 0);
       notify();
       return snapshot();
@@ -296,10 +303,14 @@ export function createTransportEngine(options: TransportEngineOptions = {}) {
         useTempoMap = true;
         bpm = resolveTempoAt(project, positionTicks);
         timeSignature = { ...resolveMeterAt(project, positionTicks) };
+        if (project.melody?.clips) {
+          activeMelodyClips = project.melody.clips;
+        }
       } else if (activeMaps && useTempoMap) {
         bpm = resolveTempoAt(activeMaps, positionTicks);
         timeSignature = { ...resolveMeterAt(activeMaps, positionTicks) };
       }
+      lastChasedNotes = chaseMidiNotes(activeMelodyClips, positionTicks);
       if (playing) {
         reanchor();
       }
@@ -355,6 +366,10 @@ export function createTransportEngine(options: TransportEngineOptions = {}) {
       useTempoMap = false;
       notify();
       return snapshot();
+    },
+
+    getChasedMidiNotes(): ChasedMidiNote[] {
+      return [...lastChasedNotes];
     },
 
     dispose(): void {

@@ -74,6 +74,8 @@ export function createTestProject(): Project {
     tempoMap: [],
     meterMap: [],
     keyMap: [],
+    melody: { clips: [] },
+    scoreBarMap: { anchors: [] },
     audioTracks: [
       {
         id: "trk1",
@@ -157,7 +159,17 @@ export function buildHook(
     beginTouchCanvasNav?: () => void;
     deleteSelectedFormaClip?: () => void;
   } = {},
-) {
+): {
+  result: { current: ReturnType<typeof useTimelineFormaGestures> };
+  commitDraft: (p: Project) => void;
+  setClipSelection: React.Dispatch<React.SetStateAction<ClipSelection>>;
+  selectLaneClip: (lane: ClipSelectionLane, id: string) => void;
+  setTouchAlertOpen: (v: boolean) => void;
+  beginMarquee: () => void;
+  beginTouchCanvasNav: () => void;
+  deleteSelectedFormaClip: () => void;
+  draftProject: Project;
+} {
   const draftProject = createTestProject();
   const commitDraft = overrides.commitDraft ?? vi.fn();
   const setClipSelection =

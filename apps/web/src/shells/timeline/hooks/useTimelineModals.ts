@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 
-export function useTimelineModals() {
+export function useTimelineModals(initialSongScreenOpen = false) {
   const [helpOpen, setHelpOpen] = useState(false);
-  const [songScreenOpen, setSongScreenOpen] = useState(false);
+  const [songScreenOpen, setSongScreenOpen] = useState(initialSongScreenOpen);
   const [songImportOpen, setSongImportOpen] = useState(false);
   const [importAsNewSong, setImportAsNewSong] = useState(false);
   const [importApplying, setImportApplying] = useState(false);

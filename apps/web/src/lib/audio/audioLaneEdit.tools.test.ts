@@ -10,7 +10,6 @@ import {
   commitAudioGesture,
   commitMoveAudioClips,
   commitResizeAudioClip,
-  GAIN_TOOL_DB_PER_PX,
   gainDbFromPointerDelta,
   joinAdjacentAudioClips,
   previewAudioFromSession,
@@ -94,9 +93,7 @@ describe("split / join / mute / gain tools", () => {
     expect(
       toggleAudioClipMute(muted, "clip-1").audioClips[0]!.muted,
     ).toBeFalsy();
-    expect(gainDbFromPointerDelta(0, 100, 80)).toBeCloseTo(
-      20 * GAIN_TOOL_DB_PER_PX,
-    );
+    expect(gainDbFromPointerDelta(0, 100, 80)).toBe(4.7);
     expect(gainDbFromPointerDelta(0, 0, -10_000)).toBe(24);
     expect(gainDbFromPointerDelta(0, 0, 10_000)).toBe(-60);
     expect(gainDbFromPointerDelta(0, Number.NaN, 10)).toBe(0);
@@ -214,9 +211,48 @@ describe("split / join / mute / gain tools", () => {
     });
     const preview = previewAudioFromSession(p, session, 0, false, false, 60);
     expect(preview.kind).toBe("gain");
-    expect(preview.gainDb).toBeCloseTo(40 * GAIN_TOOL_DB_PER_PX);
+    expect(preview.gainDb).toBe(10.8);
     const next = commitAudioGesture(p, lane, session, preview, false, false);
-    expect(next.audioClips[0]!.gainDb).toBeCloseTo(40 * GAIN_TOOL_DB_PER_PX);
+    expect(next.audioClips[0]!.gainDb).toBe(10.8);
+  });
+
+  it("fade gesture: click without drag preserves clip fades; dragging updates fade length", () => {
+    const p = projectWithAudio();
+    const lane = audioLaneId(p.audioTracks[0]!.id);
+    const session = baseSession({
+      kind: "fade-in",
+      originFadeMs: 0,
+      originClientX: 100,
+      originTicks: 0,
+      lane,
+    });
+    // Click at clientX: 101 (< 4px drag threshold) -> keeps existing clip fade (undefined)
+    const clickPreview = previewAudioFromSession(
+      p,
+      session,
+      0,
+      false,
+      false,
+      undefined,
+      undefined,
+      101,
+    );
+    expect(clickPreview.fadeInMs).toBeUndefined();
+
+    // Drag to clientX: 150 (>= 4px) with rawTicks 960 (1 beat @ 120bpm = 500ms)
+    const dragPreview = previewAudioFromSession(
+      p,
+      session,
+      960,
+      false,
+      false,
+      undefined,
+      undefined,
+      150,
+    );
+    expect(dragPreview.fadeInMs).toBe(500);
+    const withFade = commitAudioGesture(p, lane, session, dragPreview, false, false);
+    expect(withFade.audioClips[0]!.fadeInMs).toBe(500);
   });
 
   it("setAudioBus* no-ops unknown bus and applies mute/pan/name/mode", () => {

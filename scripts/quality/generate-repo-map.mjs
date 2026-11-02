@@ -435,7 +435,9 @@ try {
         cwd: ROOT_DIR,
         encoding: 'utf8'
     });
-    gitFiles = output.split(/\r?\n/).filter(Boolean);
+    gitFiles = output
+        .split(/\r?\n/)
+        .filter((f) => f && fs.existsSync(path.join(ROOT_DIR, f)));
 } catch (error) {
     console.error('❌ generate-repo-map: error running git ls-files. Ensure git is installed and you are in a git repository.');
     console.error('💡 Tip: run .\\dev doctor (or ./dev doctor) to verify environment prerequisites.');

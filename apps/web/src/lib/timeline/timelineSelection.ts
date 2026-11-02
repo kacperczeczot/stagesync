@@ -453,3 +453,14 @@ export function isTrackAudibleWithSolo(
   if (soloIds.length === 0) return true;
   return soloIds.includes(trackId);
 }
+
+/** Returns true if any audio track or bus is currently soloed. */
+export function hasAnySoloTrack(
+  soloAudioTrackIds: readonly string[],
+  soloBusIds?: readonly string[],
+): boolean {
+  return (
+    soloAudioTrackIds.length > 0 ||
+    (soloBusIds != null && soloBusIds.length > 0)
+  );
+}

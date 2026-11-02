@@ -54,6 +54,14 @@ export const KEY_GROUPS: ShortcutGroup[] = [
       { keys: "⌘/Ctrl+S", action: "Zapisz (gdy dirty)" },
       { keys: "⌘/Ctrl+A", action: "Zaznacz wszystkie klipy" },
       { keys: "⌘/Ctrl+C", action: "Kopiuj klipy (w tym audio)" },
+      {
+        keys: "⌥⌘/Alt+Ctrl+C",
+        action: "Kopiuj właściwości klipu audio (gain, fade, loop, mute)",
+      },
+      {
+        keys: "⌥⌘/Alt+Ctrl+V",
+        action: "Wklej właściwości do zaznaczonych klipów audio",
+      },
       { keys: "⌘/Ctrl+X", action: "Wytnij zaznaczone klipy" },
       { keys: "⌘/Ctrl+V", action: "Wklej przy locatorze" },
       { keys: "⌘/Ctrl+D", action: "Duplikuj zaznaczone" },
@@ -85,6 +93,12 @@ export const KEY_GROUPS: ShortcutGroup[] = [
         action: "Solo/Mute wszystkich ścieżek (dock)",
       },
       { keys: "⌥/Alt+klik S", action: "Solo wyłącznie tej ścieżki" },
+      { keys: "⌥/Alt+S", action: "Wyłącz wszystkie solo (Solo Off for All)" },
+      {
+        keys: "⌥/Alt+M",
+        action: "Włącz wszystkie wyciszone (Mute Off for All)",
+      },
+      { keys: "⌥/Alt+X", action: "Reset solo i wyciszeń (Solo/Mute Panic)" },
       {
         keys: "Shift / ⌘+klik",
         action: "Zakres / przełącz zaznaczenie ścieżek",

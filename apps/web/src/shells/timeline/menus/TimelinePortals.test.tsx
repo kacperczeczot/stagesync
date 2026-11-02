@@ -87,4 +87,18 @@ describe("TimelinePortals", () => {
     fireEvent.click(tekstBtn);
     expect(applyWand).toHaveBeenCalledWith("tekst");
   });
+
+  it("renders eye track visibility menu safely without throwing when trackVisibility is undefined", () => {
+    const props = createDefaultProps({
+      eyeOpen: true,
+      eyeMenuPos: { top: 100, left: 100 },
+      trackVisibility: undefined as unknown as TimelinePortalsProps["trackVisibility"],
+    });
+
+    expect(() => render(<TimelinePortals {...props} />)).not.toThrow();
+    expect(screen.getByRole("menu")).toBeTruthy();
+    expect(
+      screen.getByRole("menuitemcheckbox", { name: /Tempo/i }),
+    ).toBeTruthy();
+  });
 });

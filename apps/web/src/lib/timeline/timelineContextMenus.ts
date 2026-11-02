@@ -55,6 +55,9 @@ export type ClipMenuCallbacks = {
   onMuteToggle?: () => void;
   onFocusInspector: () => void;
   onSplit?: () => void;
+  onCopyProperties?: () => void;
+  onPasteProperties?: () => void;
+  canPasteProperties?: boolean;
 };
 
 export function buildClipContextMenuItems(
@@ -102,6 +105,26 @@ export function buildClipContextMenuItems(
       label: cb.clipMuted ? "Włącz klip (Unmute)" : "Wycisz klip (Mute)",
       onSelect: cb.onMuteToggle,
     });
+  }
+
+  if (cb.lane === "audio") {
+    if (cb.onCopyProperties) {
+      items.push({
+        id: "copy-properties",
+        label: "Kopiuj właściwości",
+        shortcut: "⌥⌘C",
+        onSelect: cb.onCopyProperties,
+      });
+    }
+    if (cb.onPasteProperties) {
+      items.push({
+        id: "paste-properties",
+        label: "Wklej właściwości",
+        shortcut: "⌥⌘V",
+        disabled: !cb.canPasteProperties,
+        onSelect: cb.onPasteProperties,
+      });
+    }
   }
 
   items.push(

@@ -125,6 +125,58 @@ export const AudioClipSchema = z.object({
 
 export type AudioClip = z.infer<typeof AudioClipSchema>;
 
+export const AudioClipPropertiesSchema = z.object({
+  gainDb: z.number().finite().min(-60).max(24).optional(),
+  fadeInMs: z.number().nonnegative().finite().optional(),
+  fadeOutMs: z.number().nonnegative().finite().optional(),
+  trimInMs: z
+    .number()
+    .nonnegative()
+    .finite()
+    .max(24 * 60 * 60 * 1000)
+    .optional(),
+  trimOutMs: z
+    .number()
+    .nonnegative()
+    .finite()
+    .max(24 * 60 * 60 * 1000)
+    .optional(),
+  loop: z.boolean().optional(),
+  muted: z.boolean().optional(),
+});
+
+export type AudioClipProperties = z.infer<typeof AudioClipPropertiesSchema>;
+
+export function extractAudioClipProperties(
+  clip: AudioClip,
+): AudioClipProperties {
+  return {
+    gainDb: clip.gainDb,
+    fadeInMs: clip.fadeInMs,
+    fadeOutMs: clip.fadeOutMs,
+    trimInMs: clip.trimInMs,
+    trimOutMs: clip.trimOutMs,
+    loop: clip.loop,
+    muted: clip.muted,
+  };
+}
+
+export function applyAudioClipProperties(
+  clip: AudioClip,
+  props: AudioClipProperties,
+): AudioClip {
+  return {
+    ...clip,
+    ...(props.gainDb !== undefined ? { gainDb: props.gainDb } : {}),
+    ...(props.fadeInMs !== undefined ? { fadeInMs: props.fadeInMs } : {}),
+    ...(props.fadeOutMs !== undefined ? { fadeOutMs: props.fadeOutMs } : {}),
+    ...(props.trimInMs !== undefined ? { trimInMs: props.trimInMs } : {}),
+    ...(props.trimOutMs !== undefined ? { trimOutMs: props.trimOutMs } : {}),
+    ...(props.loop !== undefined ? { loop: props.loop } : {}),
+    ...(props.muted !== undefined ? { muted: props.muted } : {}),
+  };
+}
+
 /** V4/V5 line clip — no syllable blocks. */
 export const TekstClipLineSchema = z.object({
   id: z.string().min(1),

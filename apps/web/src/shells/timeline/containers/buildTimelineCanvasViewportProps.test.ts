@@ -47,5 +47,16 @@ describe("buildTimelineCanvasViewportProps", () => {
     expect(props.timelineSurface).toBe("lanes");
     expect(props.touchTier).toBe("desktop");
     expect(props.isMobilePreview).toBe(false);
+
+    const mockCommit = vi.fn();
+    const ctxWithDraft = {
+      ...ctx,
+      draft: { commitDraft: mockCommit },
+      primaryMapId: "tempo-1",
+    };
+    const propsWithDraft = buildTimelineCanvasViewportProps(ctxWithDraft);
+    propsWithDraft.commitDraft({ id: "p1", name: "Updated" } as never);
+    expect(mockCommit).toHaveBeenCalledWith({ id: "p1", name: "Updated" });
+    expect(propsWithDraft.primaryMapId).toBe("tempo-1");
   });
 });

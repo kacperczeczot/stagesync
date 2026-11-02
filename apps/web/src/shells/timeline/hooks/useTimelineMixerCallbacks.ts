@@ -14,6 +14,7 @@ import {
   setAudioBusPan,
   setAudioBusChannelMode,
   setAudioBusOutput,
+  clearAllAudioMutes,
 } from "@lib/audio/audioLaneEdit.js";
 import { setMasterOutputRouting } from "@lib/audio/audioHwEdit.js";
 import { isHwOutRepatchBlockedWhilePlaying } from "@stagesync/shared";
@@ -159,6 +160,25 @@ export function useTimelineMixerCallbacks({
     ],
   );
 
+  const onClearAllSolo = useCallback(() => {
+    setSoloAudioTrackIds([]);
+    setSoloBusIds([]);
+  }, [setSoloAudioTrackIds, setSoloBusIds]);
+
+  const onClearAllMute = useCallback(() => {
+    if (!draftProject) return;
+    const next = clearAllAudioMutes(draftProject);
+    if (next !== draftProject) commitDraft(next);
+  }, [draftProject, commitDraft]);
+
+  const onClearAllSoloMute = useCallback(() => {
+    setSoloAudioTrackIds([]);
+    setSoloBusIds([]);
+    if (!draftProject) return;
+    const next = clearAllAudioMutes(draftProject);
+    if (next !== draftProject) commitDraft(next);
+  }, [setSoloAudioTrackIds, setSoloBusIds, draftProject, commitDraft]);
+
   const buildMasterStripCallbacks = useCallback((): MasterStripCallbacks => {
     return {
       onGainChange: (v) => {
@@ -184,8 +204,19 @@ export function useTimelineMixerCallbacks({
           );
         }
       },
+      onClearAllSolo,
+      onClearAllMute,
+      onClearAllSoloMute,
     };
-  }, [draftProject, commitDraft, playing, setLoadError]);
+  }, [
+    draftProject,
+    commitDraft,
+    playing,
+    setLoadError,
+    onClearAllSolo,
+    onClearAllMute,
+    onClearAllSoloMute,
+  ]);
 
   const buildBusCallbacks = useCallback(
     (busId: string): ChannelStripCallbacks => {
@@ -281,5 +312,8 @@ export function useTimelineMixerCallbacks({
     buildChannelStripCallbacks,
     buildMasterStripCallbacks,
     buildBusCallbacks,
+    onClearAllSolo,
+    onClearAllMute,
+    onClearAllSoloMute,
   };
 }

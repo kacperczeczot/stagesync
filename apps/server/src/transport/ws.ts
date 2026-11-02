@@ -40,6 +40,9 @@ export function attachTransportWs(
   }
 
   wss.on("connection", (ws: PresenceSocket) => {
+    ws.on("error", (err) => {
+      console.warn("[stagesync-server] client socket error", err);
+    });
     const id = randomUUID();
     ws.__presenceId = id;
     presence?.connect(id);

@@ -63,6 +63,11 @@ export type TimelineShortcutAction =
   | "wand-tekst"
   | "wand-akordy"
   | "wand-both"
+  | "clear-solo"
+  | "clear-mute"
+  | "clear-all-solo-mute"
+  | "copy-properties"
+  | "paste-properties"
   | TimelineToolLetterAction;
 
 export type TimelineShortcutInput = {
@@ -120,8 +125,28 @@ export function isReservedToolLetter(letter: string): boolean {
 export function resolveTimelineShortcut(
   e: TimelineShortcutInput,
 ): TimelineShortcutAction | null {
-  const letter = e.key.length === 1 ? e.key.toLowerCase() : "";
-  const space = e.key === " " || e.code === "Space";
+  const rawLetter = e.key.length === 1 ? e.key.toLowerCase() : "";
+  const codeLetter =
+    e.code.startsWith("Key") && e.code.length === 4
+      ? e.code.charAt(3).toLowerCase()
+      : "";
+
+  const isKey = (target: string): boolean => {
+    if (rawLetter === target) return true;
+    // When Alt or Mod modifier is pressed, macOS produces accented chars / symbols in e.key
+    // (e.g. ⌥S -> "ś", ⌥X -> "ź", ⌥M -> "µ" / "´", ⌥⌘C -> "ć", ⌥⌘V -> "√").
+    // In that case, match against physical key code (KeyS, KeyX, KeyM, etc.).
+    if (e.alt || e.mod) {
+      return codeLetter === target;
+    }
+    return false;
+  };
+
+  const space =
+    e.key === " " ||
+    e.key === "\u00a0" ||
+    e.key === "Spacebar" ||
+    e.code === "Space";
 
   if (e.helpOpen && e.key === "Escape") return "help-close";
 
@@ -133,21 +158,27 @@ export function resolveTimelineShortcut(
 
   // Modifier edit / zoom / clip ops (before bare letters).
   if (e.mod && !e.alt) {
-    if (letter === "s") return "save";
-    if (letter === "z") return e.shift ? "redo" : "undo";
-    if (letter === "y") return "redo";
-    if (letter === "c") return "copy";
-    if (letter === "x") return "cut";
-    if (letter === "v") return "paste";
-    if (letter === "d") return "duplicate";
-    if (letter === "a") return "select-all";
-    if (letter === "t") return "split-at-playhead";
-    if (letter === "j") return "join-adjacent";
-    if (letter === "u") return "cycle-from-clip";
+    if (isKey("s")) return "save";
+    if (isKey("z")) return e.shift ? "redo" : "undo";
+    if (isKey("y")) return "redo";
+    if (isKey("c")) return "copy";
+    if (isKey("x")) return "cut";
+    if (isKey("v")) return "paste";
+    if (isKey("d")) return "duplicate";
+    if (isKey("a")) return "select-all";
+    if (isKey("t")) return "split-at-playhead";
+    if (isKey("j")) return "join-adjacent";
+    if (isKey("u")) return "cycle-from-clip";
     if (e.key === "ArrowLeft") return "zoom-h-out";
     if (e.key === "ArrowRight") return "zoom-h-in";
     if (e.key === "ArrowUp") return "zoom-v-in";
     if (e.key === "ArrowDown") return "zoom-v-out";
+  }
+
+  // ⌥⌘ actions (Copy / Paste Properties)
+  if (e.mod && e.alt) {
+    if (isKey("c")) return "copy-properties";
+    if (isKey("v")) return "paste-properties";
   }
 
   // Transport space / shift+space
@@ -188,25 +219,41 @@ export function resolveTimelineShortcut(
     !e.mod &&
     !e.alt &&
     !e.shift &&
-    letter &&
-    TIMELINE_TOOL_LETTER_IDS[letter]
+    (rawLetter || codeLetter)
   ) {
-    return { type: "tool-letter", letter };
+    const key =
+      rawLetter && TIMELINE_TOOL_LETTER_IDS[rawLetter]
+        ? rawLetter
+        : codeLetter && TIMELINE_TOOL_LETTER_IDS[codeLetter]
+          ? codeLetter
+          : "";
+    if (key) {
+      return { type: "tool-letter", letter: key };
+    }
   }
 
   // Bare / global letters (views, transport) — never bare tool switch.
   if (!e.mod && !e.alt) {
-    if (letter === "t" && !e.shift) return "tool-menu-toggle";
-    if (letter === "w" && !e.shift && !e.toolMenuOpen) return "wand-tool";
-    if (letter === "x" && !e.shift) return "toggle-mixer";
-    if (letter === "i" && !e.shift) return "toggle-inspector";
-    if (letter === "c" && !e.shift) return "cycle-toggle";
-    if (letter === "k" && !e.shift) return "metronome-toggle";
-    if (letter === "s" && !e.shift) return "split-tool";
-    if (letter === "u") return "cycle-from-clip";
-    if (letter === "z" && !e.shift) return "fit-zoom";
+    if (isKey("t") && !e.shift) return "tool-menu-toggle";
+    if (isKey("w") && !e.shift && !e.toolMenuOpen) return "wand-tool";
+    if (isKey("x") && !e.shift) return "toggle-mixer";
+    if (isKey("i") && !e.shift) return "toggle-inspector";
+    if (isKey("c") && !e.shift) return "cycle-toggle";
+    if (isKey("k") && !e.shift) return "metronome-toggle";
+    if (isKey("s") && !e.shift) return "split-tool";
+    if (isKey("u")) return "cycle-from-clip";
+    if (isKey("z") && !e.shift) return "fit-zoom";
     if (e.key === "[" && !e.shift) return "setlist-prev";
     if (e.key === "]" && !e.shift) return "setlist-next";
+  }
+
+  // Solo / Mute Off for All (⌥S = clear solo, ⌥M = clear mute, ⌥X / ⌥⇧S / ⌥⇧M = panic clear both)
+  if (e.alt && !e.mod) {
+    if (isKey("x") || (e.shift && (isKey("s") || isKey("m")))) {
+      return "clear-all-solo-mute";
+    }
+    if (isKey("s") && !e.shift) return "clear-solo";
+    if (isKey("m") && !e.shift) return "clear-mute";
   }
 
   // Locator vs clip nudge (⌥←/→ = nudge; bare ←/→ = locator)

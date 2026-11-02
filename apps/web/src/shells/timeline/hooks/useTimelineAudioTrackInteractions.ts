@@ -15,6 +15,7 @@ import {
 } from "@lib/timeline/timelineSelection.js";
 import {
   buildTrackList,
+  defaultTrackVisibility,
   type TrackVisibilityMap,
 } from "@lib/timeline/timelineTracks.js";
 import {
@@ -86,7 +87,11 @@ export function useTimelineAudioTrackInteractions({
         (t) => t.id === id,
       );
       if (def?.locked) return;
-      setTrackVisibility((prev) => ({ ...prev, [id]: !prev[id] }));
+      setTrackVisibility((prev) => {
+        const current = prev ?? defaultTrackVisibility();
+        const isVis = current[id] ?? true;
+        return { ...current, [id]: !isVis };
+      });
     },
     [draftProject?.audioTracks, setTrackVisibility],
   );

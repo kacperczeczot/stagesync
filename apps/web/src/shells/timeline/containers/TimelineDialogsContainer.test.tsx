@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import {
   TimelineDialogsContainer,
   type TimelineDialogsContainerProps,
@@ -107,5 +107,21 @@ describe("TimelineDialogsContainer", () => {
     expect(screen.getByRole("dialog")).toBeTruthy();
     expect(screen.getByText(/Tempo @/i)).toBeTruthy();
     expect(screen.getByLabelText(/BPM/i)).toBeTruthy();
+  });
+
+  it("renders eye menu portal when eyeOpen is true and toggles track", () => {
+    const toggleTrack = vi.fn();
+    render(
+      <TimelineDialogsContainer
+        {...baseProps}
+        eyeOpen={true}
+        eyeMenuPos={{ top: 100, left: 100 }}
+        toggleTrack={toggleTrack}
+      />,
+    );
+    expect(screen.getByRole("menu")).toBeTruthy();
+    const tempoItem = screen.getByRole("menuitemcheckbox", { name: /Tempo/i });
+    fireEvent.click(tempoItem);
+    expect(toggleTrack).toHaveBeenCalledWith("tempo");
   });
 });

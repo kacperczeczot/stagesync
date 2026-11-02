@@ -12,6 +12,8 @@ import {
   resolveMeterAt,
   resolveTempoAt,
   ticksToMsAlongTempoMap,
+  applyAudioClipProperties,
+  type AudioClipProperties,
   type AudioClip,
   type Project,
 } from "@stagesync/shared";
@@ -245,26 +247,34 @@ export function joinAdjacentAudioClips(
   };
 }
 
-/** Pixel → dB sensitivity for Gain tool (drag up = louder). */
+/** Base dB sensitivity for Gain tool near origin (drag up = louder). */
 export const GAIN_TOOL_DB_PER_PX = 0.15;
 
 export function gainDbFromPointerDelta(
   originGainDb: number,
   originClientY: number,
   clientY: number,
-  dbPerPx: number = GAIN_TOOL_DB_PER_PX,
+  baseDbPerPx: number = GAIN_TOOL_DB_PER_PX,
 ): number {
   const origin = Number.isFinite(originGainDb) ? originGainDb : 0;
   if (
     !Number.isFinite(originClientY) ||
     !Number.isFinite(clientY) ||
-    !Number.isFinite(dbPerPx)
+    !Number.isFinite(baseDbPerPx)
   ) {
     return Math.min(24, Math.max(-60, origin));
   }
   const deltaY = originClientY - clientY;
-  const next = origin + deltaY * dbPerPx;
-  return Math.min(24, Math.max(-60, next));
+  if (deltaY === 0) return origin;
+  const sign = Math.sign(deltaY);
+  const abs = Math.abs(deltaY);
+  // Non-linear response: fine precision near 0 dB (~0.15 dB/px), smooth acceleration for wide range
+  const dbDelta = sign * (abs * baseDbPerPx + Math.pow(abs / 14, 1.5));
+  const candidate = origin + dbDelta;
+  // Snap to 0 dB when within ±0.15 dB
+  const snapped = Math.abs(candidate) < 0.15 ? 0 : candidate;
+  const clamped = Math.min(24, Math.max(-60, snapped));
+  return Math.round(clamped * 10) / 10;
 }
 
 export function setAudioClipTrimMs(
@@ -365,5 +375,23 @@ export function applyAbutCrossfadeForClip(
       if (c.id === applied.right.id) return applied.right;
       return c;
     }),
+  };
+}
+
+/**
+ * Paste copied audio clip properties (gain, fades, trim, loop, mute) across target clips.
+ */
+export function commitPasteAudioClipProperties(
+  project: Project,
+  targetClipIds: string[],
+  props: AudioClipProperties,
+): Project {
+  if (targetClipIds.length === 0) return project;
+  const targetSet = new Set(targetClipIds);
+  return {
+    ...project,
+    audioClips: project.audioClips.map((c) =>
+      targetSet.has(c.id) ? applyAudioClipProperties(c, props) : c,
+    ),
   };
 }

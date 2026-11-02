@@ -20,6 +20,7 @@ import {
   setCountdownBars,
 } from "@lib/timeline-edit/formaInspector.js";
 import { scrollCanvasToStart } from "@lib/timeline-edit/formaCanvas.js";
+import { clearAllAudioMutes } from "@lib/audio/audioLaneEdit.js";
 import {
   useTimelineShortcuts,
   type TimelineKeyHandlers,
@@ -63,6 +64,8 @@ interface Params {
   tool: ToolId;
   prevSetlistId: string | null;
   nextSetlistId: string | null;
+  copyAudioClipProperties?: (clipId?: string) => boolean;
+  pasteAudioClipProperties?: (targetClipIds?: string[]) => boolean;
   songImportOpen: boolean;
   helpOpen: boolean;
   setHelpOpen: (open: boolean | ((prev: boolean) => boolean)) => void;
@@ -112,6 +115,8 @@ interface Params {
   loopOn: boolean;
   soloAudioTrackIds: string[];
   soloBusIds: string[];
+  setSoloAudioTrackIds?: React.Dispatch<React.SetStateAction<string[]>>;
+  setSoloBusIds?: React.Dispatch<React.SetStateAction<string[]>>;
   latencyCompMs: number;
   openSongImportWizard: (asNew: boolean) => void;
   selectedClip: FormaClip | null | undefined;
@@ -151,6 +156,8 @@ export function useTimelineShortcutsAndSync({
   tool,
   prevSetlistId,
   nextSetlistId,
+  copyAudioClipProperties,
+  pasteAudioClipProperties,
   songImportOpen,
   helpOpen,
   setHelpOpen,
@@ -197,6 +204,8 @@ export function useTimelineShortcutsAndSync({
   latencyCompMs,
   openSongImportWizard,
   selectedClip,
+  setSoloAudioTrackIds,
+  setSoloBusIds,
 }: Params) {
   const onDiscard = useCallback(() => {
     if (!savedProject) {
@@ -243,6 +252,26 @@ export function useTimelineShortcutsAndSync({
     tool,
     prevSetlistId,
     nextSetlistId,
+    onClearAllSolo: () => {
+      setSoloAudioTrackIds?.([]);
+      setSoloBusIds?.([]);
+    },
+    onClearAllMute: () => {
+      const draft = draftRef.current;
+      if (!draft) return;
+      const next = clearAllAudioMutes(draft);
+      if (next !== draft) commitDraft(next);
+    },
+    onClearAllSoloMute: () => {
+      setSoloAudioTrackIds?.([]);
+      setSoloBusIds?.([]);
+      const draft = draftRef.current;
+      if (!draft) return;
+      const next = clearAllAudioMutes(draft);
+      if (next !== draft) commitDraft(next);
+    },
+    onCopyClipProperties: copyAudioClipProperties,
+    onPasteClipProperties: pasteAudioClipProperties,
   };
 
   useTimelineShortcuts({

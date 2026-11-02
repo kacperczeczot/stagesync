@@ -38,6 +38,17 @@ export {
 export function createStores(dataDir?: string) {
   const paths: DataPaths = resolveDataPaths(dataDir);
   let libraryChain: Promise<void> = Promise.resolve();
+  const projectChangeListeners = new Set<(projectId: string) => void>();
+
+  function notifyProjectChange(projectId: string): void {
+    for (const listener of projectChangeListeners) {
+      try {
+        listener(projectId);
+      } catch (err) {
+        console.error("[stagesync-server] project change listener error", err);
+      }
+    }
+  }
 
   function withLibraryLock<T>(fn: () => Promise<T>): Promise<T> {
     const run = libraryChain.then(fn, fn);
@@ -58,7 +69,7 @@ export function createStores(dataDir?: string) {
     paths,
 
     async getLibrary(): Promise<Library> {
-      return ensureLibraryFn();
+      return withLibraryLock(ensureLibraryFn);
     },
 
     async getSetlist(): Promise<Setlist> {
@@ -105,9 +116,11 @@ export function createStores(dataDir?: string) {
     },
 
     async putProject(id: string, body: PutProjectBody): Promise<Project> {
-      return withLibraryLock(() =>
+      const res = await withLibraryLock(() =>
         putProject(paths, id, body, ensureLibraryFn),
       );
+      notifyProjectChange(id);
+      return res;
     },
 
     async batchMidiProgramIds(
@@ -119,9 +132,10 @@ export function createStores(dataDir?: string) {
     },
 
     async deleteProject(id: string): Promise<void> {
-      return withLibraryLock(() =>
+      await withLibraryLock(() =>
         deleteProject(paths, id, ensureLibraryFn, readSetlistFn),
       );
+      notifyProjectChange(id);
     },
 
     async addProjectAsset(
@@ -135,7 +149,7 @@ export function createStores(dataDir?: string) {
         startTicks?: number;
       },
     ): Promise<Project> {
-      return withLibraryLock(() =>
+      const res = await withLibraryLock(() =>
         addProjectAsset(
           paths,
           projectId,
@@ -147,13 +161,15 @@ export function createStores(dataDir?: string) {
           ensureLibraryFn,
         ),
       );
+      notifyProjectChange(projectId);
+      return res;
     },
 
     async deleteProjectAsset(
       projectId: string,
       assetId: string,
     ): Promise<Project> {
-      return withLibraryLock(() =>
+      const res = await withLibraryLock(() =>
         deleteProjectAsset(
           paths,
           projectId,
@@ -163,6 +179,15 @@ export function createStores(dataDir?: string) {
           ensureLibraryFn,
         ),
       );
+      notifyProjectChange(projectId);
+      return res;
+    },
+
+    onProjectChange(listener: (projectId: string) => void): () => void {
+      projectChangeListeners.add(listener);
+      return () => {
+        projectChangeListeners.delete(listener);
+      };
     },
 
     async getAssetFilePath(

@@ -37,6 +37,10 @@ interface CanvasViewportContext {
   modals: any;
   mapEdits: any;
   shortcuts: any;
+  draft?: any;
+  primaryMapId?: string | null;
+  soloAudioTrackIds?: string[];
+  soloBusIds?: string[];
 }
 
 export function buildTimelineCanvasViewportProps(
@@ -70,12 +74,16 @@ export function buildTimelineCanvasViewportProps(
     canvasDerived,
     playback,
     audioState,
+    soloAudioTrackIds,
+    soloBusIds,
     panelState,
     floatingMenus,
     contextMenus,
     modals,
     mapEdits,
     shortcuts,
+    draft,
+    primaryMapId,
   } = ctx;
 
   const canvasInnerWidth = `calc(var(--tl-dock-w) + ${canvasDerived.canvasWidthPx}px)`;
@@ -87,8 +95,9 @@ export function buildTimelineCanvasViewportProps(
     timelineSurface,
     draftProject,
     trackSelection: selection.trackSelection,
-    soloAudioTrackIds: audioState.soloAudioTrackIds ?? [],
-    soloBusIds: audioState.soloBusIds ?? [],
+    soloAudioTrackIds:
+      soloAudioTrackIds ?? audioState.soloAudioTrackIds ?? [],
+    soloBusIds: soloBusIds ?? audioState.soloBusIds ?? [],
     selectedBusId: selection.selectedBusId,
     selectedHwOutputId: selection.selectedHwOutputId,
     trackRename: audioState.trackRename,
@@ -165,9 +174,7 @@ export function buildTimelineCanvasViewportProps(
     onFormaLanePointerUp: gestures.onFormaLanePointerUp,
     beginContentPencilDraw: gestures.beginContentPencilDraw,
     rawTicksAtClientX,
-    commitDraft: ctx.draftProject
-      ? (shortcuts.commitDraft ?? ((p: any) => p))
-      : (p: any) => p,
+    commitDraft: draft?.commitDraft ?? shortcuts?.commitDraft ?? ((p: any) => p),
     clearMapSelection: selection.clearMapSelection,
     selectLaneClip: panelState.selectLaneClip,
     laneImportTrackIdRef,
@@ -207,7 +214,7 @@ export function buildTimelineCanvasViewportProps(
     openSongImportWizard: modals.openSongImportWizard,
     selectedMapLane: selection.selectedMapLane,
     selectedMapIds: selection.selectedMapIds,
-    primaryMapId: panelState.primaryMapId ?? selection.primaryMapId,
+    primaryMapId: primaryMapId ?? panelState.primaryMapId ?? selection.primaryMapId,
     selectedTekstClip: derivedSelection.selectedTekstClip,
     selectedAkordClip: derivedSelection.selectedAkordClip,
     selectedCueClip: derivedSelection.selectedCueClip,

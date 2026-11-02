@@ -1,5 +1,4 @@
 import React from "react";
-import { Slider } from "@stagesync/ui";
 import type { Project, AudioClip } from "@stagesync/shared";
 import {
   setAudioClipFadeMs,
@@ -85,33 +84,40 @@ export function AudioClipInspector({
       </label>
       <label className={styles.inspField}>
         Gain klipu (dB)
-        <Slider
-          aria-label="Gain klipu"
-          min={-24}
-          max={12}
+        <input
+          className={styles.lengthInput}
+          type="number"
+          min={-60}
+          max={24}
           step={0.5}
           value={selectedAudioClip.gainDb ?? 0}
-          onValueChange={(v: number) => {
+          aria-label="Gain klipu (dB)"
+          onChange={(e) => {
             if (!draftProject) return;
+            const n = Number(e.target.value);
+            if (!Number.isFinite(n)) return;
             commitDraft(
-              setAudioClipGainDb(draftProject, selectedAudioClip.id, v),
+              setAudioClipGainDb(draftProject, selectedAudioClip.id, n),
             );
           }}
         />
       </label>
       <label className={styles.inspField}>
         Fade In (ms)
-        <Slider
-          aria-label="Fade In"
+        <input
+          className={styles.lengthInput}
+          type="number"
           min={0}
-          max={2000}
-          step={10}
+          step={5}
           value={selectedAudioClip.fadeInMs ?? 0}
-          onValueChange={(v: number) => {
+          aria-label="Fade In (ms)"
+          onChange={(e) => {
             if (!draftProject) return;
+            const n = Number(e.target.value);
+            if (!Number.isFinite(n) || n < 0) return;
             commitDraft(
               setAudioClipFadeMs(draftProject, selectedAudioClip.id, {
-                fadeInMs: v,
+                fadeInMs: n,
               }),
             );
           }}
@@ -119,17 +125,20 @@ export function AudioClipInspector({
       </label>
       <label className={styles.inspField}>
         Fade Out (ms)
-        <Slider
-          aria-label="Fade Out"
+        <input
+          className={styles.lengthInput}
+          type="number"
           min={0}
-          max={2000}
-          step={10}
+          step={5}
           value={selectedAudioClip.fadeOutMs ?? 0}
-          onValueChange={(v: number) => {
+          aria-label="Fade Out (ms)"
+          onChange={(e) => {
             if (!draftProject) return;
+            const n = Number(e.target.value);
+            if (!Number.isFinite(n) || n < 0) return;
             commitDraft(
               setAudioClipFadeMs(draftProject, selectedAudioClip.id, {
-                fadeOutMs: v,
+                fadeOutMs: n,
               }),
             );
           }}

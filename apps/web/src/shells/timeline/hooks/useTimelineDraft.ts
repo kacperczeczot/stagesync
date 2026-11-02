@@ -40,9 +40,19 @@ export function useTimelineDraft({
   const [savedProject, setSavedProject] = useState<Project | null>(null);
   const [draftProject, setDraftProject] = useState<Project | null>(null);
   const [draftHistory, setDraftHistory] = useState<DraftHistory | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => Boolean(projectId));
   const [savePending, setSavePending] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!projectId) {
+      setLoading(false);
+      setSavedProject(null);
+      setDraftProject(null);
+      setDraftHistory(null);
+      setLoadError(null);
+    }
+  }, [projectId]);
 
   const draftRef = useRef<Project | null>(null);
   draftRef.current = draftProject;

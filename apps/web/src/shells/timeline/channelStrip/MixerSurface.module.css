@@ -141,6 +141,31 @@
   }
 }
 
+.panicBtn {
+  margin: 0;
+  padding: 1px var(--ss-space-1);
+  border: 1px solid var(--ss-color-warning);
+  border-radius: var(--ss-radius-sm);
+  background: color-mix(in srgb, var(--ss-color-warning) 22%, var(--ss-color-bg));
+  color: var(--ss-color-warning);
+  font: inherit;
+  font-size: var(--ss-text-xs);
+  font-weight: var(--ss-font-weight-bold);
+  line-height: var(--ss-leading-compact);
+  cursor: pointer;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  transition: all 0.15s ease;
+}
+
+@media (hover: hover) {
+  .panicBtn:hover {
+    background: color-mix(in srgb, var(--ss-color-warning) 36%, var(--ss-color-bg));
+    border-color: var(--ss-color-warning);
+    color: var(--ss-color-text);
+  }
+}
+
 .strips {
   display: flex;
   flex-direction: row;

@@ -261,4 +261,37 @@ describe("TransportEngine", () => {
     });
     engine.dispose();
   });
+
+  it("chases MIDI melody notes spanning seekTicks", () => {
+    const engine = createTransportEngine();
+    const project = createProjectV5Seed(
+      "00000000-0000-4000-8000-0000000000ch",
+      "Chase Test",
+      "2026-07-20T00:00:00.000Z",
+    );
+    project.melody = {
+      clips: [
+        { id: "m1", pitchMidi: 60, startTicks: 0, lengthTicks: 1920 },
+        { id: "m2", pitchMidi: 64, startTicks: 960, lengthTicks: 960 },
+        { id: "m3", pitchMidi: 67, startTicks: 2880, lengthTicks: 960 },
+      ],
+    };
+
+    engine.loadProject(project.id, project);
+    expect(engine.getChasedMidiNotes()).toEqual([]);
+
+    // Seek to 1200: m1 (0-1920) and m2 (960-1920) are spanning
+    engine.seek(1200, project);
+    const chased = engine.getChasedMidiNotes();
+    expect(chased).toHaveLength(2);
+    expect(chased[0]!.id).toBe("m1");
+    expect(chased[0]!.offsetTicks).toBe(1200);
+    expect(chased[0]!.remainingTicks).toBe(720);
+
+    expect(chased[1]!.id).toBe("m2");
+    expect(chased[1]!.offsetTicks).toBe(240);
+    expect(chased[1]!.remainingTicks).toBe(720);
+
+    engine.dispose();
+  });
 });

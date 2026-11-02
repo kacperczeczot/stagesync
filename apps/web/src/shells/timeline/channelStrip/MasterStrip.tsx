@@ -3,6 +3,7 @@
  * Optional Out selector remaps Master onto a physical stereo pair.
  */
 
+import { Button } from "@stagesync/ui";
 import type {
   MasterStripCallbacks,
   MasterStripState,
@@ -74,8 +75,73 @@ export function MasterStrip({ state, callbacks }: MasterStripProps) {
         />
       </div>
 
-      {/* Match track / Click S·M row so the bottom banner lines up. */}
-      <div className={styles.mixerToolsSpacer} aria-hidden />
+      {/* Match track / Click S·M row — global Solo / Mute Off buttons */}
+      <div className={styles.mixerTools} onClick={(e) => e.stopPropagation()}>
+        <Button
+          variant="ghost"
+          iconOnly
+          selected={Boolean(state.hasAnySolo)}
+          className={[
+            styles.masterSoloClearBtn,
+            state.hasAnySolo ? styles.tapBtnSolo : styles.masterToolInactive,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          title={
+            state.hasAnySolo
+              ? "Wyłącz wszystkie solo (⌥S)"
+              : "Brak aktywnych solo"
+          }
+          aria-label={
+            state.hasAnySolo
+              ? "Wyłącz wszystkie solo (⌥S)"
+              : "Brak aktywnych solo"
+          }
+          disabled={!state.hasAnySolo}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (e.altKey || e.shiftKey) {
+              callbacks.onClearAllSoloMute?.();
+            } else {
+              callbacks.onClearAllSolo?.();
+            }
+          }}
+        >
+          S
+        </Button>
+        <Button
+          variant="ghost"
+          iconOnly
+          selected={Boolean(state.hasAnyMute)}
+          className={[
+            styles.masterMuteClearBtn,
+            state.hasAnyMute ? styles.tapBtnMute : styles.masterToolInactive,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          title={
+            state.hasAnyMute
+              ? "Włącz wszystkie wyciszone ścieżki (⌥M)"
+              : "Brak aktywnych wyciszeń"
+          }
+          aria-label={
+            state.hasAnyMute
+              ? "Włącz wszystkie wyciszone ścieżki (⌥M)"
+              : "Brak aktywnych wyciszeń"
+          }
+          disabled={!state.hasAnyMute}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (e.altKey || e.shiftKey) {
+              callbacks.onClearAllSoloMute?.();
+            } else {
+              callbacks.onClearAllMute?.();
+            }
+          }}
+        >
+          M
+        </Button>
+      </div>
 
       <div
         className={[

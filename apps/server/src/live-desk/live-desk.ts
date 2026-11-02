@@ -20,34 +20,38 @@ type Listener = (msg: LiveDeskMessage) => void;
 
 export function createLiveDeskStore(filePath: string) {
   let settings = defaultLiveDeskSettings();
-  let loaded = false;
+  let loadPromise: Promise<void> | null = null;
   const listeners = new Set<Listener>();
 
   async function ensureLoaded(): Promise<void> {
-    if (loaded) return;
-    loaded = true;
-    try {
-      const raw = JSON.parse(await readFile(filePath, "utf8")) as unknown;
-      // Drop legacy scenic themeLock if present (removed; keep other fields).
-      const cleaned =
-        raw !== null && typeof raw === "object" && !Array.isArray(raw)
-          ? Object.fromEntries(
-              Object.entries(raw as Record<string, unknown>).filter(
-                ([k]) => k !== "themeLock",
-              ),
-            )
-          : raw;
-      settings = LiveDeskSettingsSchema.parse(cleaned);
-    } catch {
-      settings = defaultLiveDeskSettings();
+    if (loadPromise) return loadPromise;
+    loadPromise = (async () => {
       try {
-        await mkdir(dirname(filePath), { recursive: true });
-        await writeFile(filePath, JSON.stringify(settings, null, 2), "utf8");
+        const raw = JSON.parse(await readFile(filePath, "utf8")) as unknown;
+        // Drop legacy scenic themeLock if present (removed; keep other fields).
+        const cleaned =
+          raw !== null && typeof raw === "object" && !Array.isArray(raw)
+            ? Object.fromEntries(
+                Object.entries(raw as Record<string, unknown>).filter(
+                  ([k]) => k !== "themeLock",
+                ),
+              )
+            : raw;
+        settings = LiveDeskSettingsSchema.parse(cleaned);
       } catch {
-        /* ignore first-write failure */
+        settings = defaultLiveDeskSettings();
+        try {
+          await mkdir(dirname(filePath), { recursive: true });
+          await writeFile(filePath, JSON.stringify(settings, null, 2), "utf8");
+        } catch {
+          /* ignore first-write failure */
+        }
       }
-    }
+    })();
+    return loadPromise;
   }
+
+  void ensureLoaded();
 
   async function persist(): Promise<void> {
     await mkdir(dirname(filePath), { recursive: true });

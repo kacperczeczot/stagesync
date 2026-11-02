@@ -152,6 +152,12 @@ export function createApp(options: CreateAppOptions = {}): AppBundle {
     );
   };
   refreshMidiSeekEnd(transport.getActiveProjectId());
+  stores.onProjectChange?.((projectId) => {
+    if (midiSeekEndCache?.projectId === projectId) {
+      midiSeekEndCache = null;
+      refreshMidiSeekEnd(projectId);
+    }
+  });
   let lastSetlistActiveId: string | null | undefined =
     transport.getActiveProjectId();
   transport.onChange((msg) => {
@@ -207,11 +213,11 @@ export function createApp(options: CreateAppOptions = {}): AppBundle {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
       "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, OPTIONS",
+      "GET, POST, PUT, PATCH, DELETE, OPTIONS",
     );
     res.setHeader(
       "Access-Control-Allow-Headers",
-      "Content-Type, Authorization, X-Requested-With",
+      "Content-Type, Authorization, X-Requested-With, X-Stagesync-Operator-Pin, X-StageSync-PIN, X-Stagesync-Host-Token",
     );
     res.setHeader(
       "Content-Security-Policy",

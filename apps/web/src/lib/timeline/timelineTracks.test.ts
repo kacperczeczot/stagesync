@@ -103,4 +103,11 @@ describe("timelineTracks", () => {
     const vis = defaultTrackVisibility([{ id: "a1", name: "A" }]);
     expect(vis["audio:a1"]).toBe(true);
   });
+
+  it("isTrackVisible handles undefined or null visibility map safely without throwing", () => {
+    const track = buildTrackList([])[0]!;
+    expect(isTrackVisible(undefined, track)).toBe(true);
+    expect(isTrackVisible(null, track)).toBe(true);
+    expect(isCoreTrackVisible(undefined, "tempo")).toBe(true);
+  });
 });

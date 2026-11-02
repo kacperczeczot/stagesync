@@ -112,4 +112,97 @@ describe("useTimelineAudioUpload", () => {
     });
     expect(setDraftProject).toHaveBeenCalled();
   });
+
+  it("preserves uncommitted draft edits in forma and existing audioTracks during upload", async () => {
+    const serverProject: Project = {
+      ...dummyProject,
+      forma: { clips: [] },
+      audioTracks: [
+        {
+          id: "track-1",
+          name: "Vocals",
+          gainDb: 0,
+          pan: 0,
+          muted: false,
+        },
+      ],
+      audioClips: [
+        {
+          id: "clip-1",
+          trackId: "track-1",
+          assetId: "asset-1",
+          startTicks: 0,
+          lengthTicks: 3840,
+        },
+      ],
+    };
+
+    const dirtyDraft: Project = {
+      ...dummyProject,
+      forma: {
+        clips: [
+          {
+            id: "f1",
+            kind: "section",
+            startTicks: 0,
+            lengthTicks: 3840,
+            name: "Chorus",
+          },
+        ],
+      },
+      audioTracks: [
+        {
+          id: "track-1",
+          name: "Vocals",
+          gainDb: -6, // uncommitted gain change
+          pan: 0,
+          muted: false,
+        },
+        {
+          id: "track-local-2",
+          name: "Drums",
+          gainDb: 0,
+          pan: 0,
+          muted: false,
+        },
+      ],
+    };
+
+    vi.mocked(uploadProjectAudio).mockResolvedValue(serverProject);
+
+    let savedState: Project | null = dummyProject;
+    let draftState: Project | null = dirtyDraft;
+    const setSavedProject = vi.fn((updater) => {
+      savedState = typeof updater === "function" ? updater(savedState) : updater;
+    });
+    const setDraftProject = vi.fn((updater) => {
+      draftState = typeof updater === "function" ? updater(draftState) : updater;
+    });
+
+    const { result } = renderHook(() =>
+      useTimelineAudioUpload({
+        projectId: "p1",
+        draftProject: dirtyDraft,
+        setSavedProject,
+        setDraftProject,
+        setDraftHistory: vi.fn(),
+        setTrackVisibility: vi.fn(),
+        setLoadError: vi.fn(),
+      }),
+    );
+
+    const fakeFile = new File(["dummy"], "vocals.wav", { type: "audio/wav" });
+
+    await act(async () => {
+      await result.current.onUploadAudioToTrack("track-1", fakeFile);
+    });
+
+    expect(draftState?.forma.clips).toHaveLength(1);
+    expect(draftState?.forma.clips[0]?.name).toBe("Chorus");
+    expect(draftState?.audioTracks).toHaveLength(2);
+    expect(draftState?.audioTracks.find((t) => t.id === "track-1")?.gainDb).toBe(-6);
+    expect(draftState?.audioClips).toHaveLength(1);
+    // Saved state still has empty forma so dirty flag remains true
+    expect(savedState?.forma.clips).toHaveLength(0);
+  });
 });

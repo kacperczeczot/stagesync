@@ -81,5 +81,30 @@ describe("buildTimelineDialogsProps", () => {
     expect(props.songScreenOpen).toBe(true);
     expect(props.libraryNames).toEqual(["Song A", "Song B"]);
     expect(props.songScreenId).toBe("test-id");
+    expect(props.trackVisibility).toBeDefined();
+    expect(props.trackVisibility.forma).toBe(true);
+    expect(props.trackVisibility.tempo).toBe(false);
+    expect(typeof props.toggleTrack).toBe("function");
+
+    const wandTool = { applyWand: vi.fn() };
+    const propsWithWand = buildTimelineDialogsProps({
+      draft,
+      shortcuts,
+      modals,
+      setlistState,
+      songImport,
+      floatingMenus,
+      audioState,
+      mapEdits,
+      toolbarVisibleSet: new Set(["pointer"]),
+      setToolbarVisibleTools: vi.fn(),
+      displayTicks: 0,
+      touchAlertOpen: false,
+      setTouchAlertOpen: vi.fn(),
+      tool: "pointer",
+      wandTool,
+    });
+    propsWithWand.applyWand("fill");
+    expect(wandTool.applyWand).toHaveBeenCalledWith("fill");
   });
 });

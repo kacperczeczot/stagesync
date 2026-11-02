@@ -646,7 +646,11 @@ fn tail_sidecar_log_file(path: &std::path::Path) -> Option<String> {
     if trimmed.len() <= cap {
         return Some(trimmed.to_string());
     }
-    Some(format!("…\n{}", &trimmed[trimmed.len() - cap..]))
+    let mut start = trimmed.len() - cap;
+    while start < trimmed.len() && !trimmed.is_char_boundary(start) {
+        start += 1;
+    }
+    Some(format!("…\n{}", &trimmed[start..]))
 }
 
 #[tauri::command]

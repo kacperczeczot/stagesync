@@ -455,3 +455,54 @@ export function duplicateAudioTrack(
     trackId: newTrackId,
   };
 }
+
+/** Returns true if any audio track, bus, or hardware output is currently muted. */
+export function hasAnyMutedTrackOrBus(project: Project): boolean {
+  if (project.audioTracks.some((t) => Boolean(t.muted))) return true;
+  if (project.audioBusses?.some((b) => Boolean(b.muted))) return true;
+  if (project.audioHardwareOutputs?.some((h) => Boolean(h.muted))) return true;
+  return false;
+}
+
+/**
+ * Unmutes all audio tracks, busses, and hardware outputs (Solo / Mute Off for All).
+ * Returns original project reference if nothing was muted.
+ */
+export function clearAllAudioMutes(project: Project): Project {
+  let changed = false;
+  const audioTracks = project.audioTracks.map((t) => {
+    if (!t.muted) return t;
+    changed = true;
+    const { muted: _drop, ...rest } = t;
+    void _drop;
+    return rest;
+  });
+
+  const audioBusses = project.audioBusses
+    ? project.audioBusses.map((b) => {
+        if (!b.muted) return b;
+        changed = true;
+        const { muted: _drop, ...rest } = b;
+        void _drop;
+        return rest;
+      })
+    : undefined;
+
+  const audioHardwareOutputs = project.audioHardwareOutputs
+    ? project.audioHardwareOutputs.map((h) => {
+        if (!h.muted) return h;
+        changed = true;
+        const { muted: _drop, ...rest } = h;
+        void _drop;
+        return rest;
+      })
+    : undefined;
+
+  if (!changed) return project;
+  return {
+    ...project,
+    audioTracks,
+    ...(audioBusses !== undefined ? { audioBusses } : {}),
+    ...(audioHardwareOutputs !== undefined ? { audioHardwareOutputs } : {}),
+  };
+}

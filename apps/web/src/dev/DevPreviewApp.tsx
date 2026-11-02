@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo } from "react";
 import { createMemoryRouter, Outlet } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { ContextMenuProvider } from "@stagesync/ui";
@@ -25,26 +25,23 @@ function DevPreviewLayout() {
 
 export function DevPreviewApp() {
   const config = getDevPreviewConfig();
-  const appliedKeyRef = useRef<string | null>(null);
-  const cleanupRef = useRef<(() => void) | null>(null);
 
   const configKey = config
     ? `${config.surface}:${config.path}:${config.session}:${config.projectId}`
     : null;
 
-  if (config && appliedKeyRef.current !== configKey) {
-    cleanupRef.current?.();
-    cleanupRef.current = applyDevSurfaceMocks(config);
-    appliedKeyRef.current = configKey;
-  }
+  useLayoutEffect(() => {
+    if (!config) return;
+    const cleanup = applyDevSurfaceMocks(config);
+    return () => {
+      cleanup();
+    };
+  }, [config, configKey]);
 
   useEffect(() => {
     const removeScreenshotListener = installDevPreviewScreenshotListener();
     return () => {
       removeScreenshotListener();
-      cleanupRef.current?.();
-      cleanupRef.current = null;
-      appliedKeyRef.current = null;
     };
   }, []);
 
@@ -58,6 +55,7 @@ export function DevPreviewApp() {
             children: [
               { path: "/admin", element: <AdminShell /> },
               { path: "/client", element: <ClientShell /> },
+              { path: "/timeline", element: <TimelineShell /> },
               { path: "/timeline/:projectId", element: <TimelineShell /> },
             ],
           },

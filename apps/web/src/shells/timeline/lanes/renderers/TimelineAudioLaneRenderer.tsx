@@ -6,12 +6,17 @@ import type {
   Project,
 } from "@stagesync/shared";
 import {
+  elapsedToTicks,
+  resolveMeterAt,
+  resolveTempoAt,
+  resolveTrackColor,
+} from "@stagesync/shared";
+import {
   audioTrackIdFromLane,
   type AudioLaneId,
 } from "@lib/timeline/timelineTracks.js";
 import { clipStylePx } from "@lib/timeline-edit/formaCanvas.js";
 import { peaksToPolylinePoints } from "@lib/audio/waveformPeaks.js";
-import { resolveTrackColor } from "@stagesync/shared";
 import {
   isClipSelected,
   type ClipSelection,
@@ -20,6 +25,24 @@ import {
 import { isAudioAssetDecodeFailed } from "@lib/audio/audioPlayback.js";
 import type { ClipMenuLane } from "@lib/timeline/timelineContextMenus.js";
 import styles from "../../TimelineShell.module.css";
+
+/**
+ * Maps clip gain dB [-60, +24] to lane SVG Y coordinate.
+ * 0 dB (unity gain) is right at the vertical center (centerY = H / 2).
+ * Boost (>0 to +24 dB): maps center -> top edge (3px).
+ * Cut (<0 to -60 dB): maps center -> bottom edge (H - 3px) with audio taper.
+ */
+export function gainDbToLaneY(gainDb: number, H = 28): number {
+  const centerY = H / 2;
+  if (!Number.isFinite(gainDb) || gainDb === 0) return centerY;
+  if (gainDb > 0) {
+    const norm = Math.min(1, Math.max(0, gainDb / 24));
+    return centerY - norm * (centerY - 3);
+  }
+  const norm = Math.min(1, Math.max(0, -gainDb / 60));
+  const taper = Math.pow(norm, 0.7);
+  return centerY + taper * (H - 3 - centerY);
+}
 
 export type TimelineAudioLaneRendererProps = {
   lane: AudioLaneId;
@@ -33,6 +56,7 @@ export type TimelineAudioLaneRendererProps = {
     clipId?: string | null;
     originClipStart?: number;
     optionCopy?: boolean;
+    hasDragged?: boolean;
   } | null;
   gesturePreview: {
     kind?: string;
@@ -40,6 +64,9 @@ export type TimelineAudioLaneRendererProps = {
     startTicks: number;
     lengthTicks: number;
     targetLane?: string;
+    gainDb?: number;
+    fadeInMs?: number;
+    fadeOutMs?: number;
   } | null;
   clipSelection: ClipSelection;
   viewSpan: { start: number; end: number };
@@ -158,11 +185,62 @@ export function TimelineAudioLaneRenderer({
           effectiveZoomH,
         );
         const widthPx = Number.parseFloat(String(style.width)) || 0;
+        const W = Math.max(8, widthPx);
+        const H = 28; // SVG coordinate height
         const peaks = asset?.waveformPeaks;
         const poly =
           peaks && peaks.length
-            ? peaksToPolylinePoints(peaks, Math.max(8, widthPx), 28)
+            ? peaksToPolylinePoints(peaks, W, H)
             : "";
+
+        // Gain line — use live gesture preview during drag, else clip.gainDb (default 0 dB)
+        const effectiveGainDb =
+          previewing && gesturePreview?.gainDb != null
+            ? gesturePreview.gainDb
+            : (clip.gainDb ?? 0);
+        const gainY = gainDbToLaneY(effectiveGainDb, H);
+        const isGainActive =
+          effectiveGainDb !== 0 ||
+          (previewing && gesturePreview?.gainDb != null);
+
+        // Fade pixel widths — accurate timeline geometry based on clip start tempo & meter
+        const bpm = resolveTempoAt(draftProject, clip.startTicks);
+        const meter = resolveMeterAt(draftProject, clip.startTicks);
+        const ppq = draftProject.ppq;
+
+        const effectiveFadeInMs =
+          previewing && gesturePreview?.fadeInMs != null
+            ? gesturePreview.fadeInMs
+            : (clip.fadeInMs ?? 0);
+        const effectiveFadeOutMs =
+          previewing && gesturePreview?.fadeOutMs != null
+            ? gesturePreview.fadeOutMs
+            : (clip.fadeOutMs ?? 0);
+
+        const inTicks =
+          effectiveFadeInMs > 0
+            ? elapsedToTicks(effectiveFadeInMs, bpm, meter, ppq)
+            : 0;
+        const outTicks =
+          effectiveFadeOutMs > 0
+            ? elapsedToTicks(effectiveFadeOutMs, bpm, meter, ppq)
+            : 0;
+
+        const clipTicks = Math.max(1, clip.lengthTicks);
+        const fadeInRatio = Math.min(1, Math.max(0, inTicks / clipTicks));
+        const fadeOutRatio = Math.min(1, Math.max(0, outTicks / clipTicks));
+
+        const fadeInPx =
+          effectiveFadeInMs > 0
+            ? Math.max(2, Math.min(W, Math.round(fadeInRatio * W)))
+            : 0;
+        const fadeOutPx =
+          effectiveFadeOutMs > 0
+            ? Math.max(2, Math.min(W, Math.round(fadeOutRatio * W)))
+            : 0;
+
+        const showOverlay = true;
+
         const decodeFailed =
           Boolean(projectId) &&
           (failedAudioAssetIds.includes(clip.assetId) ||
@@ -211,30 +289,84 @@ export function TimelineAudioLaneRenderer({
               });
             }}
           >
-            {(clip.fadeInMs ?? 0) > 0 ? (
-              <span
-                className={styles.audioFadeIn}
-                style={{
-                  width: `${Math.min(widthPx * 0.45, Math.max(4, widthPx * 0.12))}px`,
-                }}
-              />
-            ) : null}
-            {(clip.fadeOutMs ?? 0) > 0 ? (
-              <span
-                className={styles.audioFadeOut}
-                style={{
-                  width: `${Math.min(widthPx * 0.45, Math.max(4, widthPx * 0.12))}px`,
-                }}
-              />
-            ) : null}
-            {poly ? (
+            {showOverlay ? (
               <svg
                 className={styles.audioWaveform}
-                viewBox={`0 0 ${Math.max(8, widthPx)} 28`}
+                viewBox={`0 0 ${W} ${H}`}
                 preserveAspectRatio="none"
                 aria-hidden
               >
-                <polygon points={poly} />
+                {/* Waveform polygon */}
+                {poly ? <polygon points={poly} className={styles.audioWaveformPoly} /> : null}
+
+                {/* Fade-in: shaded triangle + diagonal line */}
+                {fadeInPx > 0 ? (
+                  <>
+                    <polygon
+                      points={`0,0 ${fadeInPx},0 0,${H}`}
+                      className={styles.audioFadeFill}
+                    />
+                    <line
+                      x1={0} y1={H}
+                      x2={fadeInPx} y2={0}
+                      className={styles.audioFadeLine}
+                    />
+                  </>
+                ) : null}
+
+                {/* Fade-out: shaded triangle + diagonal line */}
+                {fadeOutPx > 0 ? (
+                  <>
+                    <polygon
+                      points={`${W - fadeOutPx},0 ${W},0 ${W},${H}`}
+                      className={styles.audioFadeFill}
+                    />
+                    <line
+                      x1={W - fadeOutPx} y1={0}
+                      x2={W} y2={H}
+                      className={styles.audioFadeLine}
+                    />
+                  </>
+                ) : null}
+
+                {/* Gain envelope line */}
+                <line
+                  x1={0}
+                  y1={gainY}
+                  x2={W}
+                  y2={gainY}
+                  className={
+                    isGainActive
+                      ? styles.audioGainLineActive
+                      : styles.audioGainLine
+                  }
+                />
+                {isGainActive ? (
+                  <>
+                    <circle
+                      cx={0}
+                      cy={gainY}
+                      r={2}
+                      className={styles.audioGainDot}
+                    />
+                    <circle
+                      cx={W}
+                      cy={gainY}
+                      r={2}
+                      className={styles.audioGainDot}
+                    />
+                  </>
+                ) : null}
+                {previewing && gesturePreview?.gainDb != null ? (
+                  <text
+                    x={W / 2}
+                    y={Math.max(10, Math.min(H - 4, gainY - 3))}
+                    className={styles.audioGainText}
+                  >
+                    {effectiveGainDb > 0 ? "+" : ""}
+                    {effectiveGainDb.toFixed(1)} dB
+                  </text>
+                ) : null}
               </svg>
             ) : null}
             <span className={styles.audioClipLabel}>
@@ -260,11 +392,36 @@ export function TimelineAudioLaneRenderer({
           effectiveZoomH,
         );
         const widthPx = Number.parseFloat(String(style.width)) || 0;
+        const W = Math.max(8, widthPx);
+        const H = 28;
         const peaks = asset?.waveformPeaks;
         const poly =
           peaks && peaks.length
-            ? peaksToPolylinePoints(peaks, Math.max(8, widthPx), 28)
+            ? peaksToPolylinePoints(peaks, W, H)
             : "";
+        const gBpm = resolveTempoAt(draftProject, ghostClip.startTicks);
+        const gMeter = resolveMeterAt(draftProject, ghostClip.startTicks);
+        const gGainDb = ghostClip.gainDb ?? 0;
+        const gGainY = gainDbToLaneY(gGainDb, H);
+        const gInTicks =
+          (ghostClip.fadeInMs ?? 0) > 0
+            ? elapsedToTicks(ghostClip.fadeInMs!, gBpm, gMeter, draftProject.ppq)
+            : 0;
+        const gOutTicks =
+          (ghostClip.fadeOutMs ?? 0) > 0
+            ? elapsedToTicks(ghostClip.fadeOutMs!, gBpm, gMeter, draftProject.ppq)
+            : 0;
+        const gClipTicks = Math.max(1, ghostClip.lengthTicks);
+        const gFadeInPx =
+          (ghostClip.fadeInMs ?? 0) > 0
+            ? Math.max(2, Math.min(W, Math.round((gInTicks / gClipTicks) * W)))
+            : 0;
+        const gFadeOutPx =
+          (ghostClip.fadeOutMs ?? 0) > 0
+            ? Math.max(2, Math.min(W, Math.round((gOutTicks / gClipTicks) * W)))
+            : 0;
+        const gGainActive = gGainDb !== 0;
+        const showGhostOverlay = true;
         return (
           <button
             key={`ghost-${ghostClip.id}`}
@@ -280,30 +437,43 @@ export function TimelineAudioLaneRenderer({
             }}
             disabled
           >
-            {(ghostClip.fadeInMs ?? 0) > 0 ? (
-              <span
-                className={styles.audioFadeIn}
-                style={{
-                  width: `${Math.min(widthPx * 0.45, Math.max(4, widthPx * 0.12))}px`,
-                }}
-              />
-            ) : null}
-            {(ghostClip.fadeOutMs ?? 0) > 0 ? (
-              <span
-                className={styles.audioFadeOut}
-                style={{
-                  width: `${Math.min(widthPx * 0.45, Math.max(4, widthPx * 0.12))}px`,
-                }}
-              />
-            ) : null}
-            {poly ? (
+            {showGhostOverlay ? (
               <svg
                 className={styles.audioWaveform}
-                viewBox={`0 0 ${Math.max(8, widthPx)} 28`}
+                viewBox={`0 0 ${W} ${H}`}
                 preserveAspectRatio="none"
                 aria-hidden
               >
-                <polygon points={poly} />
+                {poly ? <polygon points={poly} className={styles.audioWaveformPoly} /> : null}
+                {gFadeInPx > 0 ? (
+                  <>
+                    <polygon points={`0,0 ${gFadeInPx},0 0,${H}`} className={styles.audioFadeFill} />
+                    <line x1={0} y1={H} x2={gFadeInPx} y2={0} className={styles.audioFadeLine} />
+                  </>
+                ) : null}
+                {gFadeOutPx > 0 ? (
+                  <>
+                    <polygon points={`${W - gFadeOutPx},0 ${W},0 ${W},${H}`} className={styles.audioFadeFill} />
+                    <line x1={W - gFadeOutPx} y1={0} x2={W} y2={H} className={styles.audioFadeLine} />
+                  </>
+                ) : null}
+                <line
+                  x1={0}
+                  y1={gGainY}
+                  x2={W}
+                  y2={gGainY}
+                  className={
+                    gGainActive
+                      ? styles.audioGainLineActive
+                      : styles.audioGainLine
+                  }
+                />
+                {gGainActive ? (
+                  <>
+                    <circle cx={0} cy={gGainY} r={1.5} className={styles.audioGainDot} />
+                    <circle cx={W} cy={gGainY} r={1.5} className={styles.audioGainDot} />
+                  </>
+                ) : null}
               </svg>
             ) : null}
             <span className={styles.audioClipLabel}>

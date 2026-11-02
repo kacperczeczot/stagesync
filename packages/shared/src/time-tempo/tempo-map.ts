@@ -158,6 +158,7 @@ function boundariesBetween(
   const lo = Math.min(fromTicks, toTicks);
   const hi = Math.max(fromTicks, toTicks);
   const marks = new Set<number>([lo, hi]);
+  if (lo < 0 && hi > 0) marks.add(0);
   for (const ev of project.tempoMap) {
     if (ev.startTicks > lo && ev.startTicks < hi) marks.add(ev.startTicks);
   }
@@ -189,8 +190,9 @@ export function ticksToMsAlongTempoMap(
   for (let i = 0; i < marks.length - 1; i++) {
     const a = marks[i]!;
     const b = marks[i + 1]!;
-    const bpm = resolveTempoAt(project, a);
-    const meter = resolveMeterAt(project, a);
+    const evalTick = a < 0 ? 0 : a;
+    const bpm = resolveTempoAt(project, evalTick);
+    const meter = resolveMeterAt(project, evalTick);
     ms += ticksToMs(b - a, bpm, meter, project.ppq);
   }
   return sign * ms;

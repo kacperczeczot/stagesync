@@ -1183,16 +1183,20 @@
   border-color: var(--ss-color-primary);
 }
 
-.tapBtnSolo {
-  color: var(--tl-solo-fg);
-  background: var(--tl-solo-bg);
-  border-color: var(--tl-solo-bg);
+.tapBtnSolo,
+:global(.ss-btn).tapBtnSolo,
+:global(.ss-btn).tapBtnSolo:not(:disabled) {
+  color: var(--tl-solo-fg, var(--ss-color-solo-fg));
+  background: var(--tl-solo-bg, var(--ss-color-solo));
+  border-color: var(--tl-solo-bg, var(--ss-color-solo));
 }
 
-.tapBtnMute {
-  color: var(--tl-mute-fg);
-  background: var(--tl-mute-bg);
-  border-color: var(--tl-mute-bg);
+.tapBtnMute,
+:global(.ss-btn).tapBtnMute,
+:global(.ss-btn).tapBtnMute:not(:disabled) {
+  color: var(--tl-mute-fg, var(--ss-color-mute-fg));
+  background: var(--tl-mute-bg, var(--ss-color-mute));
+  border-color: var(--tl-mute-bg, var(--ss-color-mute));
 }
 
 @media (hover: hover) {
@@ -1202,16 +1206,18 @@
     border-color: var(--ss-color-primary);
   }
 
-  .tapBtnSolo:hover {
-    color: var(--tl-solo-fg);
-    background: color-mix(in srgb, var(--tl-solo-bg) 88%, var(--ss-color-text));
-    border-color: var(--tl-solo-bg);
+  .tapBtnSolo:hover,
+  :global(.ss-btn).tapBtnSolo:hover:not(:disabled) {
+    color: var(--tl-solo-fg, var(--ss-color-solo-fg));
+    background: color-mix(in srgb, var(--tl-solo-bg, var(--ss-color-solo)) 88%, white);
+    border-color: var(--tl-solo-bg, var(--ss-color-solo));
   }
 
-  .tapBtnMute:hover {
-    color: var(--tl-mute-fg);
-    background: color-mix(in srgb, var(--tl-mute-bg) 88%, var(--ss-color-text));
-    border-color: var(--tl-mute-bg);
+  .tapBtnMute:hover,
+  :global(.ss-btn).tapBtnMute:hover:not(:disabled) {
+    color: var(--tl-mute-fg, var(--ss-color-mute-fg));
+    background: color-mix(in srgb, var(--tl-mute-bg, var(--ss-color-mute)) 88%, white);
+    border-color: var(--tl-mute-bg, var(--ss-color-mute));
   }
 }
 
@@ -2362,45 +2368,63 @@
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ss-color-warning) 50%, transparent);
 }
 
-.audioFadeIn,
-.audioFadeOut {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.55;
-}
-
-.audioFadeIn {
-  left: 0;
-  background: linear-gradient(
-    to right,
-    color-mix(in srgb, var(--ss-color-bg) 75%, transparent),
-    transparent
-  );
-}
-
-.audioFadeOut {
-  right: 0;
-  background: linear-gradient(
-    to left,
-    color-mix(in srgb, var(--ss-color-bg) 75%, transparent),
-    transparent
-  );
-}
-
 .audioWaveform {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.55;
+  overflow: visible;
 }
 
-.audioWaveform polygon {
+/* Waveform peak fill */
+.audioWaveformPoly {
   fill: var(--ss-color-fg);
+  opacity: 0.45;
+}
+
+/* Fade overlay — semi-transparent dark triangle */
+.audioFadeFill {
+  fill: var(--ss-color-bg, #000);
+  opacity: 0.45;
+}
+
+/* Fade diagonal line — the primary visible indicator, DAW-style */
+.audioFadeLine {
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+/* Gain envelope horizontal line */
+.audioGainLine {
+  stroke: rgba(255, 255, 255, 0.45);
+  stroke-width: 1.2;
+  stroke-dasharray: none;
+  stroke-linecap: round;
+  transition: stroke 0.1s ease, stroke-width 0.1s ease;
+}
+
+.audioGainLineActive {
+  stroke: var(--ss-color-primary);
+  stroke-width: 2;
+  stroke-dasharray: none;
+  stroke-linecap: round;
+}
+
+/* Gain line end caps */
+.audioGainDot {
+  fill: var(--ss-color-primary);
+}
+
+.audioGainText {
+  fill: rgba(255, 255, 255, 0.95);
+  font-size: 9px;
+  font-family: var(--ss-font-mono, monospace);
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.9));
 }
 
 .audioClipLabel {

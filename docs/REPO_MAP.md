@@ -6,16 +6,16 @@
 
 ## 📊 Statystyki Repozytorium (Śledzone w Git)
 
-* **Liczba wszystkich plików:** 1647
+* **Liczba wszystkich plików:** 1654
 * **Liczba katalogów:** 247
-* **Data aktualizacji:** 2026-09-04T00:18:46.091Z
+* **Data aktualizacji:** 2026-11-02T16:38:47.849Z
 
 ### Kategorie
 
 | Kategoria | Liczba plików |
 | :--- | ---: |
-| Kod | 1246 |
-| Docs | 135 |
+| Kod | 1252 |
+| Docs | 136 |
 | Config | 119 |
 | Assety | 120 |
 | Inne | 27 |
@@ -24,9 +24,9 @@
 
 | Rozszerzenie | Liczba plików |
 | :--- | ---: |
-| `.ts` | 773 |
+| `.ts` | 779 |
 | `.tsx` | 287 |
-| `.md` | 122 |
+| `.md` | 123 |
 | `.png` | 94 |
 | `.kt` | 71 |
 | `.css` | 52 |
@@ -40,26 +40,26 @@
 
 ## 🏛️ Przegląd Architektury
 
-- **apps/** (1242) — Aplikacje wykonawcze i powłoki klienckie w monorepo
+- **apps/** (1245) — Aplikacje wykonawcze i powłoki klienckie w monorepo
   - **console/** (97) — Android WebView shell dla interfejsu /admin (ADR 0016)
-  - **desktop/** (108) — Tauri thin shell dla serwera lokalnego na desktop (ADR 0010)
+  - **desktop/** (107) — Tauri thin shell dla serwera lokalnego na desktop (ADR 0010)
   - **performer/** (71) — Android WebView shell dla interfejsu /client (ADR 0016)
   - **server/** (167) — Główny backend Node.js — SSOT Host, Master Clock, REST/WS API
-  - **web/** (769) — Aplikacja webowa React/Vite (Admin, Client, Timeline, Mikser)
+  - **web/** (773) — Aplikacja webowa React/Vite (Admin, Client, Timeline, Mikser)
     - **e2e/** (3) — Testy integracyjne E2E (Playwright)
     - **public/** (10) — Zasoby statyczne i favicon
       - **brand/** (5) — Materiały brandingowe i logotypy StageSync
     - **scripts/** (11) — Skrypty pomocnicze builda i benchmarków webowych
       - **benchmark/** (9) — Skrypty benchmarków wydajnościowych UI/Audio
-    - **src/** (725) — Kod źródłowy UI i logiki klienta
+    - **src/** (729) — Kod źródłowy UI i logiki klienta
       - **dev/** (18) — Narzędzia i panele deweloperskie wewnątrz aplikacji
-      - **lib/** (249) — Biblioteki klienta (5 kategorii — bez plików w lib root)
-        - **audio/** (64) — DSP, AudioContext, tempo, waveform
+      - **lib/** (252) — Biblioteki klienta (5 kategorii — bez plików w lib root)
+        - **audio/** (66) — DSP, AudioContext, tempo, waveform
         - **client/** (69) — Preferencje, mostek desktop, i18n shell, utilities UI
-        - **shell-operator/** (30) — Operatory CRUD API / aktywny projekt
+        - **shell-operator/** (31) — Operatory CRUD API / aktywny projekt
         - **timeline/** (51) — Silnik renderowania timeline (bez mutacji treści)
         - **timeline-edit/** (35) — Mutacje treści klipów (akordy, cue, forma, tekst)
-      - **shells/** (432) — Powłoki Admin / Client / Timeline
+      - **shells/** (433) — Powłoki Admin / Client / Timeline
       - **transport/** (17) — Transport WS, playhead, probe wydajności
     - **test/** (9) — Testy jednostkowe i mocki aplikacji webowej
       - **benchmark/** (1) — Testy wydajnościowe struktur danych
@@ -71,25 +71,25 @@
   - **library/** (3) — Główny plik bazy utworów (library.json) oraz szablony projektów
   - **logs/** (1) — Buffer logów systemowych, diagnostyka i ślady wykonania
   - **projects/** (1) — Katalog projektów użytkownika z lokalnymi zasobami assets/
-- **docs/** (93) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
-  - **analysis/** (48)
+- **docs/** (94) — Dokumentacja techniczna, specyfikacje architektoniczne i audyty
+  - **analysis/** (49)
   - **architecture/** (32) — Architektura systemu, SSOT, ADR, specyfikacje API i Design System
     - **adr/** (20) — Architectural Decision Records (Decyzje architektoniczne)
     - **api/** (1) — Specyfikacje interfejsów programistycznych REST i WebSocket
     - **ui/** (9) — Dokumentacja systemu designu, tokenów i komponentów UI
   - **examples/** (2) — Przykładowe pliki baz danych i pakiety projektowe v5
   - **guides/** (5) — Podręczniki operatorskie (INSTALL, DESKTOP, MOBILE, DX)
-- **packages/** (226) — Współdzielone pakiety wewnętrzne monorepo
+- **packages/** (228) — Współdzielone pakiety wewnętrzne monorepo
   - **android-keystore/** (2) — Keystore do sideloadu / podpisywania APK (lokalny, nie sekret produkcyjny CI)
   - **eslint-config/** (5) — Wspólne reguły ESLint dla całego repozytorium
   - **plugins/** (4)
-  - **shared/** (183) — Logika domenowa SSOT, Zod schematy, przeliczenia czasu i akordów
+  - **shared/** (185) — Logika domenowa SSOT, Zod schematy, przeliczenia czasu i akordów
   - **typescript-config/** (5) — Bazowe pliki tsconfig.json dla paczek i aplikacji
   - **ui/** (26) — Biblioteka komponentów UI (przycisk, pole, menu, badge)
-- **scripts/** (33) — Skrypty monorepo (mapa repo, release notes, lint CSS, merge-train)
+- **scripts/** (34) — Skrypty monorepo (mapa repo, release notes, lint CSS, merge-train)
   - **hub/** (11)
   - **merge-train/** (4) — Automatyzacja merge train i walidacji PR
-  - **quality/** (5) — Narzędzia jakości kodu, linków i generator mapy repozytorium
+  - **quality/** (6) — Narzędzia jakości kodu, linków i generator mapy repozytorium
   - **release/** (9) — Skrypty wydań SemVer, budowania paczek i release notes
   - **setup/** (2) — Skrypty inicjalizacyjne i setupu środowiska deweloperskiego
 
@@ -227,7 +227,6 @@ stagesync/
 │   │   │   ├── generate-bmps.ps1
 │   │   │   ├── kill-zombies.mjs
 │   │   │   ├── pack-stagesync-setup.mjs
-│   │   │   ├── parse-schema.mjs
 │   │   │   ├── prepare-stagesync-setup-bin.mjs
 │   │   │   ├── sync-launcher-ui.mjs
 │   │   │   ├── sync-sidecar-server.mjs
@@ -499,9 +498,9 @@ stagesync/
 │   │   │   │   ├── devSurfaceState.ts
 │   │   │   │   └── devSurfaceTypes.ts
 │   │   │   ├── lib/
-│   │   │   │   ├── audio/  … (64 pliki, 2 podkatalogi; 45 plików bezpośrednio)
+│   │   │   │   ├── audio/  … (66 plików, 2 podkatalogi; 47 plików bezpośrednio)
 │   │   │   │   ├── client/  … (69 plików, 2 podkatalogi; 63 pliki bezpośrednio)
-│   │   │   │   ├── shell-operator/  … (30 plików, 1 podkatalog; 24 pliki bezpośrednio)
+│   │   │   │   ├── shell-operator/  … (31 plików, 1 podkatalog; 25 plików bezpośrednio)
 │   │   │   │   ├── timeline/  … (51 plików, 1 podkatalog; 47 plików bezpośrednio)
 │   │   │   │   └── timeline-edit/  … (35 plików, 3 podkatalogi; 29 plików bezpośrednio)
 │   │   │   ├── shells/
@@ -513,7 +512,8 @@ stagesync/
 │   │   │   │   ├── pages/  … (3 pliki)
 │   │   │   │   ├── settings/  … (25 plików, 1 podkatalog; 19 plików bezpośrednio)
 │   │   │   │   ├── shared/  … (2 pliki)
-│   │   │   │   └── timeline/  … (185 plików, 10 podkatalogów; 13 plików bezpośrednio)
+│   │   │   │   ├── timeline/  … (185 plików, 10 podkatalogów; 13 plików bezpośrednio)
+│   │   │   │   └── nav-buttons-consistency.test.ts
 │   │   │   ├── transport/
 │   │   │   │   ├── api.test.ts
 │   │   │   │   ├── api.ts
@@ -649,7 +649,8 @@ stagesync/
 │   │   │   │   ├── report-adr-dual-engine-vst-align.md
 │   │   │   │   ├── report-beta-gate.md
 │   │   │   │   ├── report-coverage-baseline.md
-│   │   │   │   └── report-scope-5.4.md
+│   │   │   │   ├── report-scope-5.4.md
+│   │   │   │   └── report-scope-5.5.md
 │   │   │   └── README.md
 │   │   ├── working/
 │   │   │   ├── .gitignore
@@ -854,6 +855,8 @@ stagesync/
 │   │   │   │   ├── time.test.ts
 │   │   │   │   └── time.ts
 │   │   │   ├── transport/
+│   │   │   │   ├── chase-midi.test.ts
+│   │   │   │   ├── chase-midi.ts
 │   │   │   │   ├── transport-loop.test.ts
 │   │   │   │   ├── transport-loop.ts
 │   │   │   │   ├── transport.test.ts
@@ -937,7 +940,8 @@ stagesync/
 │   │   ├── check-unlinked.mjs
 │   │   ├── fix-unlinked-links.mjs
 │   │   ├── generate-repo-map.mjs
-│   │   └── lint-ss-css.mjs
+│   │   ├── lint-ss-css.mjs
+│   │   └── lint-ss-css.test.mjs
 │   ├── release/
 │   │   ├── build-release-notes.mjs
 │   │   ├── build-release-notes.test.mjs

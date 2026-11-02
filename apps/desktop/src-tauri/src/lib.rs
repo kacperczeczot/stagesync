@@ -947,7 +947,11 @@ pub(crate) fn append_sidecar_log(log: &mut String, chunk: &str) {
         log.push('\n');
     }
     if log.len() > SIDECAR_LOG_CAP {
-        let keep = &log[log.len() - SIDECAR_LOG_CAP..];
+        let mut start = log.len() - SIDECAR_LOG_CAP;
+        while start < log.len() && !log.is_char_boundary(start) {
+            start += 1;
+        }
+        let keep = &log[start..];
         *log = format!("…\n{keep}");
     }
 }

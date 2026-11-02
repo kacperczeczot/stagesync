@@ -215,6 +215,9 @@ export function useTimelineShellInteractions(
     laneImportStartTicksRef,
     laneAudioFileRef,
     locatorTicks,
+    hasCopiedAudioClipProperties: selection.hasCopiedAudioClipProperties,
+    copyAudioClipProperties: selection.copyAudioClipProperties,
+    pasteAudioClipProperties: selection.pasteAudioClipProperties,
   });
 
   const gestures = useTimelineGestures({
@@ -324,6 +327,8 @@ export function useTimelineShellInteractions(
     setSelectedHwOutputId: selection.setSelectedHwOutputId,
     setInspectorVisible,
     setEyeOpen: floatingMenus.setEyeOpen,
+    soloAudioTrackIds,
+    soloBusIds,
     setSoloAudioTrackIds,
     setSoloBusIds,
     isMobilePreview,
@@ -346,6 +351,8 @@ export function useTimelineShellInteractions(
     cutClipSelection: selection.cutClipSelection,
     copyClipSelection: selection.copyClipSelection,
     pasteClipClipboard: selection.pasteClipClipboard,
+    copyAudioClipProperties: selection.copyAudioClipProperties,
+    pasteAudioClipProperties: selection.pasteAudioClipProperties,
     locatorTicks,
     audioBuffering: playback.audioBuffering,
     playing: transport.state.playing,
@@ -409,6 +416,8 @@ export function useTimelineShellInteractions(
     loopOn: canvasDerived.loopOn,
     soloAudioTrackIds,
     soloBusIds,
+    setSoloAudioTrackIds,
+    setSoloBusIds,
     latencyCompMs: playback.latencyCompMs,
     openSongImportWizard: modals.openSongImportWizard,
     selectedClip: derivedSelection.selectedClip,

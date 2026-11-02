@@ -112,4 +112,29 @@ describe("AudioClipInspector", () => {
     fireEvent.click(loopCheckbox);
     expect(commitDraft).toHaveBeenCalled();
   });
+
+  it("handles gain, fade in and fade out numeric inputs", () => {
+    const { project, audioClip } = createTestProject();
+    const commitDraft = vi.fn();
+
+    render(
+      <AudioClipInspector
+        draftProject={project}
+        commitDraft={commitDraft}
+        selectedAudioClip={audioClip}
+      />,
+    );
+
+    const gainInput = screen.getByLabelText("Gain klipu (dB)");
+    fireEvent.change(gainInput, { target: { value: "-6" } });
+    expect(commitDraft).toHaveBeenCalled();
+
+    const fadeInInput = screen.getByLabelText("Fade In (ms)");
+    fireEvent.change(fadeInInput, { target: { value: "120" } });
+    expect(commitDraft).toHaveBeenCalled();
+
+    const fadeOutInput = screen.getByLabelText("Fade Out (ms)");
+    fireEvent.change(fadeOutInput, { target: { value: "250" } });
+    expect(commitDraft).toHaveBeenCalled();
+  });
 });

@@ -5,11 +5,13 @@ import { useTimelineShellState } from "./useTimelineShellState.js";
 
 const mockUseTransport = vi.fn();
 
+let mockParams: Record<string, string | undefined> = { projectId: "p1" };
+
 vi.mock("react-router", async (importOriginal) => {
   const actual = await importOriginal<typeof import("react-router")>();
   return {
     ...actual,
-    useParams: () => ({ projectId: "p1" }),
+    useParams: () => mockParams,
     useNavigate: () => vi.fn(),
     useLocation: () => ({ pathname: "/project/p1" }),
     useBlocker: () => ({ state: "unblocked" }),
@@ -38,6 +40,7 @@ vi.mock("../../../transport/useTransport.js", () => ({
 describe("useTimelineShellState", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockParams = { projectId: "p1" };
     Object.defineProperty(window, "matchMedia", {
       writable: true,
       value: vi.fn().mockImplementation((query) => ({
@@ -86,5 +89,15 @@ describe("useTimelineShellState", () => {
     expect(result.current.headerContainerProps).toBeDefined();
     expect(result.current.canvasViewportProps).toBeDefined();
     expect(result.current.dialogsContainerProps).toBeDefined();
+  });
+
+  it("opens song screen modal by default when projectId is absent (/timeline route)", () => {
+    mockParams = {};
+    const { result } = renderHook(() => useTimelineShellState());
+
+    expect(result.current.projectId).toBeUndefined();
+    expect(result.current.loading).toBe(false);
+    expect(result.current.draftProject).toBeNull();
+    expect(result.current.dialogsContainerProps.songScreenOpen).toBe(true);
   });
 });

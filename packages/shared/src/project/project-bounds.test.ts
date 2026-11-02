@@ -84,6 +84,18 @@ describe("projectEndTicks", () => {
       ],
     };
     expect(projectEndTicks(p)).toBe(5_000);
+    p.akordy = { clips: [] };
+    p.melody = {
+      clips: [
+        {
+          id: "m-1",
+          pitchMidi: 60,
+          startTicks: 4_000,
+          lengthTicks: 2_500,
+        },
+      ],
+    };
+    expect(projectEndTicks(p)).toBe(6_500);
   });
 
   it("ignores countdown-only (non-positive) ends", () => {

@@ -154,9 +154,9 @@ export async function createProject(
     });
   }
 
+  await writeProject(paths, project);
   library.projects.push(libraryEntryFromProject(project));
   await saveLibrary(paths, library);
-  await writeProject(paths, project);
   return project;
 }
 

@@ -36,8 +36,8 @@ export class MockWebSocket {
   onmessage: ((ev: MessageEvent) => void) | null = null;
   onclose: ((ev: CloseEvent) => void) | null = null;
   onerror: ((ev: Event) => void) | null = null;
-  send = vi.fn();
-  close = vi.fn(() => {
+  send: ReturnType<typeof vi.fn> = vi.fn();
+  close: ReturnType<typeof vi.fn> = vi.fn(() => {
     this.readyState = MockWebSocket.CLOSED;
   });
 

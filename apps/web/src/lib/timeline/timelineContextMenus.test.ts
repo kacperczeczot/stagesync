@@ -84,8 +84,13 @@ describe("timelineContextMenus", () => {
       onDelete: vi.fn(),
       onMuteToggle: vi.fn(),
       onFocusInspector: vi.fn(),
+      onCopyProperties: vi.fn(),
+      onPasteProperties: vi.fn(),
+      canPasteProperties: true,
     });
     expect(actionIds(audio)).toContain("mute");
+    expect(actionIds(audio)).toContain("copy-properties");
+    expect(actionIds(audio)).toContain("paste-properties");
     const mute = audio.find((i) => "id" in i && i.id === "mute") as {
       label: string;
     };

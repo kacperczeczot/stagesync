@@ -24,7 +24,7 @@ assert.equal(bumpSemver("5.4.7", "major"), "6.0.0");
 
 assert.equal(lineKey("5.5.0"), "5.5");
 assert.equal(heroForCut("5.4.8"), null);
-assert.equal(heroForCut("5.5.0"), "Pitch & FX");
+assert.equal(heroForCut("5.5.0"), "Mix & Monitoring");
 assert.equal(heroForCut("6.0.0"), "Live Suite");
 assert.throws(() => heroForCut("9.9.0"), /LINE_HEROES/);
 
@@ -111,9 +111,9 @@ const withHero = cutChangelog(sample, {
   prevVersion: "5.4.7",
   nextVersion: "5.5.0",
   date: "2026-09-01",
-  hero: "Pitch & FX",
+  hero: "Mix & Monitoring",
 });
-assert.match(withHero, /## \[5\.5\.0\].* — Pitch & FX$/m);
+assert.match(withHero, /## \[5\.5\.0\].* — Mix & Monitoring$/m);
 
 const pkg = setPackageVersion(
   JSON.stringify({ name: "stagesync", version: "5.4.7" }, null, 2) + "\n",

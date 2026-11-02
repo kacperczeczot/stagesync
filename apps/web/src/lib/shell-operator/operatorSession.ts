@@ -4,7 +4,10 @@ import {
   isDesktopShell,
   isRealTauriWebView,
 } from "@lib/client/desktopBridge.js";
-import { getActiveDevSurface } from "../../dev/devSurfaceState.js";
+import {
+  getActiveDevSession,
+  getActiveDevSurface,
+} from "../../dev/devSurfaceState.js";
 import { getStageSyncNative } from "@lib/client/nativeShell.js";
 
 export const OPERATOR_SESSION_KEY = "stagesync.operatorSession";
@@ -45,6 +48,8 @@ export function markOperatorSession(): void {
 
 export function hasOperatorSession(): boolean {
   if (!usesOperatorSessionStorage()) return false;
+  const devSession = getActiveDevSession();
+  if (typeof devSession === "boolean") return devSession;
   if (typeof sessionStorage === "undefined") return false;
   try {
     return sessionStorage.getItem(OPERATOR_SESSION_KEY) === "1";

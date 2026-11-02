@@ -57,12 +57,13 @@ export function useTransportInterpolation() {
       const softLoop = transportLoopForSoftClock(next.loop);
       loopRef.current = softLoop;
       const anchor = toTransportAnchor(next, tempoMapsRef.current);
+      const prevPositionTicks = anchorRef.current.positionTicks;
       anchorRef.current = anchor;
       receiptMsRef.current = receiptMs;
       const isStartOrSeek =
         !playingRef.current ||
         !next.playing ||
-        Math.abs(anchor.positionTicks - anchorRef.current.positionTicks) > 100;
+        Math.abs(anchor.positionTicks - prevPositionTicks) > 100;
       playingRef.current = next.playing;
       setState(next);
       if (isStartOrSeek) {
@@ -73,6 +74,10 @@ export function useTransportInterpolation() {
   );
 
   const startRaf = useCallback(() => {
+    if (rafIdRef.current !== 0) {
+      // Loop already running smoothly; avoid tearing down and recreating RAF 25x/sec
+      return;
+    }
     stopRaf();
     const tick = (timeMs: number) => {
       if (!playingRef.current) return;
@@ -89,7 +94,7 @@ export function useTransportInterpolation() {
 
     const loop = (frameTime: number) => {
       if (!playingRef.current) {
-        rafIdRef.current = 0;
+        stopRaf();
         return;
       }
       tick(frameTime);

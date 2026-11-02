@@ -43,4 +43,42 @@ describe("DevPreviewApp", () => {
       .filter((msg) => String(msg).includes("cannot render a <Router>"));
     expect(nestedRouterErrors).toHaveLength(0);
   });
+
+  it("renders /client with session=1 and displays Admin and Timeline navigation buttons", () => {
+    setPreviewSearch("?surface=web&path=/client&session=1&projectId=dev-preview");
+    const { getByLabelText } = render(<DevPreviewApp />);
+    const appNav = getByLabelText("Aplikacje");
+    expect(appNav).toBeTruthy();
+    expect(appNav.textContent).toContain("Admin");
+    expect(appNav.textContent).toContain("Timeline");
+  });
+
+  it("renders /client with session=0 and hides Admin and Timeline navigation buttons", () => {
+    setPreviewSearch("?surface=web&path=/client&session=0&projectId=dev-preview");
+    const { queryByLabelText } = render(<DevPreviewApp />);
+    expect(queryByLabelText("Aplikacje")).toBeNull();
+  });
+
+  it("renders /client on compact mobile with session=1 and displays OperatorNav with Admin and Timeline", () => {
+    vi.stubGlobal(
+      "matchMedia",
+      (query: string) =>
+        ({
+          matches: query.includes("max-width: 640px"),
+          media: query,
+          addEventListener: vi.fn(),
+          removeEventListener: vi.fn(),
+          addListener: vi.fn(),
+          removeListener: vi.fn(),
+          dispatchEvent: vi.fn(),
+        }) as unknown as MediaQueryList,
+    );
+    setPreviewSearch("?surface=web&path=/client&session=1&projectId=dev-preview");
+    const { getByLabelText } = render(<DevPreviewApp />);
+    const operatorNav = getByLabelText("Nawigacja operatora");
+    expect(operatorNav).toBeTruthy();
+    const appNav = getByLabelText("Aplikacje");
+    expect(appNav.textContent).toContain("Admin");
+    expect(appNav.textContent).toContain("Timeline");
+  });
 });

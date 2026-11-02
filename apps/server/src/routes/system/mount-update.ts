@@ -1,5 +1,6 @@
 import type { Router } from "express";
 import { ApplyUpdateBodySchema } from "@stagesync/shared";
+import { assertLifecycleAllowed } from "./lifecycle-auth.js";
 import { fetchLatestReleaseVersion, isSemverNewer } from "./semver-release.js";
 
 type UpdateMountContext = {
@@ -74,6 +75,8 @@ export function mountUpdateRoutes(
 
   /** POST /api/system/apply-update — trigger Watchtower HTTP API (host only). */
   router.post("/apply-update", async (req, res) => {
+    if (!assertLifecycleAllowed(req, res)) return;
+
     const body = ApplyUpdateBodySchema.safeParse(req.body);
     if (!body.success) {
       res

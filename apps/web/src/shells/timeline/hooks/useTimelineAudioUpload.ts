@@ -44,10 +44,12 @@ export function useTimelineAudioUpload({
 }: UseTimelineAudioUploadOptions) {
   const [audioUploadPending, setAudioUploadPending] = useState(false);
   const audioUploadPendingRef = useRef(false);
+  const draftProjectRef = useRef(draftProject);
+  draftProjectRef.current = draftProject;
 
   const onUploadAudioToTrack = useCallback(
     async (trackId: string, file: File, opts?: { startTicks?: number }) => {
-      if (!projectId || !draftProject) return;
+      if (!projectId || !(draftProjectRef.current ?? draftProject)) return;
       if (audioUploadPendingRef.current) return;
       audioUploadPendingRef.current = true;
       setAudioUploadPending(true);
@@ -56,14 +58,32 @@ export function useTimelineAudioUpload({
           trackId,
           startTicks: opts?.startTicks,
         });
-        // Merge any client-side audio tracks that might not be on server yet
-        const mergedTracks = [...next.audioTracks];
-        for (const dt of draftProject.audioTracks) {
-          if (!mergedTracks.some((t) => t.id === dt.id)) {
-            mergedTracks.push(dt);
+        const latestDraft = draftProjectRef.current ?? draftProject;
+        if (!latestDraft) return;
+
+        // Preserve existing draft tracks (including uncommitted mixer/track edits) and append any new server tracks
+        const mergedTracks = [...latestDraft.audioTracks];
+        for (const nt of next.audioTracks) {
+          if (!mergedTracks.some((t) => t.id === nt.id)) {
+            mergedTracks.push(nt);
           }
         }
-        let project: Project = { ...next, audioTracks: mergedTracks };
+        // Preserve existing draft clips and append newly created clip(s) from server
+        const mergedClips = [...latestDraft.audioClips];
+        for (const nc of next.audioClips) {
+          if (!mergedClips.some((c) => c.id === nc.id)) {
+            mergedClips.push(nc);
+          }
+        }
+
+        // Base on latestDraft so uncommitted edits in other lanes (forma, tekst, akordy, cue, melody)
+        // are preserved rather than overwritten by stale server state.
+        let project: Project = {
+          ...latestDraft,
+          assets: next.assets,
+          audioTracks: mergedTracks,
+          audioClips: mergedClips,
+        };
         let targetTrackId = trackId;
         let lastClipId: string | null = null;
         if (next.assets.length && next.audioClips.length) {
@@ -113,7 +133,35 @@ export function useTimelineAudioUpload({
             );
           }
         }
-        setSavedProject(project);
+        setSavedProject((prev: Project | null) => {
+          if (!prev) return project;
+          const updatedTrack = project.audioTracks.find(
+            (t) => t.id === targetTrackId,
+          );
+          const nextSavedTracks = updatedTrack
+            ? prev.audioTracks.some((t) => t.id === updatedTrack.id)
+              ? prev.audioTracks.map((t) =>
+                  t.id === updatedTrack.id ? updatedTrack : t,
+                )
+              : [...prev.audioTracks, updatedTrack]
+            : prev.audioTracks;
+          const updatedClip = lastClipId
+            ? project.audioClips.find((c) => c.id === lastClipId)
+            : undefined;
+          const nextSavedClips = updatedClip
+            ? prev.audioClips.some((c) => c.id === updatedClip.id)
+              ? prev.audioClips.map((c) =>
+                  c.id === updatedClip.id ? updatedClip : c,
+                )
+              : [...prev.audioClips, updatedClip]
+            : prev.audioClips;
+          return {
+            ...prev,
+            assets: project.assets,
+            audioTracks: nextSavedTracks,
+            audioClips: nextSavedClips,
+          };
+        });
         setDraftProject(project);
         setDraftHistory((h: DraftHistory | null) =>
           h ? syncPresentAfterSave(h, project) : createDraftHistory(project),

@@ -39,8 +39,15 @@ const router = createBrowserRouter([
           </OperatorPinGate>
         ),
       },
+      {
+        path: "/timeline",
+        element: (
+          <OperatorPinGate>
+            <TimelineShell />
+          </OperatorPinGate>
+        ),
+      },
       { path: "/smart-tempo", element: <SmartTempoPage /> },
-      { path: "/timeline", element: <Navigate to="/admin" replace /> },
       { path: "*", element: <Navigate to="/" replace /> },
     ],
   },

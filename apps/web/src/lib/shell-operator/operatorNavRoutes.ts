@@ -40,10 +40,10 @@ export function isAdminSectionId(value: string): value is AdminSectionId {
   return ALL_ADMIN_SECTION_IDS.has(value as AdminSectionId);
 }
 
-/** Mirrors Tauri `timeline_nav_url` — last project or Admin fallback. */
+/** Mirrors Tauri `timeline_nav_url` — last project or /timeline song picker fallback. */
 export function getTimelineNavUrl(): string {
   const id = getLastTimelineProjectId();
-  return id ? `/timeline/${id}` : "/admin";
+  return id ? `/timeline/${id}` : "/timeline";
 }
 
 export function getAdminNavUrl(section?: AdminSectionId): string {

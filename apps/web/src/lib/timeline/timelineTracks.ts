@@ -101,19 +101,21 @@ export function ensureAudioTrackVisibility(
 }
 
 export function isTrackVisible(
-  visibility: TrackVisibilityMap,
+  visibility: TrackVisibilityMap | undefined | null,
   track: TrackDef,
 ): boolean {
   if (track.locked) return true;
+  if (!visibility) return true;
   return visibility[track.id] ?? true;
 }
 
 /** @deprecated Prefer isTrackVisible — kept for existing call sites. */
 export function isCoreTrackVisible(
-  visibility: TrackVisibilityMap,
+  visibility: TrackVisibilityMap | undefined | null,
   id: CoreTrackId,
 ): boolean {
   const def = TRACKS.find((t) => t.id === id);
   if (def?.locked) return true;
+  if (!visibility) return true;
   return visibility[id] ?? true;
 }

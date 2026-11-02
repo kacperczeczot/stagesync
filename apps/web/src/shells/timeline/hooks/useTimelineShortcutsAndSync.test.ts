@@ -214,4 +214,42 @@ describe("useTimelineShortcutsAndSync", () => {
 
     expect(mockOpenSongImportWizard).toHaveBeenCalledWith(true);
   });
+
+  it("handles onClearAllSolo, onClearAllMute, and onClearAllSoloMute via keyHandlersRef", () => {
+    const setSoloAudioTrackIds = vi.fn();
+    const setSoloBusIds = vi.fn();
+    const mutedProject = {
+      ...project,
+      audioTracks: [{ ...project.audioTracks[0]!, muted: true }],
+    };
+    renderHook(() =>
+      useTimelineShortcutsAndSync(
+        createParams({
+          setSoloAudioTrackIds,
+          setSoloBusIds,
+          draftRef: { current: mutedProject },
+        }),
+      ),
+    );
+
+    act(() => {
+      keyHandlersRef.current.onClearAllSolo?.();
+    });
+    expect(setSoloAudioTrackIds).toHaveBeenCalledWith([]);
+    expect(setSoloBusIds).toHaveBeenCalledWith([]);
+
+    act(() => {
+      keyHandlersRef.current.onClearAllMute?.();
+    });
+    expect(mockCommitDraft).toHaveBeenCalled();
+    const unmutedDraft = mockCommitDraft.mock.calls[0]![0] as Project;
+    expect(unmutedDraft.audioTracks[0]!.muted).toBeUndefined();
+
+    act(() => {
+      keyHandlersRef.current.onClearAllSoloMute?.();
+    });
+    expect(setSoloAudioTrackIds).toHaveBeenCalledTimes(2);
+    expect(setSoloBusIds).toHaveBeenCalledTimes(2);
+    expect(mockCommitDraft).toHaveBeenCalledTimes(2);
+  });
 });

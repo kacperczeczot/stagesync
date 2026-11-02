@@ -86,17 +86,55 @@ export function useGridCarouselMotion({
     track.style.transform = "";
   };
 
-  // Keep cycle cell active highlight live within the same carousel row.
+  const areCycleStepsEqual = (
+    a: GridCycleStep[],
+    b: GridCycleStep[],
+  ): boolean => {
+    if (a === b) return true;
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+      const s1 = a[i]!;
+      const s2 = b[i]!;
+      if (
+        s1.symbol !== s2.symbol ||
+        s1.bars !== s2.bars ||
+        s1.active !== s2.active ||
+        s1.activeBarInStep !== s2.activeBarInStep ||
+        s1.isSubBar !== s2.isSubBar
+      ) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  // Keep cycle cell active highlight live within the same carousel row without redundant re-render loops.
   useEffect(() => {
     if (carouselBusy.current) return;
     if (display.key !== carouselKey) return;
+    if (
+      display.countdownPreview === countdownPreview &&
+      areCycleStepsEqual(display.cycle, cycle) &&
+      areCycleStepsEqual(display.nextCycle, nextCycle)
+    ) {
+      return;
+    }
     setDisplay({
       key: carouselKey,
       cycle,
       nextCycle,
       countdownPreview,
     });
-  }, [cycle, nextCycle, carouselKey, countdownPreview, display.key]);
+  }, [
+    cycle,
+    nextCycle,
+    carouselKey,
+    countdownPreview,
+    display.key,
+    display.cycle,
+    display.nextCycle,
+    display.countdownPreview,
+  ]);
 
   // Phrase-row carousel swap (translateY) when subsection / section key changes.
   useLayoutEffect(() => {

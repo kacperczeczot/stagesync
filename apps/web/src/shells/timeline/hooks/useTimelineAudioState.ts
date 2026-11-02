@@ -30,6 +30,8 @@ interface Params {
   setEyeOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSoloAudioTrackIds: React.Dispatch<React.SetStateAction<string[]>>;
   setSoloBusIds: React.Dispatch<React.SetStateAction<string[]>>;
+  soloAudioTrackIds: string[];
+  soloBusIds: string[];
   isMobilePreview: boolean;
   setTouchAlertOpen: React.Dispatch<React.SetStateAction<boolean>>;
   openContextMenu: (args: OpenContextMenuArgs) => void;
@@ -52,6 +54,8 @@ export function useTimelineAudioState({
   setSelectedHwOutputId,
   setInspectorVisible,
   setEyeOpen,
+  soloAudioTrackIds,
+  soloBusIds,
   setSoloAudioTrackIds,
   setSoloBusIds,
   isMobilePreview,
@@ -138,6 +142,8 @@ export function useTimelineAudioState({
   });
 
   return {
+    soloAudioTrackIds,
+    soloBusIds,
     trackRename,
     setTrackRename,
     audioLaneDropId,

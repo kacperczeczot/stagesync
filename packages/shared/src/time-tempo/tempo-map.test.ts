@@ -117,6 +117,17 @@ describe("ticksToSeconds / secondsToTicks", () => {
     );
   });
 
+  it("uses tempo at tick 0 (not defaultBpm) for negative pre-roll ticks and spans crossing zero", () => {
+    const map = [{ startTicks: 0, bpm: 120 }];
+    // Even if defaultBpm is 60, tick 0 has an explicit event at 120 BPM
+    const ticks = secondsToTicks(-0.5, map, 60, METER, DEFAULT_PPQ);
+    expect(ticks).toBe(-DEFAULT_PPQ);
+    expect(ticksToSeconds(ticks, map, 60, METER, DEFAULT_PPQ)).toBeCloseTo(
+      -0.5,
+      6,
+    );
+  });
+
   it("rejects non-finite seconds / ticks", () => {
     const map = [{ startTicks: 0, bpm: 120 }];
     expect(() => secondsToTicks(Number.NaN, map, 120)).toThrow(/finite/);

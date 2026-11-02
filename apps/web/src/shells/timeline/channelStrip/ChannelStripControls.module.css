@@ -735,36 +735,61 @@
 }
 
 /* Solo / Mute color accents — geometry from Button iconOnly. */
-.tapBtnSolo {
-  color: var(--tl-solo-fg, var(--ss-color-text));
-  background: var(--tl-solo-bg, var(--ss-color-warning));
-  border-color: var(--tl-solo-bg, var(--ss-color-warning));
+.tapBtnSolo,
+:global(.ss-btn).tapBtnSolo,
+:global(.ss-btn).tapBtnSolo:not(:disabled) {
+  color: var(--tl-solo-fg, var(--ss-color-solo-fg));
+  background: var(--tl-solo-bg, var(--ss-color-solo));
+  border-color: var(--tl-solo-bg, var(--ss-color-solo));
 }
 
-.tapBtnMute {
-  color: var(--tl-mute-fg, var(--ss-color-text));
-  background: var(--tl-mute-bg, var(--ss-color-danger));
-  border-color: var(--tl-mute-bg, var(--ss-color-danger));
+.tapBtnMute,
+:global(.ss-btn).tapBtnMute,
+:global(.ss-btn).tapBtnMute:not(:disabled) {
+  color: var(--tl-mute-fg, var(--ss-color-mute-fg));
+  background: var(--tl-mute-bg, var(--ss-color-mute));
+  border-color: var(--tl-mute-bg, var(--ss-color-mute));
 }
 
 @media (hover: hover) {
-  .tapBtnSolo:hover {
-    color: var(--tl-solo-fg, var(--ss-color-text));
+  .tapBtnSolo:hover,
+  :global(.ss-btn).tapBtnSolo:hover:not(:disabled) {
+    color: var(--tl-solo-fg, var(--ss-color-solo-fg));
     background: color-mix(
       in srgb,
-      var(--tl-solo-bg, var(--ss-color-warning)) 88%,
-      var(--ss-color-text)
+      var(--tl-solo-bg, var(--ss-color-solo)) 88%,
+      white
     );
+    border-color: var(--tl-solo-bg, var(--ss-color-solo));
   }
 
-  .tapBtnMute:hover {
-    color: var(--tl-mute-fg, var(--ss-color-text));
+  .tapBtnMute:hover,
+  :global(.ss-btn).tapBtnMute:hover:not(:disabled) {
+    color: var(--tl-mute-fg, var(--ss-color-mute-fg));
     background: color-mix(
       in srgb,
-      var(--tl-mute-bg, var(--ss-color-danger)) 88%,
-      var(--ss-color-text)
+      var(--tl-mute-bg, var(--ss-color-mute)) 88%,
+      white
     );
+    border-color: var(--tl-mute-bg, var(--ss-color-mute));
   }
+}
+
+.masterSoloClearBtn {
+  font-weight: var(--ss-font-weight-bold);
+  font-size: var(--ss-text-xs);
+  transition: all 0.15s ease;
+}
+
+.masterMuteClearBtn {
+  font-weight: var(--ss-font-weight-bold);
+  font-size: var(--ss-text-xs);
+  transition: all 0.15s ease;
+}
+
+.masterToolInactive {
+  opacity: 0.28;
+  cursor: default;
 }
 
 @media (max-height: 550px) {

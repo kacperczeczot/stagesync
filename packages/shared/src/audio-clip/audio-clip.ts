@@ -362,33 +362,41 @@ export function clampAudioClipToAsset(
   };
 }
 
-/** Apply end-edge trim: keep start; shorten via trimOutMs when duration known. */
+/** Apply end-edge trim: keep start; shorten or extend via trimOutMs within asset duration. */
 export function resizeAudioClipEnd(
   clip: AudioClip,
   asset: Pick<ProjectAsset, "durationMs"> | null | undefined,
   newEndTicks: number,
   ctx: AudioTempoCtx,
 ): AudioClip {
-  const start = clip.startTicks;
-  let lengthTicks = Math.max(1, Math.floor(newEndTicks - start));
+  const startTicks = clip.startTicks;
+  const candidateEndTicks = Math.floor(newEndTicks);
+  const desiredLengthTicks = Math.max(1, candidateEndTicks - startTicks);
   const durationMs = asset?.durationMs;
   if (durationMs != null && durationMs > 0) {
-    const desiredMs = ticksToMs(lengthTicks, ctx.bpm, ctx.meter, ppqOf(ctx));
-    const trimIn = trimInMsOf(clip);
-    const maxPlayable = Math.max(1, durationMs - trimIn);
-    const playable = Math.min(maxPlayable, Math.max(1, desiredMs));
-    const trimOut = Math.max(0, durationMs - trimIn - playable);
-    lengthTicks = Math.max(
+    const currentTrimIn = trimInMsOf(clip);
+    const desiredMs = ticksToMs(desiredLengthTicks, ctx.bpm, ctx.meter, ppqOf(ctx));
+    const maxPlayableMs = Math.max(1, durationMs - currentTrimIn);
+    const actualPlayableMs = Math.min(maxPlayableMs, Math.max(1, desiredMs));
+    const actualLengthTicks = Math.max(
       1,
-      elapsedToTicks(playable, ctx.bpm, ctx.meter, ppqOf(ctx)),
+      elapsedToTicks(actualPlayableMs, ctx.bpm, ctx.meter, ppqOf(ctx)),
     );
+    const sourceEndMs = currentTrimIn + actualPlayableMs;
+    const newTrimOutMs = Math.max(0, durationMs - sourceEndMs);
     return clampAudioClipToAsset(
-      { ...clip, lengthTicks, trimOutMs: trimOut > 0 ? trimOut : undefined },
+      {
+        ...clip,
+        startTicks,
+        lengthTicks: actualLengthTicks,
+        trimInMs: currentTrimIn > 0 ? currentTrimIn : undefined,
+        trimOutMs: newTrimOutMs > 0 ? newTrimOutMs : undefined,
+      },
       asset,
       ctx,
     );
   }
-  return { ...clip, lengthTicks };
+  return { ...clip, lengthTicks: desiredLengthTicks };
 }
 
 /** Apply start-edge trim: keep end; adjust startTicks + trimInMs when duration known. */
@@ -398,35 +406,49 @@ export function resizeAudioClipStart(
   newStartTicks: number,
   ctx: AudioTempoCtx,
 ): AudioClip {
-  const end = clip.startTicks + clip.lengthTicks;
-  let start = Math.floor(newStartTicks);
-  if (end - start < 1) start = end - 1;
-  let lengthTicks = Math.max(1, end - start);
+  const endTicks = clip.startTicks + clip.lengthTicks;
+  let candidateStartTicks = Math.floor(newStartTicks);
+  if (endTicks - candidateStartTicks < 1) candidateStartTicks = endTicks - 1;
   const durationMs = asset?.durationMs;
   if (durationMs != null && durationMs > 0) {
-    const deltaTicks = start - clip.startTicks;
-    const deltaMs = ticksToMs(deltaTicks, ctx.bpm, ctx.meter, ppqOf(ctx));
-    let trimIn = trimInMsOf(clip) + deltaMs;
-    const trimOut = trimOutMsOf(clip);
-    const maxTrimIn = Math.max(0, durationMs - trimOut - 1);
-    trimIn = Math.min(Math.max(0, trimIn), maxTrimIn);
-    const playable = Math.max(1, durationMs - trimIn - trimOut);
-    lengthTicks = Math.max(
-      1,
-      elapsedToTicks(playable, ctx.bpm, ctx.meter, ppqOf(ctx)),
+    const currentTrimIn = trimInMsOf(clip);
+    const currentPlayableMs = clip.trimOutMs != null
+      ? audioClipPlayableMs(clip, asset, ctx)
+      : Math.min(
+          Math.max(1, durationMs - currentTrimIn),
+          ticksToMs(clip.lengthTicks, ctx.bpm, ctx.meter, ppqOf(ctx)),
+        );
+    const sourceEndMs = Math.min(
+      durationMs,
+      Math.max(1, currentTrimIn + currentPlayableMs),
     );
-    start = end - lengthTicks;
+    const desiredLengthTicks = Math.max(1, endTicks - candidateStartTicks);
+    const desiredMs = ticksToMs(desiredLengthTicks, ctx.bpm, ctx.meter, ppqOf(ctx));
+
+    // Right edge in source audio is pinned at sourceEndMs; moving left edge adjusts trimInMs.
+    let newTrimInMs = sourceEndMs - desiredMs;
+    newTrimInMs = Math.max(0, Math.min(sourceEndMs - 1, newTrimInMs));
+
+    const actualPlayableMs = Math.max(1, sourceEndMs - newTrimInMs);
+    const actualLengthTicks = Math.max(
+      1,
+      elapsedToTicks(actualPlayableMs, ctx.bpm, ctx.meter, ppqOf(ctx)),
+    );
+    const actualStartTicks = endTicks - actualLengthTicks;
+    const newTrimOutMs = Math.max(0, durationMs - sourceEndMs);
+
     return clampAudioClipToAsset(
       {
         ...clip,
-        startTicks: start,
-        lengthTicks,
-        trimInMs: trimIn > 0 ? trimIn : undefined,
-        trimOutMs: trimOut > 0 ? trimOut : undefined,
+        startTicks: actualStartTicks,
+        lengthTicks: actualLengthTicks,
+        trimInMs: newTrimInMs > 0 ? newTrimInMs : undefined,
+        trimOutMs: newTrimOutMs > 0 ? newTrimOutMs : undefined,
       },
       asset,
       ctx,
     );
   }
-  return { ...clip, startTicks: start, lengthTicks };
+  const lengthTicks = Math.max(1, endTicks - candidateStartTicks);
+  return { ...clip, startTicks: candidateStartTicks, lengthTicks };
 }

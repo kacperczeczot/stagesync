@@ -213,10 +213,11 @@ export function parseEnvContent(content: string): Record<string, string> {
 }
 
 function formatEnvLine(key: string, value: string): string {
-  if (/[\s#"'\\]/.test(value)) {
-    return `${key}="${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+  const sanitized = String(value).replace(/[\r\n\0]/g, "");
+  if (/[\s#"'\\]/.test(sanitized)) {
+    return `${key}="${sanitized.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
   }
-  return `${key}=${value}`;
+  return `${key}=${sanitized}`;
 }
 
 function isTruthyEnv(value: unknown): boolean {

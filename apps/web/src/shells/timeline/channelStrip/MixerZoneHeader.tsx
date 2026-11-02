@@ -9,6 +9,7 @@ export function MixerZoneHeader({
   addTitle,
   onAdd,
   addDisabled,
+  extraAction,
 }: {
   title: string;
   visible: boolean;
@@ -17,6 +18,7 @@ export function MixerZoneHeader({
   addTitle?: string;
   onAdd?: () => void;
   addDisabled?: boolean;
+  extraAction?: React.ReactNode;
 }) {
   return (
     <div className={styles.zoneHead}>
@@ -28,6 +30,7 @@ export function MixerZoneHeader({
           onToggle={onToggle}
         />
       </div>
+      {extraAction}
       {visible && onAdd ? (
         <button
           type="button"

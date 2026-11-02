@@ -83,4 +83,58 @@ describe("TimelineAudioLaneRenderer", () => {
     fireEvent.contextMenu(clipBtn);
     expect(openClipContextMenu).toHaveBeenCalled();
   });
+
+  it("gainDbToLaneY centers 0 dB, boosts towards top, cuts towards bottom without dead zones", async () => {
+    const { gainDbToLaneY } = await import("./TimelineAudioLaneRenderer.js");
+    expect(gainDbToLaneY(0, 28)).toBe(14);
+    expect(gainDbToLaneY(24, 28)).toBe(3);
+    expect(gainDbToLaneY(-60, 28)).toBe(25);
+    // Monotonicity: higher dB -> higher on screen (lower Y value)
+    expect(gainDbToLaneY(6, 28)).toBeLessThan(gainDbToLaneY(0, 28));
+    expect(gainDbToLaneY(-12, 28)).toBeGreaterThan(gainDbToLaneY(0, 28));
+    expect(gainDbToLaneY(-30, 28)).toBeGreaterThan(gainDbToLaneY(-12, 28));
+  });
+
+  it("moves gain line and fade overlay in real-time during live gesture preview", async () => {
+    const { gainDbToLaneY } = await import("./TimelineAudioLaneRenderer.js");
+    const { container } = render(
+      <TimelineAudioLaneRenderer
+        lane="audio:trk1"
+        draftProject={dummyProject}
+        projectId="p1"
+        failedAudioAssetIds={[]}
+        gestureSession={{
+          kind: "gain",
+          clipId: "ac1",
+          originClipStart: 0,
+          lane: "audio:trk1",
+          hasDragged: true,
+        }}
+        gesturePreview={{
+          kind: "gain",
+          clipId: "ac1",
+          startTicks: 0,
+          lengthTicks: 3840,
+          gainDb: 12,
+        }}
+        clipSelection={{ items: [], primaryId: null }}
+        viewSpan={{ start: 0, end: 7680 }}
+        barTicks={1920}
+        effectiveZoomH={1}
+        openClipContextMenu={vi.fn()}
+        onAudioClipPointerDown={vi.fn()}
+        onFormaClipPointerMove={vi.fn()}
+        onFormaClipPointerUp={vi.fn()}
+      />,
+    );
+
+    const gainLines = container.querySelectorAll("line");
+    expect(gainLines.length).toBeGreaterThan(0);
+    const gainLine = Array.from(gainLines).find((l) =>
+      l.getAttribute("class")?.includes("audioGainLine"),
+    );
+    expect(gainLine).toBeTruthy();
+    // In preview with +12 dB, Y should be gainDbToLaneY(12) = 8.5
+    expect(Number(gainLine?.getAttribute("y1"))).toBeCloseTo(gainDbToLaneY(12, 28), 1);
+  });
 });

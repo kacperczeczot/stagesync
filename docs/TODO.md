@@ -6,13 +6,6 @@
 
 Otwarte zadania. Plan etapów: [ROADMAP.md](./ROADMAP.md). Historia: [CHANGELOG.md](../CHANGELOG.md).
 
-## Must — Pitch & FX
-
-- [ ] Solo / Mute Off for All
-- [ ] Audition Window / PFL (podgląd realizatora)
-- [ ] Paste Properties (routing, gain, fade, HW Out)
-- [ ] Chase MIDI Notes po Seek
-
 ## Must — operator / HW
 
 - [ ] **HW smoke multi-out** na interfejsie ≥ 4 ch (mac/Win) — [DESKTOP.md](./guides/DESKTOP.md); bez claim green

@@ -8,6 +8,7 @@ import {
   UltrastarSearchBodySchema,
 } from "@stagesync/shared";
 import { writeManagedSettings } from "../system/env-settings.js";
+import { assertLifecycleAllowed } from "./system/lifecycle-auth.js";
 import { handleRouteError, sendError } from "./errors.js";
 import { mountSessionYoutubeRoutes } from "./youtube-audio.js";
 import { fetchUgTab, searchUgChords } from "../ug/ug-fetch.js";
@@ -160,6 +161,7 @@ export function createImportRouter(): Router {
   });
 
   router.put("/ultrastar/account", (req, res) => {
+    if (!assertLifecycleAllowed(req, res)) return;
     try {
       const body = UltrastarAccountPutBodySchema.parse(req.body ?? {});
       const status = persistUsdbAccount(body.user, body.pass);

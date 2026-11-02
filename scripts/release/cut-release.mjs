@@ -37,7 +37,7 @@ export const LINE_HEROES = Object.freeze({
   "5.2": "Pocket Stage",
   "5.3": "Colors & Channels",
   "5.4": "Syllables",
-  "5.5": "Pitch & FX",
+  "5.5": "Mix & Monitoring",
   "6.0": "Live Suite",
   "6.1": "Karaoke & Jukebox",
 });

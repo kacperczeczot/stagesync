@@ -40,6 +40,9 @@ export function projectEndTicks(project: Project): number {
   for (const clip of project.cue?.clips ?? []) {
     maxEnd = considerEnd(maxEnd, clip.startTicks, clip.lengthTicks);
   }
+  for (const clip of project.melody?.clips ?? []) {
+    maxEnd = considerEnd(maxEnd, clip.startTicks, clip.lengthTicks);
+  }
   for (const clip of project.audioClips ?? []) {
     maxEnd = considerEnd(maxEnd, clip.startTicks, clip.lengthTicks);
   }

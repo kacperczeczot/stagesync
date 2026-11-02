@@ -65,7 +65,15 @@ export function useTimelineShellState() {
   const { state, displayTicks, setLoop, snapMode, setSnapMode } = transport;
 
   // 2. Modals & UI Viewport State
-  const modals = useTimelineModals();
+  const modals = useTimelineModals(!projectId);
+  const { setSongScreenOpen } = modals;
+
+  useEffect(() => {
+    if (!projectId) {
+      setSongScreenOpen(true);
+    }
+  }, [projectId, setSongScreenOpen]);
+
   const [songMetaOpen, setSongMetaOpen] = useState(false);
   const [inspectorVisible, setInspectorVisible] = useState(
     () =>
@@ -335,6 +343,8 @@ export function useTimelineShellState() {
       isMobilePreview,
       tool,
       trackVisibility,
+      soloAudioTrackIds,
+      soloBusIds,
       songMetaOpen,
       audioLaneDropId: interactions.audioLaneDropId,
       setAudioLaneDropId: interactions.setAudioLaneDropId,
@@ -361,8 +371,11 @@ export function useTimelineShellState() {
       modals,
       mapEdits,
       shortcuts: interactions.shortcuts,
+      draft,
+      primaryMapId,
     },
     dialogs: {
+      projectId: projectId ?? null,
       draft,
       shortcuts: interactions.shortcuts,
       modals,
@@ -370,6 +383,8 @@ export function useTimelineShellState() {
       songImport,
       floatingMenus,
       audioState: interactions.audioState,
+      trackVisibility,
+      toggleTrack: interactions.audioState.toggleTrack,
       mapEdits,
       toolbarVisibleSet,
       setToolbarVisibleTools,
@@ -377,6 +392,7 @@ export function useTimelineShellState() {
       touchAlertOpen,
       setTouchAlertOpen,
       tool,
+      wandTool,
     },
     laneResizeTrackId: zoomPan.laneResizeTrackId,
     dockWidthResizing: zoomPan.dockWidthResizing,
@@ -415,5 +431,6 @@ export function useTimelineShellState() {
     commitDraft,
     canvasNotice,
     dialogsContainerProps,
+    setSongScreenOpen: modals.setSongScreenOpen,
   };
 }

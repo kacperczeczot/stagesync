@@ -77,6 +77,9 @@ export type UseTimelineContextMenusOptions = {
     MutableRefObject<number | null> | RefObject<number | null>;
   laneAudioFileRef: RefObject<HTMLInputElement | null>;
   locatorTicks: number;
+  hasCopiedAudioClipProperties?: boolean;
+  copyAudioClipProperties?: (clipId?: string) => boolean;
+  pasteAudioClipProperties?: (targetClipIds?: string[]) => boolean;
 };
 
 export function useTimelineContextMenus({
@@ -104,6 +107,9 @@ export function useTimelineContextMenus({
   laneImportStartTicksRef,
   laneAudioFileRef,
   locatorTicks,
+  hasCopiedAudioClipProperties,
+  copyAudioClipProperties,
+  pasteAudioClipProperties,
 }: UseTimelineContextMenusOptions) {
   const openClipContextMenu = useCallback(
     (args: {
@@ -272,6 +278,19 @@ export function useTimelineContextMenus({
                   commitDraft(setAudioClipMuted(draft, clipId, !clip.muted));
                 }
               : undefined,
+          onCopyProperties:
+            lane === "audio" && copyAudioClipProperties
+              ? () => {
+                  copyAudioClipProperties(clipId);
+                }
+              : undefined,
+          onPasteProperties:
+            lane === "audio" && pasteAudioClipProperties
+              ? () => {
+                  pasteAudioClipProperties([clipId]);
+                }
+              : undefined,
+          canPasteProperties: !!hasCopiedAudioClipProperties,
           onFocusInspector: () => focusInspectorPanel(),
           onSplit:
             canSplit && splitTicks != null && !multiIds
@@ -335,6 +354,9 @@ export function useTimelineContextMenus({
       duplicateClipSelection,
       focusInspectorPanel,
       locatorTicks,
+      copyAudioClipProperties,
+      hasCopiedAudioClipProperties,
+      pasteAudioClipProperties,
     ],
   );
 

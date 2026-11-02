@@ -79,3 +79,9 @@ export {
   normalizeLoop,
   loopWrapTicks,
 } from "../transport/transport-loop.js";
+
+export {
+  ChasedMidiNoteSchema,
+  chaseMidiNotes,
+  type ChasedMidiNote,
+} from "../transport/chase-midi.js";

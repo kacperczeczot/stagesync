@@ -42,7 +42,7 @@ export async function menuTestingVerify() {
   } else if (choice === "full-audit") {
     if (
       !(await confirmDanger(
-        "Pełny audyt: ~25s, format + auto-fix docs + e2e (zwalnia :3000/:4000). Uruchomić?",
+        "Pełny audyt: format + auto-fix docs + e2e + coverage (zwalnia :3000/:4000). Uruchomić?",
         true,
       ))
     ) {

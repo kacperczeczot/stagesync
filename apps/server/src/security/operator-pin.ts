@@ -59,6 +59,11 @@ export function isDestructiveApiRequest(req: Request): boolean {
   const path = (req.originalUrl ?? req.url).split("?")[0] ?? "";
   if (!path.startsWith("/api/")) return false;
 
+  // Client presence & push token self-registration — no operator PIN.
+  if (path === "/api/push/tokens" || path.startsWith("/api/push/tokens/")) {
+    return false;
+  }
+
   // Operator-auth status / unlock must stay reachable without a PIN.
   if (
     path === "/api/system/operator-auth" ||

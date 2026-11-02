@@ -7,6 +7,57 @@ projekt stosuje [Semantic Versioning](https://semver.org/lang/pl/).
 
 ## [Unreleased]
 
+### Dodano
+
+#### 🎛️ Audio / Mikser & Transport
+
+- **Solo / Mute Off for All:**
+  - Globalne wskaźniki i przyciski resetu `S` (Solo Off) oraz `M` (Mute Off) w pasku Stereo Out (Master) miksera, aktywujące się i podświetlane (bursztyn/czerwień), gdy jakakolwiek ścieżka, bus lub wyjście fizyczne HW Out jest wyciszone lub w trybie Solo.
+  - Przycisk Panic `Solo/Mute Off` w nagłówku strefy Master miksera, pojawiający się automatycznie przy aktywnym solowaniu lub wyciszeniu i umożliwiający natychmiastowe przywrócenie nominalnego odsłuchu.
+  - Globalne skróty klawiszowe: `⌥S` (Solo Off for All), `⌥M` (Mute Off for All) oraz `⌥X` / `⌥⇧S` / `⌥⇧M` (Panic: reset obu stanów naraz).
+  - Płynne mikro-rampy dezipperingu w silniku WebAudio (`linearRampToValueAtTime`) zapobiegające trzaskom cyfrowym przy jednoczesnym odciszaniu ścieżek.
+
+- **Paste Properties (Wklejanie właściwości klipów audio):**
+  - Schowek atrybutów klipu audio w pamięci podręcznej Timeline: wzmocnienie (`gainDb`), czasy narastania i opadania (`fadeInMs`, `fadeOutMs`), przycięcie (`trimInMs`, `trimOutMs`), pętla (`loop`) oraz stan wyciszenia (`muted`).
+  - Akcje menu kontekstowego klipu audio: "Kopiuj właściwości" (`⌥⌘C` / `Alt+Ctrl+C`) oraz "Wklej właściwości" (`⌥⌘V` / `Alt+Ctrl+V`) działające hurtowo na wielu zaznaczonych klipach audio bez naruszania ich pozycji na osi czasu czy przypisanych plików źródłowych.
+  - Typowane schematy walidacji Zod `AudioClipPropertiesSchema`, ekstrakcja `extractAudioClipProperties` oraz aplikacja `applyAudioClipProperties` w `@stagesync/shared`.
+
+- **Nawigacja `/timeline` i okno wyboru utworu:**
+  - Bezpośrednie wejście pod adres `/timeline` (bez parametru `:projectId`) nie przekierowuje już do `/admin` — renderuje widok Timeline z automatycznie otwartym oknem modalnym wyboru utworu z biblioteki ("Wybierz utwór").
+  - Kliknięcie dowolnego utworu z listy przenosi natychmiast do właściwego projektu na osi czasu (`/timeline/:id`).
+  - Uaktualniono `getTimelineNavUrl()`, dzięki czemu przejście do Timeline z poziomu paska `OperatorNav` przy braku ostatniego projektu otwiera bezpośrednio `/timeline` z listą utworów.
+
+#### 🎹 MIDI & Silnik Transportu
+
+- **Chase MIDI Notes po Seek:**
+  - Deterministyczne retriggerowanie i kontynuacja aktywnych nut MIDI przecinających pozycję docelową po skoku transportu (`seekTicks`).
+  - Silnik `chaseMidiNotes` w `@stagesync/shared` wyliczający czas trwania, przesunięcie (`offsetTicks`) oraz pozostały czas (`remainingTicks`) dla nut trwających w momencie skoku, zapobiegając ucinaniu akordów i partii melodycznych podczas skoków realizatora.
+  - Integracja w serwerowym silniku transportu (`TransportEngine.seek`), z natychmiastowym buforowaniem i odpytywaniem stanu nut (`getChasedMidiNotes`).
+
+### Naprawiono
+
+#### ⏱️ Timeline & DAW
+
+- **Zachowanie niezapisanych zmian przy wgrywaniu plików audio:** wgrywanie nowego klipu audio w `useTimelineAudioUpload` scala teraz zaimportowane zasoby, ścieżki i klipy z bieżącym szkicem (`draftProjectRef.current`), nie nadpisując niezapisanych edycji na warstwach Formy, Tekstu, Akordów, Cue ani Melodii oraz zachowując stan `dirty`.
+- **Gesty rysowania na płótnie i narzędzie Różdżki (Wand):** naprawiono przekazywanie właściwości `draft` (`commitDraft`), `primaryMapId` oraz `wandTool` (`applyWand`) do `TimelineCanvasViewport` i okien dialogowych Timeline.
+- **Przycinanie wycinków audio bez jawnego `trimOutMs`:** funkcje `resizeAudioClipStart` oraz `resizeAudioClipEnd` prawidłowo wyliczają domyślną granicę wycinka na podstawie pozycji startowej i czasu trwania na osi czasu.
+- **Widoczność błędów ładowania projektu:** baner błędu `loadError` w `TimelineShell` jest wyświetlany pod nagłówkiem również wtedy, gdy w pamięci znajduje się już wcześniej załadowany szkic projektu.
+
+#### 🖥️ Klient, Admin & Transport
+
+- **Wyeliminowanie sztormu zapytań HTTP podczas odtwarzania w Adminie:** usunięto `displayTicks` z zależności efektu pobierającego projekt i zasoby w `AdminShell`, co wyeliminowało 60–120 nadmiarowych żądań `GET` na sekundę podczas pracy transportu.
+- **Płynność interpolacji playheada (`useTransportInterpolation`):** pętla `requestAnimationFrame` nie jest już niszczona i odtwarzana przy każdym pakiecie WebSocket (25 Hz), a detekcja skoku (`jumped`) poprawnie porównuje poprzednią pozycję przed nadpisaniem kotwicy czasu.
+- **Stabilność renderowania siatki taktów (`useGridPaneMotion`):** dodano głębokie porównanie kroków cyklu (`areCycleStepsEqual`), przerywając niepotrzebne przerenderowania widoku klienta na każdym ticku zegara.
+- **Zapisywanie notatek perkusyjnych (`ClientStagePanes`):** wprowadzono 400 ms debounce przy edycji notatek perkusisty z poprawnym przywracaniem ostatniego zapisanego stanu w razie błędu sieci oraz spłukiwaniem zapisu przy odmontowaniu widoku.
+- **Komunikaty akcji bazy danych w widoku Utworów (`SongsView`):** powiadomienia `actionNotice` oraz błędy `actionError` są teraz wyświetlane pod paskiem narzędzi także po zamknięciu menu bazy danych.
+
+#### 🛠️ Serwer, Import & Desktop
+
+- **Wyszukiwarka Ultimate Guitar (`ug-fetch`):** zastąpiono stanowe wyrażenie regularne `/gi` wewnątrz `.filter()` bezstanowym porównaniem `.toLowerCase().includes()`, co naprawia błąd odrzucający co drugi pasujący wynik wyszukiwania.
+- **Obliczanie czasu w pre-rollu i końca projektu (`tempo-map`, `project-bounds`):** uwzględniono granicę w ticku `0` przy konwersji ujemnych ticków odliczania (countdown) na milisekundy, ujednolicono domyślne `ppq = 960` w `beat1-align` oraz włączono klipy warstwy `melody` do wyliczania `projectEndTicks` i unieważniania pamięci podręcznej końca utworu na serwerze (`pause-at-end`, `auto-advance`, `midiSeekEndCache`).
+- **Bezpieczeństwo nagłówków CORS, PIN-u i `.env`:** dodano metodę `PATCH` i nagłówki autoryzacji (`X-Stagesync-Operator-Pin`, `X-Stagesync-Host-Token`) do CORS, przywrócono możliwość rejestracji tokenów `/api/push/tokens` przez tablety wykonawców bez PIN-u operatora, zabezpieczono endpointy konta UltraStar i aktualizacji przed zdalnym wywołaniem oraz oczyszczono zapis `.env` ze znaków nowej linii.
+- **Bezpieczne cięcie logów UTF-8 w Tauri (`lib.rs`, `launcher.rs`):** obcinanie bufora logów sidecara w Rust respektuje granice znaków UTF-8 (`is_char_boundary`), zapobiegając panice wątku na polskich znakach diakrytycznych.
+
 ## [5.4.12](https://github.com/kacperczeczot/stagesync/compare/v5.4.11...v5.4.12) - 2026-08-15
 
 ### Dodano

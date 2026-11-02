@@ -40,12 +40,19 @@
 .segmentChip {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--ss-touch-min);
   padding: var(--ss-space-2) var(--ss-space-3);
+  border: 1px solid transparent;
   border-radius: var(--ss-radius-sm);
   color: var(--ss-color-text-muted);
+  font-family: var(--ss-font-sans);
   font-size: var(--ss-text-sm);
   font-weight: var(--ss-font-weight-medium);
+  line-height: var(--ss-leading-compact);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .segmentMuted {

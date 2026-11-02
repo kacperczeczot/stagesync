@@ -44,17 +44,6 @@
     "allow-desktop-update",
     "allow-desktop-launcher",
     "allow-quit-desktop-app",
-    "shell:allow-kill",
-    {
-      "identifier": "shell:allow-spawn",
-      "allow": [
-        {
-          "name": "bin/stagesync-host",
-          "sidecar": true,
-          "args": true
-        }
-      ]
-    },
     "updater:default",
     "notification:default"
   ]

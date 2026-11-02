@@ -252,6 +252,7 @@ export function previewAudioFromSession(
   ctrlKey: boolean,
   clientY?: number,
   targetLane?: AudioLaneId,
+  clientX?: number,
 ): FormaGesturePreview {
   const mode = contentSnapModeFromModifiers(metaKey, ctrlKey);
   const floor = contentFloorTicks(project.forma.clips);
@@ -261,12 +262,27 @@ export function previewAudioFromSession(
     const originY = session.originClientY ?? 0;
     const y = clientY ?? originY;
     const originGain = session.originGainDb ?? clip?.gainDb ?? 0;
+
+    const hasDragged =
+      session.hasDragged ??
+      (session.originClientY != null
+        ? clientY != null && Math.abs(clientY - session.originClientY) >= 4
+        : true);
+
+    if (hasDragged) {
+      session.hasDragged = true;
+    }
+
+    const effectiveGain = hasDragged
+      ? gainDbFromPointerDelta(originGain, originY, y)
+      : originGain;
+
     return {
       kind: "gain",
       clipId: session.clipId,
       startTicks: session.originClipStart,
       lengthTicks: session.originClipLength,
-      gainDb: gainDbFromPointerDelta(originGain, originY, y),
+      gainDb: effectiveGain,
     };
   }
 
@@ -280,6 +296,28 @@ export function previewAudioFromSession(
         lengthTicks: session.originClipLength,
       };
     }
+
+    const hasDragged =
+      session.hasDragged ??
+      (session.originClientX != null
+        ? clientX != null && Math.abs(clientX - session.originClientX) >= 4
+        : true);
+
+    if (hasDragged) {
+      session.hasDragged = true;
+    }
+
+    if (!hasDragged) {
+      return {
+        kind: session.kind,
+        clipId: clip.id,
+        startTicks: clip.startTicks,
+        lengthTicks: clip.lengthTicks,
+        fadeInMs: clip.fadeInMs,
+        fadeOutMs: clip.fadeOutMs,
+      };
+    }
+
     const ctx = {
       bpm: resolveTempoAt(project, clip.startTicks),
       meter: resolveMeterAt(project, clip.startTicks),
@@ -287,25 +325,16 @@ export function previewAudioFromSession(
     };
     const asset = project.assets.find((a) => a.id === clip.assetId);
     const playableMs = audioClipPlayableMs(clip, asset, ctx);
-    const intoMs = Math.max(
-      0,
-      ticksToMs(
-        Math.max(0, rawTicks - clip.startTicks),
-        ctx.bpm,
-        ctx.meter,
-        ctx.ppq,
-      ),
-    );
-    const fromEndMs = Math.max(
-      0,
-      ticksToMs(
-        Math.max(0, clip.startTicks + clip.lengthTicks - rawTicks),
-        ctx.bpm,
-        ctx.meter,
-        ctx.ppq,
-      ),
-    );
+
     if (session.kind === "fade-in") {
+      const intoTicks = rawTicks - clip.startTicks;
+      const intoMs =
+        intoTicks <= 0
+          ? 0
+          : Math.max(
+              0,
+              ticksToMs(intoTicks, ctx.bpm, ctx.meter, ctx.ppq),
+            );
       const fades = clampAudioFades(
         { fadeInMs: intoMs, fadeOutMs: clip.fadeOutMs },
         playableMs,
@@ -319,6 +348,15 @@ export function previewAudioFromSession(
         fadeOutMs: clip.fadeOutMs,
       };
     }
+
+    const fromEndTicks = clip.startTicks + clip.lengthTicks - rawTicks;
+    const fromEndMs =
+      fromEndTicks <= 0
+        ? 0
+        : Math.max(
+            0,
+            ticksToMs(fromEndTicks, ctx.bpm, ctx.meter, ctx.ppq),
+          );
     const fades = clampAudioFades(
       { fadeInMs: clip.fadeInMs, fadeOutMs: fromEndMs },
       playableMs,

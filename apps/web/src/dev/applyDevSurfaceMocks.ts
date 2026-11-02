@@ -9,7 +9,10 @@ import {
   normalizeDevPreviewConfig,
   type DevPreviewConfig,
 } from "./devPreviewConfig.js";
-import { setDevSurfaceOverride } from "./devSurfaceState.js";
+import {
+  setDevSessionOverride,
+  setDevSurfaceOverride,
+} from "./devSurfaceState.js";
 
 const DEV_NATIVE_KEY = "__stagesync_dev_native__";
 
@@ -121,6 +124,7 @@ export function applyDevSurfaceMocks(config: DevPreviewConfig): () => void {
   const tauriBackup = readTauriBackup();
 
   setDevSurfaceOverride(normalized.surface);
+  setDevSessionOverride(normalized.surface === "web" ? normalized.session : false);
   applyNativeShell(normalized.surface);
   applyTauriMarkers(normalized.surface, tauriBackup);
 
@@ -142,6 +146,7 @@ export function applyDevSurfaceMocks(config: DevPreviewConfig): () => void {
 
   return () => {
     setDevSurfaceOverride(null);
+    setDevSessionOverride(null);
     applyNativeShell(null);
     applyTauriMarkers(null, tauriBackup);
     if (normalized.surface === "web" && normalized.session) {

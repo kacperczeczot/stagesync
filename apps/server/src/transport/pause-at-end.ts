@@ -31,7 +31,13 @@ export function wirePauseAtSongEnd(
   let inFlight = false;
   let endCache: { projectId: string; endTicks: number } | null = null;
 
-  return transport.onChange((msg) => {
+  const unsubStore = stores.onProjectChange?.((changedId) => {
+    if (endCache?.projectId === changedId) {
+      endCache = null;
+    }
+  });
+
+  const unsubTransport = transport.onChange((msg) => {
     if (inFlight || !msg.playing || transport.isLooping()) return;
     const projectId = msg.activeProjectId;
     if (!projectId) return;
@@ -73,4 +79,9 @@ export function wirePauseAtSongEnd(
       }
     })();
   });
+
+  return () => {
+    unsubStore?.();
+    unsubTransport();
+  };
 }
