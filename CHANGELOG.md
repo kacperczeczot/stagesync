@@ -5,7 +5,7 @@ Wszystkie istotne zmiany w StageSync są dokumentowane w tym pliku.
 Format oparty na [Keep a Changelog](https://keepachangelog.com/pl/1.1.0/),
 projekt stosuje [Semantic Versioning](https://semver.org/lang/pl/).
 
-## [Unreleased]
+## [5.5.0](https://github.com/kacperczeczot/stagesync/compare/v5.4.12...v5.5.0) - 2026-11-02 — Mix & Monitoring
 
 ### Dodano
 
